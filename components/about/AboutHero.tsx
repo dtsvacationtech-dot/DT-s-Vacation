@@ -36,7 +36,7 @@ export default function AboutHero() {
           </h2>
 
           <p className="text-gray-400 text-base md:text-lg font-light leading-loose max-w-xl mb-12">
-            With over a decade of experience crafting unforgettable escapes, Denise leads DT&apos;s Vacation 
+            With over a decade of experience crafting unforgettable escapes, Denise leads DT&apos;s Vacation &amp; Travel Limited 
             with a singular vision: to treat every traveler like family. Her roots in Jamaican culture 
             and her unwavering faith set the standard for every itinerary, ensuring that your trip is 
             planned with exactly the same care you would give a close friend.
