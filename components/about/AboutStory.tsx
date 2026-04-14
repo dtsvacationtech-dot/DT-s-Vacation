@@ -106,11 +106,7 @@ export default function AboutStory() {
                 </div>
               ))}
             </div>
-
-            </div>
-
           </div>
-
         </div>
 
         {/* Full-width Premium Quote Block */}
