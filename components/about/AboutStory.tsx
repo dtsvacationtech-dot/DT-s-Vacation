@@ -23,6 +23,9 @@ const milestones = [
 export default function AboutStory() {
   return (
     <section className="relative bg-deep-navy py-24 md:py-32 overflow-hidden">
+      {/* Smooth transition from previous section */}
+      <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-[#000c1c] to-transparent pointer-events-none" />
+      
       {/* Background radial soft light */}
       <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-bl from-blue-900/20 to-transparent blur-3xl pointer-events-none" />
 

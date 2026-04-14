@@ -98,6 +98,9 @@ export default function AboutHero() {
         </div>
 
       </div>
+
+      {/* Smooth transition into the next deep-navy section */}
+      <div className="absolute bottom-0 inset-x-0 h-48 bg-gradient-to-t from-deep-navy to-transparent pointer-events-none" />
     </section>
   );
 }
