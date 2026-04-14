@@ -6,12 +6,12 @@ const milestones = [
   {
     year: "The Beginning",
     title: "A Calling to Serve",
-    body: "DT's Vacation & Travel Ltd. was born not from a business plan, but from a heartfelt calling. Denis Thomas, rooted deep in Jamaican culture and guided by faith, saw how transformative travel could be — and set out to make it accessible, personal, and extraordinary for every client.",
+    body: "DT's Vacation & Travel Limited was born not from a business plan, but from a heartfelt calling. Denise Thomas, rooted deep in Jamaican culture and guided by faith, saw how transformative travel could be — and set out to make it accessible, personal, and extraordinary for every client.",
   },
   {
     year: "The Vision",
     title: "Boutique, Never Generic",
-    body: "From the very first booking, Denis refused to offer cookie-cutter packages. Every itinerary is hand-crafted, every hotel personally vetted, and every detail — from airport transfers to wedding centerpieces — is planned with the same care you would give a close friend.",
+    body: "From the very first booking, Denise refused to offer cookie-cutter packages. Every itinerary is hand-crafted, every hotel personally vetted, and every detail — from airport transfers to wedding centerpieces — is planned with the same care you would give a close friend.",
   },
   {
     year: "Today & Beyond",

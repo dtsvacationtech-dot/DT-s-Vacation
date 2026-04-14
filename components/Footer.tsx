@@ -13,7 +13,7 @@ export default function Footer() {
             </span>
           </Link>
           <p className="text-gray-500 font-light leading-relaxed italic mb-8 max-w-md">
-            &quot;DT&apos;s Vacation &amp; Travel Ltd. Personalized and Professional Travel Service at its Best... You Ask, We Deliver!&quot;
+            &quot;DT&apos;s Vacation &amp; Travel Limited. Personalized and Professional Travel Service at its Best... You Ask, We Deliver!&quot;
           </p>
 
           <div className="flex flex-col gap-3 mb-8">
@@ -88,7 +88,7 @@ export default function Footer() {
       </div>
 
       <div className="max-w-[1600px] mx-auto pt-8 border-t border-gray-200 flex flex-col md:flex-row items-center justify-between text-xs text-gray-400 font-medium tracking-wide">
-        <p>© {new Date().getFullYear()} DT&apos;s Vacation &amp; Travel Ltd. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} DT&apos;s Vacation &amp; Travel Limited. All rights reserved.</p>
         <div className="flex gap-6 mt-4 md:mt-0">
           <Link href="#" className="hover:text-deep-navy transition-colors">Privacy Policy</Link>
           <Link href="#" className="hover:text-deep-navy transition-colors">Terms of Service</Link>
