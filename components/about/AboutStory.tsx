@@ -117,11 +117,11 @@ export default function AboutStory() {
             &ldquo;
           </div>
 
-          <div className="relative z-10 max-w-5xl text-center px-4">
-            <p className="text-tropical-gold text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] mb-8">
+          <div className="relative z-10 max-w-4xl mx-auto text-center px-4">
+            <p className="text-tropical-gold text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] mb-8 relative z-20">
               Our Core Mission
             </p>
-            <p className="font-heading font-semibold text-3xl md:text-4xl lg:text-5xl text-white leading-[1.4] md:leading-[1.5]">
+            <p className="font-heading font-medium text-2xl md:text-3xl lg:text-4xl text-white leading-relaxed md:leading-[1.6]">
               To be the agency that treats every traveler like family — bringing 
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-tropical-gold to-yellow-200"> intentional adventures</span>, 
               seamless planning, and unforgettable memories to every soul we serve.
