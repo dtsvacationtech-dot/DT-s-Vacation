@@ -1,4 +1,4 @@
-import Image from "next/image";
+import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
 
 export default function CruiseShowcase() {
   // Data derived from the official Wix content
@@ -32,10 +32,11 @@ export default function CruiseShowcase() {
         <div className="relative w-full h-[400px] md:h-[600px] lg:h-[700px] rounded-[2rem] md:rounded-[3rem] overflow-hidden group shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
           {/* Main Image with dramatic slow zoom */}
           <div className="absolute inset-0">
-            <Image 
+            <ImageWithSkeleton 
               src="/images/cruise_wonder_4k.jpg"
               alt="Wonder of the Seas - World's Largest Cruise Ship"
               fill
+              skeletonClassName="skeleton-shimmer-dark"
               className="object-cover transition-transform duration-[10000ms] ease-out group-hover:scale-110"
               sizes="100vw"
               priority

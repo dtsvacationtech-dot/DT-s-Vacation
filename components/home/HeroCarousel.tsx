@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import { heroSlides } from "@/lib/mockData";
+import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
 
 export default function HeroCarousel() {
   const [current, setCurrent] = useState(0);
@@ -39,19 +39,20 @@ export default function HeroCarousel() {
           }`}
         >
           <div className="absolute inset-0 w-full h-full overflow-hidden">
-            <Image
+            <ImageWithSkeleton
               src={slide.image}
               alt={slide.title}
               fill
-              quality={100}
-              unoptimized
+              quality={85}
+              skeletonClassName="skeleton-shimmer-dark"
               className={`object-cover object-center transform transition-transform ease-out duration-[20000ms] ${
                 index === current ? "scale-100" : "scale-110"
               }`}
               priority={index === 0}
+              sizes="100vw"
             />
           </div>
-          {/* Intense Cinematic Dual Gradients for Premium Lighting */}
+          {/* Cinematic Gradients */}
           <div className="absolute inset-0 bg-gradient-to-r from-[#000c1c]/95 via-[#000c1c]/50 to-transparent pointer-events-none"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-[#000c1c] via-transparent to-transparent pointer-events-none opacity-90"></div>
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(0,45,98,0.2)_0%,transparent_60%)] pointer-events-none"></div>
@@ -106,12 +107,13 @@ export default function HeroCarousel() {
                       : "w-28 h-[170px] md:w-44 md:h-[320px] brightness-75 hover:brightness-100 mt-4 md:mt-8 hover:-translate-y-2"
                   }`}
                 >
-                  <Image
+                  <ImageWithSkeleton
                     src={slide.image}
                     alt={slide.cardTitle}
                     fill
-                    unoptimized
+                    skeletonClassName="skeleton-shimmer-dark"
                     className="object-cover transition-transform duration-[2000ms] ease-out group-hover:scale-110"
+                    sizes="(max-width: 768px) 150px, 240px"
                   />
                   <div className={`absolute inset-0 bg-gradient-to-t transition-all duration-500 ${isActive ? "from-[#000c1c]/90 via-[#000c1c]/10 to-transparent" : "from-[#000c1c]/80 via-black/30 to-transparent"}`}></div>
                   <div className={`absolute left-3 md:left-6 text-left transition-all duration-500 ease-out ${isActive ? "bottom-4 md:bottom-8" : "bottom-3 md:bottom-6"}`}>
@@ -152,7 +154,6 @@ export default function HeroCarousel() {
           </div>
 
           <div className="flex-1 px-4 md:px-12 flex items-center">
-            {/* Real Progress Bar */}
             <div className="w-full h-[2px] bg-white/20 relative">
               <div 
                 className="absolute top-0 left-0 h-full bg-white transition-all duration-500 ease-out"

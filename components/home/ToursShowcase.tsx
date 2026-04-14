@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
 import { useState } from "react";
 
 type Tour = {
@@ -122,7 +122,7 @@ export default function ToursShowcase() {
             >
               {/* Background Image */}
               <div className="absolute inset-0">
-                <Image 
+                <ImageWithSkeleton 
                   src={tour.image}
                   alt={tour.title}
                   fill

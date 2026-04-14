@@ -96,3 +96,31 @@ h1, h2, h3, h4, h5, h6 {
 ::-webkit-scrollbar-thumb:hover {
   background: #EBB400;
 }
+
+/* iOS-style Skeleton Shimmer Loading */
+.skeleton-shimmer {
+  background: linear-gradient(
+    110deg,
+    #e8e8e8 8%,
+    #f5f5f5 18%,
+    #e8e8e8 33%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+.skeleton-shimmer-dark {
+  background: linear-gradient(
+    110deg,
+    rgba(255,255,255,0.05) 8%,
+    rgba(255,255,255,0.12) 18%,
+    rgba(255,255,255,0.05) 33%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

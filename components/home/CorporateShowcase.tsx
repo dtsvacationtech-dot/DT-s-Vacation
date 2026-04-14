@@ -1,4 +1,4 @@
-import Image from "next/image";
+import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
 
 export default function CorporateShowcase() {
   return (
@@ -62,10 +62,11 @@ export default function CorporateShowcase() {
               
               {/* Top Main Image: Catamaran (Aligned Right) */}
               <div className="relative w-[90%] md:w-[85%] aspect-[4/3] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] ml-auto group">
-                <Image 
+                <ImageWithSkeleton 
                   src="/images/corporate_activity_1776114758134.png"
                   alt="Luxury Corporate Catamaran"
                   fill
+                  skeletonClassName="skeleton-shimmer-dark"
                   className="object-cover transition-transform duration-[3000ms] ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-105"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
@@ -73,10 +74,11 @@ export default function CorporateShowcase() {
               
               {/* Bottom Overlapping Image: Meeting (Aligned Left) */}
               <div className="relative w-[85%] md:w-[75%] aspect-[16/9] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border-[6px] md:border-[8px] border-deep-navy -mt-16 md:-mt-32 z-20 group">
-                <Image 
+                <ImageWithSkeleton 
                   src="/images/corporate_meeting_1776114742944.png"
                   alt="Corporate Meeting"
                   fill
+                  skeletonClassName="skeleton-shimmer-dark"
                   className="object-cover transition-transform duration-[3000ms] ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-105"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />

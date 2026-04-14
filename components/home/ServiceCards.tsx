@@ -1,4 +1,4 @@
-import Image from "next/image";
+import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
 
 const hotels = [
   {
@@ -57,13 +57,12 @@ export default function ServiceCards() {
               
               {/* Image Container */}
               <div className="relative w-full h-72 overflow-hidden bg-gray-200">
-                <Image
+                <ImageWithSkeleton
                   src={hotel.image}
                   alt={hotel.name}
                   fill
                   className="object-cover transition-transform duration-[1500ms] ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-110"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  unoptimized
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
               </div>

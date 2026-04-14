@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Image from "next/image";
+import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
 
 const mainImages = [
   "/images/wedding_jamaica_main_1776112259228.png",
@@ -78,7 +78,7 @@ export default function WeddingShowcase() {
             {/* Main Tall Image (Left) */}
             <div className="col-span-1 row-span-2 relative rounded-[2rem] md:rounded-[3rem] overflow-hidden group shadow-2xl bg-gray-200">
               {mainImages.map((src, idx) => (
-                <Image 
+                <ImageWithSkeleton 
                   key={src}
                   src={src} 
                   alt={`Luxury Wedding ${idx + 1}`} 
@@ -94,7 +94,7 @@ export default function WeddingShowcase() {
             {/* Top Square Image (Right) */}
             <div className="col-span-1 row-span-1 relative rounded-[2rem] md:rounded-[2.5rem] overflow-hidden group shadow-xl bg-gray-200">
               {detailImages.map((src, idx) => (
-                <Image 
+                <ImageWithSkeleton 
                   key={src}
                   src={src} 
                   alt={`Wedding Detail ${idx + 1}`} 
@@ -108,7 +108,7 @@ export default function WeddingShowcase() {
             {/* Bottom Square Image (Right) */}
             <div className="col-span-1 row-span-1 relative rounded-[2rem] md:rounded-[2.5rem] overflow-hidden group shadow-xl bg-gray-200">
               {peopleImages.map((src, idx) => (
-                <Image 
+                <ImageWithSkeleton 
                   key={src}
                   src={src} 
                   alt={`Wedding Reception ${idx + 1}`} 
