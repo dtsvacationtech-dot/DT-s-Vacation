@@ -107,23 +107,39 @@ export default function AboutStory() {
               ))}
             </div>
 
-            {/* In-flow Mission Statement Block */}
-            <div className="mt-20 pt-16 border-t border-white/10">
-              <blockquote className="relative">
-                <svg className="absolute -top-6 -left-4 w-12 h-12 text-tropical-gold/20" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
-                </svg>
-                <p className="text-white font-heading font-semibold text-xl md:text-2xl leading-relaxed italic z-10 relative">
-                  To be the agency that treats every traveler like family — bringing 
-                  <span className="text-tropical-gold px-1">intentional adventures</span>, 
-                  seamless planning, and unforgettable memories to every soul we serve.
-                </p>
-              </blockquote>
             </div>
 
           </div>
 
         </div>
+
+        {/* Full-width Premium Quote Block */}
+        <div className="mt-32 pt-24 border-t border-white/10 relative flex justify-center">
+          
+          {/* Faint massive background quotation mark */}
+          <div className="absolute top-8 left-1/2 -translate-x-1/2 text-[15rem] leading-none font-serif text-white/[0.03] select-none pointer-events-none">
+            &ldquo;
+          </div>
+
+          <div className="relative z-10 max-w-5xl text-center px-4">
+            <p className="text-tropical-gold text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] mb-8">
+              Our Core Mission
+            </p>
+            <p className="font-heading font-semibold text-3xl md:text-4xl lg:text-5xl text-white leading-[1.4] md:leading-[1.5]">
+              To be the agency that treats every traveler like family — bringing 
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-tropical-gold to-yellow-200"> intentional adventures</span>, 
+              seamless planning, and unforgettable memories to every soul we serve.
+            </p>
+            
+            {/* Small decorative element at bottom */}
+            <div className="flex justify-center items-center gap-4 mt-12 opacity-80">
+              <div className="w-12 h-[1px] bg-gradient-to-r from-transparent to-tropical-gold" />
+              <div className="w-2 h-2 rotate-45 bg-tropical-gold" />
+              <div className="w-12 h-[1px] bg-gradient-to-l from-transparent to-tropical-gold" />
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
   );
