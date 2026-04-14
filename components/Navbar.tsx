@@ -35,6 +35,7 @@ export default function Navbar() {
   }, [isMobileMenuOpen]);
 
   const navLinks = [
+    { label: 'Home', href: '/' },
     { label: 'Hotels', href: '/#hotels' },
     { label: 'Corporate', href: '/#corporate' },
     { label: 'Weddings', href: '/#weddings' },
