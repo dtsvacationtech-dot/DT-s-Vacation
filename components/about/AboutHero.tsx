@@ -98,6 +98,45 @@ export default function AboutHero() {
         </div>
 
       </div>
+
+      {/* Dynamic Slanted Section Divider (Marquee) */}
+      <div className="absolute -bottom-8 left-0 right-0 h-16 bg-tropical-gold transform -rotate-2 scale-105 flex items-center overflow-hidden z-20 shadow-[0_0_30px_rgba(235,180,0,0.2)]">
+        <div className="flex whitespace-nowrap animate-marquee items-center">
+          {[...Array(6)].map((_, i) => (
+            <div key={i} className="flex items-center">
+              <span className="text-deep-navy font-heading font-extrabold text-sm uppercase tracking-[0.3em] mx-6">
+                Unforgettable Journeys
+              </span>
+              <svg className="w-4 h-4 text-deep-navy/50" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+              </svg>
+              <span className="text-deep-navy font-heading font-extrabold text-sm uppercase tracking-[0.3em] mx-6">
+                Intentional Planning
+              </span>
+              <svg className="w-4 h-4 text-deep-navy/50" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+              </svg>
+              <span className="text-deep-navy font-heading font-extrabold text-sm uppercase tracking-[0.3em] mx-6">
+                Luxury Retreats
+              </span>
+              <svg className="w-4 h-4 text-deep-navy/50" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+              </svg>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <style jsx>{`
+        @keyframes marquee {
+          0% { transform: translateX(0%); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+          animation: marquee 30s linear infinite;
+        }
+      `}</style>
+
     </section>
   );
 }
