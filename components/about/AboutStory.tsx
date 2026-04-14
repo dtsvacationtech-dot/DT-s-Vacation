@@ -22,9 +22,21 @@ const milestones = [
 
 export default function AboutStory() {
   return (
-    <section className="relative bg-deep-navy py-24 md:py-32 overflow-hidden">
-      {/* Background radial soft light */}
-      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-bl from-blue-900/20 to-transparent blur-3xl pointer-events-none" />
+    <section className="relative bg-[#010918] py-24 md:py-32 overflow-hidden border-t border-white/5 shadow-[inset_0_40px_80px_rgba(0,0,0,0.4)]">
+      
+      {/* Premium ambient glows */}
+      <div className="absolute top-[-10%] right-[-10%] w-[800px] h-[800px] bg-tropical-gold/5 blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 left-[-10%] w-[600px] h-[600px] bg-blue-600/5 blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-gradient-to-tr from-[#002D62]/20 to-transparent blur-[120px] pointer-events-none" />
+
+      {/* Elegant Faint Grid Pattern */}
+      <div 
+        className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-screen" 
+        style={{ 
+          backgroundImage: 'linear-gradient(rgba(255,255,255,0.8) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.8) 1px, transparent 1px)', 
+          backgroundSize: '80px 80px' 
+        }} 
+      />
 
       <div className="max-w-[1600px] mx-auto px-6 md:px-12 lg:px-16">
         
