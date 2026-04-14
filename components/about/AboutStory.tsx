@@ -2,111 +2,128 @@
 
 import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
 
-const chapters = [
+const milestones = [
   {
-    num: "01",
     year: "The Beginning",
     title: "A Calling to Serve",
     body: "DT's Vacation & Travel Ltd. was born not from a business plan, but from a heartfelt calling. Denis Thomas, rooted deep in Jamaican culture and guided by faith, saw how transformative travel could be — and set out to make it accessible, personal, and extraordinary for every client.",
   },
   {
-    num: "02",
     year: "The Vision",
     title: "Boutique, Never Generic",
     body: "From the very first booking, Denis refused to offer cookie-cutter packages. Every itinerary is hand-crafted, every hotel personally vetted, and every detail — from airport transfers to wedding centerpieces — is planned with the same care you would give a close friend.",
   },
   {
-    num: "03",
     year: "Today & Beyond",
     title: "Jamaica to the World",
-    body: "What started as a local Jamaica specialist has expanded into a full-service international travel consultancy. From Caribbean Cruise packages and Jamaican resort retreats to European honeymoons and corporate conferences — we bring the warmth of the Caribbean to every corner of the world.",
+    body: "What started as a local Jamaica specialist has expanded into a full-service international travel consultancy. From Caribbean Cruise packages and Jamaican resort retreats to European honeymoons and corporate conferences — DT's Vacation brings the warmth of the Caribbean to every corner of the world.",
   },
 ];
 
 export default function AboutStory() {
   return (
-    <section className="relative bg-[#000c1c] py-24 md:py-32 overflow-hidden">
-      {/* Super subtle background glow */}
-      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-      
+    <section className="relative bg-deep-navy py-24 md:py-32 overflow-hidden">
+      {/* Background radial soft light */}
+      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-bl from-blue-900/20 to-transparent blur-3xl pointer-events-none" />
+
       <div className="max-w-[1600px] mx-auto px-6 md:px-12 lg:px-16">
         
-        {/* Header Section */}
-        <div className="flex flex-col items-center text-center mb-16 md:mb-24">
-          <p className="text-tropical-gold text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] mb-4">
-            The Journey Behind the Journey
-          </p>
-          <h2 className="font-heading font-extrabold text-5xl md:text-6xl text-white tracking-tight">
-            Our Story.
-          </h2>
-        </div>
-
-        {/* Immersive Panoramic Image */}
-        <div className="relative w-full aspect-[16/9] md:aspect-[21/9] lg:aspect-[24/9] rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.4)] mb-24 group">
-          <ImageWithSkeleton
-            src="/images/hero_hotels.jpg"
-            alt="Luxury Travel Experience"
-            fill
-            className="object-cover transition-transform duration-[15s] ease-out group-hover:scale-105"
-            skeletonClassName="skeleton-shimmer-dark"
-            sizes="100vw"
-          />
-          {/* Subtle inside shadow/vignette to make it feel premium */}
-          <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-[2rem] md:rounded-[3rem] pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#000c1c]/80 via-transparent to-transparent pointer-events-none" />
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 relative">
           
-          {/* Floating Tag inside the image (Clean and grounded) */}
-          <div className="absolute bottom-6 left-6 md:bottom-10 md:left-10 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-6 py-3 flex items-center gap-3">
-             <span className="w-2 h-2 rounded-full bg-tropical-gold" />
-             <span className="text-white text-xs font-medium tracking-widest uppercase">10+ Years Trusted</span>
-          </div>
-        </div>
-
-        {/* 3-Column Story Chapters */}
-        <div className="grid md:grid-cols-3 gap-12 md:gap-8 lg:gap-16 relative">
-          {chapters.map((chapter) => (
-            <div key={chapter.num} className="relative group">
-              {/* Massive background number for airy design */}
-              <div className="absolute -top-12 -left-6 text-[120px] font-heading font-black text-white/[0.03] pointer-events-none select-none transition-colors duration-500 group-hover:text-tropical-gold/[0.05]">
-                {chapter.num}
-              </div>
+          {/* LEFT: Premium Sticky Images (Fixes the "Solid/Heavy" issue) */}
+          <div className="lg:col-span-6 relative">
+            <div className="sticky top-32 h-fit mb-12 lg:mb-0">
               
-              <div className="relative z-10 pt-4">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-8 h-[1px] bg-tropical-gold" />
-                  <p className="text-tropical-gold text-[10px] font-bold uppercase tracking-[0.2em]">
-                    {chapter.year}
+              <div className="relative w-full aspect-[4/5] max-w-[500px] mx-auto lg:mr-auto">
+                {/* Image 1: Main background portrait */}
+                <div className="absolute top-0 right-0 w-[85%] h-[90%] rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10 group">
+                  <ImageWithSkeleton
+                    src="/images/hero_hotels.jpg"
+                    alt="Luxury Travel Experience"
+                    fill
+                    className="object-cover transition-transform duration-[10s] group-hover:scale-105"
+                    skeletonClassName="skeleton-shimmer-dark"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                  />
+                  <div className="absolute inset-0 bg-deep-navy/20 mix-blend-overlay" />
+                </div>
+
+                {/* Image 2: Overlapping foreground landscape (Adds airiness and depth) */}
+                <div className="absolute bottom-0 left-0 w-[65%] aspect-[4/3] rounded-[1.5rem] overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.7)] border-4 border-deep-navy group">
+                  <ImageWithSkeleton
+                    src="/images/luxury_cruise_top_1776115596156.png"
+                    alt="Premium Service"
+                    fill
+                    className="object-cover transition-transform duration-[10s] group-hover:scale-110"
+                    skeletonClassName="skeleton-shimmer-dark"
+                    sizes="(max-width: 1024px) 70vw, 30vw"
+                  />
+                </div>
+
+                {/* Floating Glass Badge (Tucked elegantly) */}
+                <div className="absolute top-8 left-0 lg:-left-8 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-5 shadow-2xl">
+                  <p className="text-tropical-gold font-bold text-[10px] uppercase tracking-widest mb-1">
+                    Rooted In
+                  </p>
+                  <p className="text-white font-heading font-bold text-xl leading-tight">
+                    Faith &<br/>Purpose
                   </p>
                 </div>
-                
-                <h3 className="font-heading font-bold text-white text-2xl lg:text-3xl mb-6">
-                  {chapter.title}
-                </h3>
-                
-                <p className="text-gray-400 font-light leading-loose text-[15px] lg:text-base">
-                  {chapter.body}
-                </p>
+
               </div>
             </div>
-          ))}
-        </div>
-
-        {/* Mission Statement Block */}
-        <div className="mt-32 md:mt-40 relative">
-          {/* Decorative brackets */}
-          <div className="absolute left-0 top-0 w-8 h-8 border-t border-l border-tropical-gold/50" />
-          <div className="absolute right-0 bottom-0 w-8 h-8 border-b border-r border-tropical-gold/50" />
-          
-          <div className="py-16 px-8 text-center max-w-4xl mx-auto">
-            <p className="text-white/40 text-[10px] font-bold uppercase tracking-[0.3em] mb-8">Our Core Mission</p>
-            <p className="font-heading font-medium text-2xl md:text-3xl lg:text-4xl text-white leading-[1.6]">
-              &ldquo;To be the agency that treats every traveler like family — 
-              bringing <span className="text-transparent bg-clip-text bg-gradient-to-r from-tropical-gold to-yellow-200">intentional adventures</span>, 
-              seamless planning, and unforgettable memories to every soul we serve.&rdquo;
-            </p>
           </div>
-        </div>
 
+          {/* RIGHT: Elegant Story Content (Scrollable) */}
+          <div className="lg:col-span-6 flex flex-col justify-center">
+            
+            <div className="mb-16">
+              <p className="text-tropical-gold text-[11px] font-bold uppercase tracking-[0.25em] mb-4">
+                The Journey Behind the Journey
+              </p>
+              <h2 className="font-heading font-extrabold text-4xl md:text-5xl lg:text-6xl text-white tracking-tight leading-[1.1]">
+                Our Story.
+              </h2>
+            </div>
+            
+            {/* Story Chapters without rigid lines (Fixes the "misaligned/เหลื่อม" issue) */}
+            <div className="flex flex-col gap-12 md:gap-16">
+              {milestones.map((item, i) => (
+                <div key={item.year} className="relative pl-6 md:pl-10 group">
+                  
+                  {/* Clean left border highlight instead of clunky dots */}
+                  <div className="absolute left-0 top-1 bottom-1 w-[2px] bg-white/10 group-hover:bg-tropical-gold transition-colors duration-500 rounded-full" />
+                  
+                  <p className="text-tropical-gold text-[10px] font-bold uppercase tracking-[0.2em] mb-3">
+                    {item.year}
+                  </p>
+                  <h3 className="font-heading font-bold text-white text-2xl md:text-3xl mb-4 group-hover:text-white/90 transition-colors">
+                    {item.title}
+                  </h3>
+                  <p className="text-gray-300 font-light leading-relaxed text-[15px] md:text-lg">
+                    {item.body}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* In-flow Mission Statement Block */}
+            <div className="mt-20 pt-16 border-t border-white/10">
+              <blockquote className="relative">
+                <svg className="absolute -top-6 -left-4 w-12 h-12 text-tropical-gold/20" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                </svg>
+                <p className="text-white font-heading font-semibold text-xl md:text-2xl leading-relaxed italic z-10 relative">
+                  To be the agency that treats every traveler like family — bringing 
+                  <span className="text-tropical-gold px-1">intentional adventures</span>, 
+                  seamless planning, and unforgettable memories to every soul we serve.
+                </p>
+              </blockquote>
+            </div>
+
+          </div>
+
+        </div>
       </div>
     </section>
   );
