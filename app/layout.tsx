@@ -31,7 +31,7 @@ export default function RootLayout({
       lang="en"
       className={`${montserrat.variable} ${openSans.variable} scroll-smooth`}
     >
-      <body className="min-h-screen flex flex-col font-body antialiased bg-off-white">
+      <body className="min-h-screen flex flex-col font-body antialiased bg-[#000814] text-white">
         <Navbar />
         <main className="flex-grow">{children}</main>
         <Footer />
