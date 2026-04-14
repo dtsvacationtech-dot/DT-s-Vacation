@@ -23,12 +23,12 @@ export default function AboutStats() {
   }, []);
 
   return (
-    <section ref={ref} className="relative bg-white py-20 md:py-28 overflow-hidden">
-      {/* Subtle decorative diagonal stripe */}
-      <div className="absolute inset-0 opacity-[0.03]" style={{backgroundImage: 'repeating-linear-gradient(-45deg, #000c1c 0, #000c1c 1px, transparent 0, transparent 50%)', backgroundSize: '20px 20px'}} />
+    <section ref={ref} className="relative bg-tropical-gold py-24 md:py-32 overflow-hidden border-t border-black/5">
+      {/* Subtle engraved diagonal stripe pattern for texture */}
+      <div className="absolute inset-0 opacity-[0.05]" style={{backgroundImage: 'repeating-linear-gradient(-45deg, #000c1c 0, #000c1c 1px, transparent 0, transparent 50%)', backgroundSize: '20px 20px'}} />
 
-      <div className="max-w-[1600px] mx-auto px-5 md:px-8 lg:px-16">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
+      <div className="max-w-[1600px] mx-auto px-5 md:px-8 lg:px-16 relative z-10">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 md:gap-16">
           {stats.map((item, i) => (
             <div
               key={item.label}
@@ -37,13 +37,16 @@ export default function AboutStats() {
               }`}
               style={{ transitionDelay: `${i * 120}ms` }}
             >
-              <p className="font-heading font-bold text-4xl md:text-5xl lg:text-6xl text-deep-navy mb-2">
+              {/* Premium Top Line Divider above each stat */}
+              <div className="w-12 h-1 bg-deep-navy/20 mx-auto mb-8 rounded-full" />
+              
+              <p className="font-heading font-black text-5xl md:text-6xl lg:text-7xl text-deep-navy mb-3 tracking-tighter drop-shadow-sm">
                 {item.number}
               </p>
-              <p className="font-bold text-deep-navy text-sm md:text-base mb-1">
+              <p className="font-bold text-deep-navy text-sm md:text-base mb-2 uppercase tracking-widest">
                 {item.label}
               </p>
-              <p className="text-gray-400 text-xs md:text-sm font-light">
+              <p className="text-deep-navy/70 text-xs md:text-sm font-medium">
                 {item.sub}
               </p>
             </div>

@@ -22,7 +22,7 @@ const milestones = [
 
 export default function AboutStory() {
   return (
-    <section className="relative bg-[#FAFAFA] py-24 md:py-32 overflow-hidden border-t border-white/10 shadow-[inset_0_40px_80px_rgba(0,0,0,0.05)]">
+    <section className="relative bg-[#F9F7F2] py-24 md:py-32 overflow-hidden border-t border-black/5 shadow-[inset_0_40px_80px_rgba(0,0,0,0.03)]">
       
       {/* Air ambient light to keep it premium but breathable */}
       <div className="absolute top-[-10%] right-[-10%] w-[800px] h-[800px] bg-tropical-gold/10 blur-[120px] pointer-events-none" />
