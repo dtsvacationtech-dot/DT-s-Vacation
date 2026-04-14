@@ -35,11 +35,12 @@ export default function Navbar() {
   }, [isMobileMenuOpen]);
 
   const navLinks = [
-    { label: 'Hotels', href: '#hotels' },
-    { label: 'Corporate', href: '#corporate' },
-    { label: 'Weddings', href: '#weddings' },
-    { label: 'Cruises', href: '#cruises' },
-    { label: 'Tours', href: '#tours' },
+    { label: 'Hotels', href: '/#hotels' },
+    { label: 'Corporate', href: '/#corporate' },
+    { label: 'Weddings', href: '/#weddings' },
+    { label: 'Cruises', href: '/#cruises' },
+    { label: 'Tours', href: '/#tours' },
+    { label: 'About', href: '/about' },
   ];
 
   return (
