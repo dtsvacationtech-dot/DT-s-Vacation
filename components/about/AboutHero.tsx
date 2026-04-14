@@ -11,50 +11,41 @@ export default function AboutHero() {
 
       <div className="max-w-[1600px] mx-auto w-full px-6 md:px-12 lg:px-16 grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
         
-        {/* LEFT: Text Content */}
+        {/* LEFT: Biographical Text Content */}
         <div className="lg:col-span-6 z-10 order-2 lg:order-1 pt-8 lg:pt-0">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-3 bg-white/5 border border-white/10 backdrop-blur-sm rounded-full p-1.5 pr-6 mb-8 shadow-xl">
-            <div className="bg-tropical-gold text-deep-navy text-[10px] font-bold uppercase tracking-[0.2em] px-4 py-1.5 rounded-full">
-              Our Story
-            </div>
-            <span className="text-gray-300 text-xs font-medium tracking-wide">
-              Est. 2014
-            </span>
+          
+          <div className="flex items-center gap-4 mb-6">
+             <div className="w-8 h-[1px] bg-tropical-gold" />
+             <p className="text-tropical-gold text-[10px] md:text-xs font-bold uppercase tracking-[0.3em]">
+               The Visionary
+             </p>
           </div>
 
-          {/* Main Heading */}
-          <h1 className="font-heading font-extrabold text-white leading-[1.05] tracking-tight mb-8">
-            <span className="block text-5xl md:text-6xl lg:text-[72px] mb-2 drop-shadow-lg">
-              Crafting Journeys
+          {/* Editorial Heading */}
+          <h1 className="font-heading font-bold text-white leading-[1.1] tracking-tight mb-8">
+            <span className="block text-4xl md:text-5xl lg:text-6xl mb-2">
+              Meet
             </span>
-            <span className="block text-5xl md:text-6xl lg:text-[72px] text-transparent bg-clip-text bg-gradient-to-r from-tropical-gold to-yellow-200">
-              With Purpose.
+            <span className="block text-5xl md:text-6xl lg:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-tropical-gold to-yellow-200">
+              Denis Thomas.
             </span>
           </h1>
 
-          <p className="text-gray-300 text-lg md:text-xl font-light leading-relaxed max-w-xl mb-12">
-            What began as a calling to serve others has grown into Jamaica&apos;s most trusted 
-            boutique travel experience — built on faith, warmth, and an unwavering 
-            commitment to making every journey extraordinary.
+          <h2 className="text-xl md:text-2xl text-white font-heading font-medium leading-relaxed mb-6 max-w-lg">
+            More than a travel expert — a devoted architect of intentional journeys.
+          </h2>
+
+          <p className="text-gray-400 text-base md:text-lg font-light leading-loose max-w-xl mb-12">
+            With over a decade of experience crafting unforgettable escapes, Denis leads DT&apos;s Vacation 
+            with a singular vision: to treat every traveler like family. Her roots in Jamaican culture 
+            and her unwavering faith set the standard for every itinerary, ensuring that your trip is 
+            planned with exactly the same care you would give a close friend.
           </p>
 
-          {/* Signature of Denis */}
-          <div className="flex bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 max-w-xl backdrop-blur-md shadow-2xl items-center justify-between group hover:bg-white/[0.07] transition-all">
-            <div className="flex flex-col">
-              <span className="text-white font-heading font-bold text-xl md:text-3xl tracking-wide group-hover:text-tropical-gold transition-colors">
-                Denis Thomas
-              </span>
-              <span className="text-gray-400 text-xs md:text-sm font-medium tracking-widest uppercase mt-1">
-                Founder & CEO
-              </span>
-            </div>
-            <div className="w-12 h-12 rounded-full border border-tropical-gold/30 flex items-center justify-center text-tropical-gold">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </div>
+          <div className="font-serif text-3xl md:text-4xl text-white/30 italic opacity-80">
+            Denis Thomas
           </div>
+
         </div>
 
         {/* RIGHT: Framed Portrait Image */}
@@ -99,43 +90,16 @@ export default function AboutHero() {
 
       </div>
 
-      {/* Dynamic Slanted Section Divider (Marquee) */}
-      <div className="absolute -bottom-8 left-0 right-0 h-16 bg-tropical-gold transform -rotate-2 scale-105 flex items-center overflow-hidden z-20 shadow-[0_0_30px_rgba(235,180,0,0.2)]">
-        <div className="flex whitespace-nowrap animate-marquee items-center">
-          {[...Array(6)].map((_, i) => (
-            <div key={i} className="flex items-center">
-              <span className="text-deep-navy font-heading font-extrabold text-sm uppercase tracking-[0.3em] mx-6">
-                Unforgettable Journeys
-              </span>
-              <svg className="w-4 h-4 text-deep-navy/50" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
-              </svg>
-              <span className="text-deep-navy font-heading font-extrabold text-sm uppercase tracking-[0.3em] mx-6">
-                Intentional Planning
-              </span>
-              <svg className="w-4 h-4 text-deep-navy/50" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
-              </svg>
-              <span className="text-deep-navy font-heading font-extrabold text-sm uppercase tracking-[0.3em] mx-6">
-                Luxury Retreats
-              </span>
-              <svg className="w-4 h-4 text-deep-navy/50" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
-              </svg>
-            </div>
-          ))}
-        </div>
+      {/* Subtle Static Wave Pattern Divider */}
+      <div className="absolute -bottom-1 left-0 right-0 h-16 w-full overflow-hidden z-20 pointer-events-none">
+        <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="absolute bottom-0 w-full h-full text-white/5" fill="currentColor">
+          <path d="M0,0 C150,100 350,0 600,50 C850,100 1050,0 1200,50 L1200,120 L0,120 Z" />
+        </svg>
+        <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="absolute bottom-0 w-full h-full text-tropical-gold/10" fill="none" stroke="currentColor" strokeWidth="1">
+          <path d="M0,10 C150,110 350,10 600,60 C850,110 1050,10 1200,60" />
+          <path d="M0,30 C150,130 350,30 600,80 C850,130 1050,30 1200,80" />
+        </svg>
       </div>
-
-      <style jsx>{`
-        @keyframes marquee {
-          0% { transform: translateX(0%); }
-          100% { transform: translateX(-50%); }
-        }
-        .animate-marquee {
-          animation: marquee 30s linear infinite;
-        }
-      `}</style>
 
     </section>
   );
