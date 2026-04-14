@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import AboutHero from "@/components/about/AboutHero";
 import AboutStory from "@/components/about/AboutStory";
-import AboutValues from "@/components/about/AboutValues";
 import AboutStats from "@/components/about/AboutStats";
 
 export const metadata: Metadata = {
@@ -14,15 +11,10 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <>
-      <Navbar />
-      <main className="bg-deep-navy overflow-hidden">
-        <AboutHero />
-        <AboutStory />
-        <AboutStats />
-        <AboutValues />
-      </main>
-      <Footer />
-    </>
+    <main className="bg-deep-navy overflow-hidden">
+      <AboutHero />
+      <AboutStory />
+      <AboutStats />
+    </main>
   );
 }
