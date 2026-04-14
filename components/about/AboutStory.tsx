@@ -16,35 +16,35 @@ const milestones = [
   {
     year: "Today & Beyond",
     title: "Jamaica to the World",
-    body: "What started as a local Jamaica specialist has expanded into a full-service international travel consultancy. From Caribbean Cruise packages and Jamaican resort retreats to European honeymoons and corporate conferences — DT's Vacation brings the warmth of the Caribbean to every corner of the world.",
+    body: "What started as a local Jamaica specialist has expanded into a full-service international travel consultancy. From Caribbean Cruise packages and Jamaican resort retreats to European honeymoons and corporate conferences — DT's Vacation & Travel Limited brings the warmth of the Caribbean to every corner of the world.",
   },
 ];
 
 export default function AboutStory() {
   return (
     <section className="relative bg-[#FAFAFA] py-24 md:py-32 overflow-hidden border-t border-white/10 shadow-[inset_0_40px_80px_rgba(0,0,0,0.05)]">
-      
+
       {/* Air ambient light to keep it premium but breathable */}
       <div className="absolute top-[-10%] right-[-10%] w-[800px] h-[800px] bg-tropical-gold/10 blur-[120px] pointer-events-none" />
       <div className="absolute bottom-1/4 left-[-10%] w-[600px] h-[600px] bg-blue-600/5 blur-[100px] pointer-events-none" />
 
       {/* Elegant Faint Grid Pattern (Light) */}
-      <div 
-        className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-multiply" 
-        style={{ 
-          backgroundImage: 'linear-gradient(rgba(0,0,0,0.8) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.8) 1px, transparent 1px)', 
-          backgroundSize: '80px 80px' 
-        }} 
+      <div
+        className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-multiply"
+        style={{
+          backgroundImage: 'linear-gradient(rgba(0,0,0,0.8) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.8) 1px, transparent 1px)',
+          backgroundSize: '80px 80px'
+        }}
       />
 
       <div className="max-w-[1600px] mx-auto px-6 md:px-12 lg:px-16">
-        
+
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 relative">
-          
+
           {/* LEFT: Premium Sticky Images */}
           <div className="lg:col-span-6 relative">
             <div className="sticky top-32 h-fit mb-12 lg:mb-0">
-              
+
               <div className="relative w-full aspect-[4/5] max-w-[500px] mx-auto lg:mr-auto">
                 {/* Image 1: Main background portrait */}
                 <div className="absolute top-0 right-0 w-[85%] h-[90%] rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.15)] group">
@@ -77,7 +77,7 @@ export default function AboutStory() {
                     Rooted In
                   </p>
                   <p className="text-deep-navy font-heading font-bold text-xl leading-tight">
-                    Faith &<br/>Purpose
+                    Faith &<br />Purpose
                   </p>
                 </div>
 
@@ -87,7 +87,7 @@ export default function AboutStory() {
 
           {/* RIGHT: Elegant Story Content (Scrollable) */}
           <div className="lg:col-span-6 flex flex-col justify-center">
-            
+
             <div className="mb-16">
               <p className="text-tropical-gold text-[11px] font-bold uppercase tracking-[0.25em] mb-4">
                 The Journey Behind the Journey
@@ -96,15 +96,15 @@ export default function AboutStory() {
                 Our Story.
               </h2>
             </div>
-            
+
             {/* Story Chapters */}
             <div className="flex flex-col gap-12 md:gap-16">
               {milestones.map((item, i) => (
                 <div key={item.year} className="relative pl-6 md:pl-10 group">
-                  
+
                   {/* Clean left border highlight */}
                   <div className="absolute left-0 top-1 bottom-1 w-[2px] bg-gray-200 group-hover:bg-tropical-gold transition-colors duration-500 rounded-full" />
-                  
+
                   <p className="text-tropical-gold text-[10px] font-bold uppercase tracking-[0.2em] mb-3">
                     {item.year}
                   </p>
@@ -122,7 +122,7 @@ export default function AboutStory() {
 
         {/* Full-width Premium Quote Block */}
         <div className="mt-32 pt-24 border-t border-gray-200 relative flex justify-center">
-          
+
           {/* Faint massive background quotation mark */}
           <div className="absolute top-8 left-1/2 -translate-x-1/2 text-[15rem] leading-none font-serif text-black/[0.02] select-none pointer-events-none">
             &ldquo;
@@ -133,11 +133,11 @@ export default function AboutStory() {
               Our Core Mission
             </p>
             <p className="font-heading font-medium text-2xl md:text-3xl lg:text-4xl text-deep-navy leading-relaxed md:leading-[1.6]">
-              To be the agency that treats every traveler like family — bringing 
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-[#B8860B]"> intentional adventures</span>, 
+              To be the agency that treats every traveler like family — bringing
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-[#B8860B]"> intentional adventures</span>,
               seamless planning, and unforgettable memories to every soul we serve.
             </p>
-            
+
             {/* Small decorative element at bottom */}
             <div className="flex justify-center items-center gap-4 mt-12 opacity-80">
               <div className="w-12 h-[1px] bg-gradient-to-r from-transparent to-tropical-gold" />
