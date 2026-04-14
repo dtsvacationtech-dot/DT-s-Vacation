@@ -4,7 +4,7 @@ import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
 
 export default function AboutHero() {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-[#000c1c] pt-28 pb-20">
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-deep-navy pt-28 pb-20">
       {/* Background Radial Glow */}
       <div className="absolute top-[-10%] lg:top-[10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-blue-500/10 blur-[120px] pointer-events-none" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] rounded-full bg-tropical-gold/5 blur-[150px] pointer-events-none" />
@@ -98,9 +98,6 @@ export default function AboutHero() {
         </div>
 
       </div>
-
-      {/* Smooth transition into the next deep-navy section */}
-      <div className="absolute bottom-0 inset-x-0 h-48 bg-gradient-to-t from-deep-navy to-transparent pointer-events-none" />
     </section>
   );
 }
