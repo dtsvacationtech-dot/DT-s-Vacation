@@ -17,21 +17,21 @@ const localTours: Tour[] = [
     title: "Dunn's River Falls",
     location: "Ocho Rios, Jamaica",
     category: "NATURE & ADVENTURE",
-    image: "/images/tour_dunns_river.jpg",
+    image: "/images/tour_dunns_river.webp",
   },
   {
     id: 2,
     title: "Ocho Rios Beach",
     location: "Ocho Rios, Jamaica",
     category: "BEACH & RELAXATION",
-    image: "/images/tour_dunns_beach.jpg",
+    image: "/images/tour_dunns_beach.webp",
   },
   {
     id: 3,
     title: "Rose Hall Great House",
     location: "Montego Bay, Jamaica",
     category: "CULTURE & HERITAGE",
-    image: "/images/tour_rose_hall.jpg",
+    image: "/images/tour_rose_hall.webp",
   },
 ];
 
@@ -41,21 +41,21 @@ const overseasTours: Tour[] = [
     title: "Grace Bay Beach",
     location: "Providenciales, Turks & Caicos",
     category: "ISLAND GETAWAY",
-    image: "/images/tour_turks.jpg",
+    image: "/images/tour_turks.webp",
   },
   {
     id: 5,
     title: "Stingray City",
     location: "Grand Cayman, Cayman Islands",
     category: "OCEAN ADVENTURE",
-    image: "/images/tour_cayman.jpg",
+    image: "/images/tour_cayman.webp",
   },
   {
     id: 6,
     title: "Tulum Ruins",
     location: "Riviera Maya, Mexico",
     category: "CARIBBEAN HISTORY",
-    image: "/images/tour_mexico.jpg",
+    image: "/images/tour_mexico.webp",
   },
 ];
 

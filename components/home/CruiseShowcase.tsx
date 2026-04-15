@@ -33,7 +33,7 @@ export default function CruiseShowcase() {
           {/* Main Image with dramatic slow zoom */}
           <div className="absolute inset-0">
             <ImageWithSkeleton 
-              src="/images/cruise_wonder_4k.jpg"
+              src="/images/cruise_wonder_4k.webp"
               alt="Wonder of the Seas - World's Largest Cruise Ship"
               fill
               skeletonClassName="skeleton-shimmer-dark"

@@ -6,7 +6,7 @@ const hotels = [
     name: "Catalonia Montego Bay",
     location: "Catalonia Montego Bay, Rosehall Parish, Half Moon St, Montego Bay, Jamaica",
     price: "112",
-    image: "/images/hotel_catalonia.jpg",
+    image: "/images/hotel_catalonia.webp",
     featured: true,
   },
   {
@@ -14,7 +14,7 @@ const hotels = [
     name: "Grand Palladium Jamaica",
     location: "Grand Palladium Lady Hamilton Resort & Spa, Point Lucea, Lucea, Jamaica",
     price: "145",
-    image: "/images/hotel_palladium.jpg",
+    image: "/images/hotel_palladium.webp",
     featured: false,
   },
   {
@@ -22,7 +22,7 @@ const hotels = [
     name: "Grand Palladium Lady Hamilton",
     location: "Grand Palladium Lady Hamilton Resort & Spa, Point Lucea, Lucea, Jamaica",
     price: "140",
-    image: "/images/hotel_lady_hamilton.jpg",
+    image: "/images/hotel_lady_hamilton.webp",
     featured: false,
   }
 ];

@@ -58,7 +58,7 @@ export default function AboutHero() {
           <div className="relative w-full max-w-[420px] aspect-[4/5] rounded-[2.5rem] overflow-hidden border-2 border-white/10 shadow-[0_40px_80px_rgba(0,0,0,0.5)] z-10 group">
             <div className="absolute inset-0 bg-deep-navy/20 group-hover:bg-transparent transition-all duration-700 z-10 pointer-events-none" />
             <ImageWithSkeleton
-              src="/images/Denis Profile.png"
+              src="/images/Denis Profile.webp"
               alt="Denise Thomas – Founder"
               fill
               className="object-cover object-top transition-transform duration-[10s] group-hover:scale-105"

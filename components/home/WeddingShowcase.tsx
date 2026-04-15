@@ -3,21 +3,21 @@ import React, { useState, useEffect } from "react";
 import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
 
 const mainImages = [
-  "/images/wedding_jamaica_main_1776112259228.png",
-  "/images/wedding_main_yacht_1776112796350.png",
-  "/images/wedding_main_waterfall_1776112811885.png",
+  "/images/wedding_jamaica_main_1776112259228.webp",
+  "/images/wedding_main_yacht_1776112796350.webp",
+  "/images/wedding_main_waterfall_1776112811885.webp",
 ];
 
 const detailImages = [
-  "/images/wedding_jamaica_details_1776112271584.png",
-  "/images/wedding_details_cake_1776112826404.png",
-  "/images/wedding_details_champagne_1776112839714.png",
+  "/images/wedding_jamaica_details_1776112271584.webp",
+  "/images/wedding_details_cake_1776112826404.webp",
+  "/images/wedding_details_champagne_1776112839714.webp",
 ];
 
 const peopleImages = [
-  "/images/wedding_jamaica_people_1776112285009.png",
-  "/images/wedding_people_dancing_1776112855256.png",
-  "/images/wedding_people_bouquet_1776112867462.png",
+  "/images/wedding_jamaica_people_1776112285009.webp",
+  "/images/wedding_people_dancing_1776112855256.webp",
+  "/images/wedding_people_bouquet_1776112867462.webp",
 ];
 
 export default function WeddingShowcase() {

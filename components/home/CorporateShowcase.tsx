@@ -63,7 +63,7 @@ export default function CorporateShowcase() {
               {/* Top Main Image: Catamaran (Aligned Right) */}
               <div className="relative w-[90%] md:w-[85%] aspect-[4/3] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] ml-auto group">
                 <ImageWithSkeleton 
-                  src="/images/corporate_activity_1776114758134.png"
+                  src="/images/corporate_activity_1776114758134.webp"
                   alt="Luxury Corporate Catamaran"
                   fill
                   skeletonClassName="skeleton-shimmer-dark"
@@ -75,7 +75,7 @@ export default function CorporateShowcase() {
               {/* Bottom Overlapping Image: Meeting (Aligned Left) */}
               <div className="relative w-[85%] md:w-[75%] aspect-[16/9] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border-[6px] md:border-[8px] border-deep-navy -mt-16 md:-mt-32 z-20 group">
                 <ImageWithSkeleton 
-                  src="/images/corporate_meeting_1776114742944.png"
+                  src="/images/corporate_meeting_1776114742944.webp"
                   alt="Corporate Meeting"
                   fill
                   skeletonClassName="skeleton-shimmer-dark"

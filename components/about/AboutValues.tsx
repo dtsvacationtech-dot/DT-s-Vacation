@@ -91,7 +91,7 @@ export default function AboutValues() {
         <div className="mt-20 rounded-[2.5rem] overflow-hidden relative">
           <div className="absolute inset-0">
             <ImageWithSkeleton
-              src="/images/hero_cruises.jpg"
+              src="/images/hero_cruises.webp"
               alt="Plan Your Next Journey"
               fill
               className="object-cover"

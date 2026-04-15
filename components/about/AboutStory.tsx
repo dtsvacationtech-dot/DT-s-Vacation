@@ -49,7 +49,7 @@ export default function AboutStory() {
                 {/* Image 1: Main background portrait */}
                 <div className="absolute top-0 right-0 w-[85%] h-[90%] rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.15)] group">
                   <ImageWithSkeleton
-                    src="/images/hero_hotels.jpg"
+                    src="/images/hero_hotels.webp"
                     alt="Luxury Travel Experience"
                     fill
                     className="object-cover transition-transform duration-[10s] group-hover:scale-105"
@@ -62,7 +62,7 @@ export default function AboutStory() {
                 {/* Image 2: Overlapping foreground landscape */}
                 <div className="absolute bottom-0 left-0 w-[65%] aspect-[4/3] rounded-[1.5rem] overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.2)] border-4 border-white group">
                   <ImageWithSkeleton
-                    src="/images/luxury_cruise_top_1776115596156.png"
+                    src="/images/luxury_cruise_top_1776115596156.webp"
                     alt="Premium Service"
                     fill
                     className="object-cover transition-transform duration-[10s] group-hover:scale-110"

@@ -66,7 +66,7 @@ export default function NewsletterModal() {
         {/* Cinematic Image Banner Header */}
         <div className="relative h-48 w-full">
           <ImageWithSkeleton
-            src="/images/hero_weddings.jpg"
+            src="/images/hero_weddings.webp"
             alt="Premium Travel Invitation"
             fill
             skeletonClassName="skeleton-shimmer-dark"
