@@ -238,74 +238,8 @@ export default function ServiceCards() {
             </div>
           ))}
         </div>
-
-        {/* ── Global CTA Strip ── */}
-        <div className="relative overflow-hidden rounded-[2rem] bg-deep-navy px-8 md:px-16 py-12 flex flex-col md:flex-row items-center justify-between gap-8">
-          {/* Decorative world-grid SVG background */}
-          <svg
-            className="absolute inset-0 w-full h-full opacity-[0.07] pointer-events-none"
-            viewBox="0 0 800 200"
-            preserveAspectRatio="xMidYMid slice"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            {/* Latitude lines */}
-            {[20, 60, 100, 140, 180].map((y) => (
-              <line key={`h${y}`} x1="0" y1={y} x2="800" y2={y} stroke="white" strokeWidth="0.5" />
-            ))}
-            {/* Longitude lines */}
-            {[0, 80, 160, 240, 320, 400, 480, 560, 640, 720, 800].map((x) => (
-              <line key={`v${x}`} x1={x} y1="0" x2={x} y2="200" stroke="white" strokeWidth="0.5" />
-            ))}
-            {/* Globe arcs */}
-            <ellipse cx="400" cy="100" rx="380" ry="90" fill="none" stroke="white" strokeWidth="0.8" />
-            <ellipse cx="400" cy="100" rx="200" ry="90" fill="none" stroke="white" strokeWidth="0.5" />
-            <ellipse cx="400" cy="100" rx="100" ry="90" fill="none" stroke="white" strokeWidth="0.5" />
-          </svg>
-
-          {/* Glow accent */}
-          <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-tropical-gold/20 blur-[80px] pointer-events-none" />
-
-          {/* Left: Text */}
-          <div className="relative z-10 text-center md:text-left">
-            <div className="flex items-center justify-center md:justify-start gap-3 mb-3">
-              <span className="text-2xl">🌐</span>
-              <p className="text-tropical-gold text-[11px] font-bold uppercase tracking-[0.3em]">
-                Your Destination, Anywhere
-              </p>
-            </div>
-            <h3 className="text-2xl md:text-3xl font-heading font-extrabold text-white mb-3 tracking-tight">
-              Don&apos;t see your destination?
-            </h3>
-            <p className="text-white/60 text-base font-light max-w-lg">
-              We book premium hotels in virtually any country in the world.
-              Just tell us where you want to go — we&apos;ll handle the rest.
-            </p>
-          </div>
-
-          {/* Right: CTA */}
-          <div className="relative z-10 flex flex-col sm:flex-row gap-4 flex-shrink-0">
-            <a
-              href="mailto:dtvacationandtravel@gmail.com"
-              className="inline-flex items-center gap-3 bg-tropical-gold text-deep-navy font-bold px-8 py-4 rounded-full hover:bg-yellow-300 transition-colors duration-300 shadow-lg text-sm uppercase tracking-wider whitespace-nowrap"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
-              Contact Us to Book
-            </a>
-            <a
-              href="tel:8768569812"
-              className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-bold px-8 py-4 rounded-full hover:bg-white/20 transition-colors duration-300 text-sm uppercase tracking-wider whitespace-nowrap"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-              </svg>
-              Call Us
-            </a>
-          </div>
-        </div>
-
       </div>
+
 
       {/* ── Ticker Keyframe ── */}
       <style jsx>{`
