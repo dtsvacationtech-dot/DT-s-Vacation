@@ -53,7 +53,7 @@ export default function CorporateWhy() {
           <div className="flex items-center gap-4 mb-5">
             <div className="w-8 h-[1px] bg-tropical-gold" />
             <p className="text-tropical-gold text-[10px] md:text-xs font-bold uppercase tracking-[0.35em]">
-              Corporate
+              Corporate Logistics
             </p>
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-7xl font-heading font-extrabold text-white tracking-tight leading-[1.05] mb-6">
