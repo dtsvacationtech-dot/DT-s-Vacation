@@ -41,7 +41,7 @@ export default function Navbar() {
     { label: "Home", href: "/" },
     { label: "Hotels", href: "/#hotels" },
     { label: "Corporate", href: "/corporate" },
-    { label: "Weddings", href: "/#weddings" },
+    { label: "Weddings", href: "/weddings" },
     { label: "Cruises", href: "/#cruises" },
     { label: "Tours", href: "/#tours" },
     { label: "About", href: "/about" },
@@ -51,6 +51,7 @@ export default function Navbar() {
   const getActiveHref = () => {
     // pathname might have a trailing slash due to next.config.ts trailingSlash: true
     if (pathname.startsWith("/corporate")) return "/corporate";
+    if (pathname.startsWith("/weddings")) return "/weddings";
     if (pathname.startsWith("/about")) return "/about";
     if (pathname.startsWith("/contact")) return "/contact";
     return "/";
