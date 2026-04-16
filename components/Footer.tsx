@@ -68,7 +68,7 @@ export default function Footer() {
           <h4 className="text-deep-navy font-bold tracking-wider mb-6">Quick Discoveries</h4>
           <ul className="space-y-4">
             <li><Link href="#hotels" className="text-gray-500 hover:text-tropical-gold transition-colors font-medium">Premium Hotels</Link></li>
-            <li><Link href="#corporate" className="text-gray-500 hover:text-tropical-gold transition-colors font-medium">Corporate Retreats</Link></li>
+            <li><Link href="/corporate" className="text-gray-500 hover:text-tropical-gold transition-colors font-medium">Corporate Retreats</Link></li>
             <li><Link href="#weddings" className="text-gray-500 hover:text-tropical-gold transition-colors font-medium">Destination Weddings</Link></li>
             <li><Link href="#cruises" className="text-gray-500 hover:text-tropical-gold transition-colors font-medium">Luxury Cruises</Link></li>
             <li><Link href="#tours" className="text-gray-500 hover:text-tropical-gold transition-colors font-medium">Immersive Tours</Link></li>
