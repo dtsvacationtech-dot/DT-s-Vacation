@@ -38,7 +38,7 @@ export default function Navbar() {
   const navLinks = [
     { label: 'Home', href: '/' },
     { label: 'Hotels', href: '/#hotels' },
-    { label: 'Corporate', href: '/#corporate' },
+    { label: 'Corporate', href: '/corporate' },
     { label: 'Weddings', href: '/#weddings' },
     { label: 'Cruises', href: '/#cruises' },
     { label: 'Tours', href: '/#tours' },
