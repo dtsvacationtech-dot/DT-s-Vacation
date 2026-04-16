@@ -18,25 +18,28 @@ export default function CorporateCTA() {
         </div>
       </section>
 
-      {/* ── Call to Action Block (Dark Card iOS Style) ── */}
-      <section className="px-4 md:px-8 lg:px-16 pb-24">
-        <div className="max-w-[1400px] mx-auto bg-deep-navy rounded-[2.5rem] lg:rounded-[3rem] p-10 md:p-16 lg:p-24 text-center relative overflow-hidden shadow-2xl shadow-deep-navy/20">
+      {/* ── Call to Action Block (Premium Dark Card) ── */}
+      <section className="px-4 md:px-8 lg:px-16 pb-24 relative z-10">
+        <div className="max-w-[1400px] mx-auto rounded-[2.5rem] lg:rounded-[3rem] p-10 md:p-16 lg:p-24 text-center relative overflow-hidden shadow-[0_40px_100px_-20px_rgba(0,10,30,0.5)] border border-white/10 bg-gradient-to-br from-[#0f1f38] via-deep-navy to-[#050b14]">
           
-          {/* Decorative glow inside card */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-[1px] bg-gradient-to-r from-transparent via-tropical-gold/50 to-transparent" />
-          <div className="absolute -top-40 -left-20 w-96 h-96 rounded-full bg-tropical-gold/10 blur-[100px] pointer-events-none" />
-          <div className="absolute -bottom-40 -right-20 w-96 h-96 rounded-full bg-blue-500/10 blur-[100px] pointer-events-none" />
+          {/* Ambient Mesh Gradients & Lighting */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            <div className="absolute -top-1/2 -left-1/4 w-[150%] h-[150%] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white/[0.03] via-transparent to-transparent" />
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-4/5 h-[1px] bg-gradient-to-r from-transparent via-tropical-gold/30 to-transparent" />
+            <div className="absolute -top-32 -right-32 w-[30rem] h-[30rem] rounded-full bg-tropical-gold/10 blur-[120px]" />
+            <div className="absolute -bottom-40 -left-20 w-[25rem] h-[25rem] rounded-full bg-blue-500/10 blur-[100px]" />
+          </div>
 
           <div className="relative z-10">
-            <h3 className="text-3xl md:text-5xl lg:text-6xl font-heading font-extrabold text-white tracking-tight leading-[1.1] mb-6">
+            <h3 className="text-3xl md:text-5xl lg:text-6xl font-heading font-extrabold text-white tracking-tight leading-[1.1] mb-6 drop-shadow-sm">
               Your Next Executive Trip,
               <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-tropical-gold to-yellow-200">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-tropical-gold via-yellow-200 to-tropical-gold bg-[length:200%_auto] animate-gradient">
                 Perfectly Orchestrated.
               </span>
             </h3>
 
-            <p className="text-gray-400 text-lg md:text-xl font-light max-w-2xl mx-auto mb-12 leading-relaxed">
+            <p className="text-blue-50/70 text-lg md:text-xl font-light max-w-2xl mx-auto mb-12 leading-relaxed">
               Let us take the logistics off your plate. One conversation is all it
               takes to build a travel system that works.
             </p>
