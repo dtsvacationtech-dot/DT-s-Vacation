@@ -57,7 +57,7 @@ export default function Navbar() {
         <div className="max-w-[1600px] mx-auto px-5 md:px-8 lg:px-16 flex items-center justify-between pointer-events-auto">
           
           {/* Brand Logo */}
-          <Link href="/" className="flex items-center group">
+          <Link href="/" className="flex items-center group ml-2 md:ml-6 lg:ml-10">
             <Image
               src="/images/logo.webp"
               alt="DT's Vacation & Travel Ltd."
