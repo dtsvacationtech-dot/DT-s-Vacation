@@ -50,7 +50,7 @@ export default function Navbar() {
       <nav
         className={`fixed top-0 w-full z-50 transition-all duration-500 pointer-events-none ${
           isScrolled || isMobileMenuOpen
-            ? "bg-white/85 backdrop-blur-xl py-3 md:py-4 shadow-[0_2px_20px_-10px_rgba(0,0,0,0.1)] border-b border-black/5" 
+            ? "bg-white/85 backdrop-blur-xl py-2 md:py-3 shadow-[0_2px_20px_-10px_rgba(0,0,0,0.1)] border-b border-black/5" 
             : "bg-gradient-to-b from-black/50 to-transparent py-5 md:py-8"
         }`}
       >
@@ -65,7 +65,7 @@ export default function Navbar() {
               height={240}
               className={`w-auto object-contain transition-all duration-500 max-w-full drop-shadow-[0_2px_10px_rgba(0,0,0,0.4)] ${
                 isScrolled || isMobileMenuOpen 
-                  ? "h-14 md:h-16 lg:h-20 drop-shadow-[0_2px_15px_rgba(0,0,0,0.6)]" 
+                  ? "h-10 md:h-12 lg:h-14 drop-shadow-[0_2px_15px_rgba(0,0,0,0.6)]" 
                   : "h-20 md:h-24 lg:h-28"
               }`}
               priority
