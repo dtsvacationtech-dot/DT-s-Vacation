@@ -121,9 +121,9 @@ export default function WeddingWhy() {
           <div className="relative h-[420px] md:h-[520px]">
             <Image
               src="/images/wedding_group.webp"
-              alt="Joyful wedding reception celebration with family and friends"
+              alt="Elegant outdoor wedding ceremony aisle with floral arrangements and golden chairs"
               fill
-              className="object-cover object-[center_30%]"
+              className="object-cover object-center"
               sizes="100vw"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#1a0a06]/70 via-transparent to-transparent" />
