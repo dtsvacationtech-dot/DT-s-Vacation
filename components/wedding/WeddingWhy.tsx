@@ -1,31 +1,5 @@
 import Image from "next/image";
 
-const pillars = [
-  {
-    icon: "💍",
-    title: "The Intentional Touch",
-    description:
-      "We approach every wedding with a thoughtful and considerate mindset, ensuring that every detail — from the floral arrangements to the sunset view — is intentionally chosen to reflect your unique story.",
-  },
-  {
-    icon: "🌍",
-    title: "Inclusive Celebrations",
-    description:
-      "We are devoted to making sure every guest feels welcomed and every family tradition is respected, no matter where in the world you choose to say, \"I do\".",
-  },
-  {
-    icon: "📋",
-    title: "Meticulous Peace of Mind",
-    description:
-      "You should be focused on each other, not the logistics. Our meticulous and organised planning process handles the no-nonsense details so you can stay in the moment.",
-  },
-  {
-    icon: "✨",
-    title: "A Joyful Partnership",
-    description:
-      "With a jovial spirit and a positive outlook, we turn the potentially stressful planning process into a celebratory experience filled with joy.",
-  },
-];
 
 export default function WeddingWhy() {
   return (
@@ -87,7 +61,48 @@ export default function WeddingWhy() {
 
         {/* ── 4 Pillars (Premium iOS Cards) ── */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
-          {pillars.map((p, i) => (
+          {[
+            {
+              title: "The Intentional Touch",
+              description:
+                "We approach every wedding with a thoughtful and considerate mindset, ensuring that every detail — from the floral arrangements to the sunset view — is intentionally chosen to reflect your unique story.",
+              icon: (
+                <svg className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                </svg>
+              ),
+            },
+            {
+              title: "Inclusive Celebrations",
+              description:
+                "We are devoted to making sure every guest feels welcomed and every family tradition is respected, no matter where in the world you choose to say, \"I do\".",
+              icon: (
+                <svg className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5a17.92 17.92 0 01-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
+                </svg>
+              ),
+            },
+            {
+              title: "Meticulous Peace of Mind",
+              description:
+                "You should be focused on each other, not the logistics. Our meticulous and organised planning process handles the no-nonsense details so you can stay in the moment.",
+              icon: (
+                <svg className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                </svg>
+              ),
+            },
+            {
+              title: "A Joyful Partnership",
+              description:
+                "With a jovial spirit and a positive outlook, we turn the potentially stressful planning process into a celebratory experience filled with joy.",
+              icon: (
+                <svg className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+                </svg>
+              ),
+            },
+          ].map((p, i) => (
             <div
               key={i}
               className="group relative bg-white rounded-[2rem] p-8 lg:p-10 border border-[#f0ddc8]/60 shadow-[0_20px_40px_-15px_rgba(180,120,60,0.08)] hover:shadow-[0_30px_60px_-15px_rgba(180,120,60,0.15)] hover:-translate-y-1.5 transition-all duration-500 overflow-hidden"
@@ -97,7 +112,7 @@ export default function WeddingWhy() {
               
               <div className="flex flex-col sm:flex-row items-start gap-6">
                 {/* Floating Circular Badge */}
-                <div className="w-16 h-16 flex-shrink-0 rounded-full bg-gradient-to-br from-white to-[#fdf9f5] border border-[#f0ddc8] shadow-[0_8px_16px_-6px_rgba(180,120,60,0.2)] flex items-center justify-center text-2xl group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 z-10 relative">
+                <div className="w-14 h-14 flex-shrink-0 rounded-full bg-gradient-to-br from-[#fdf0e0] to-[#f5e1c8] border border-[#e8cfa8] shadow-[0_8px_16px_-6px_rgba(180,120,60,0.2)] flex items-center justify-center text-[#c07a40] group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 z-10 relative">
                   {p.icon}
                   {/* Small glow behind icon */}
                   <div className="absolute inset-0 bg-[#d4a87a] blur-xl opacity-0 group-hover:opacity-20 rounded-full transition-opacity duration-500 -z-10" />
