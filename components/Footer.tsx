@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -8,9 +9,13 @@ export default function Footer() {
         {/* Brand & Quote Section */}
         <div className="flex flex-col lg:col-span-2">
           <Link href="/" className="flex items-center mb-6">
-            <span className="font-heading font-normal text-2xl tracking-[0.2em] text-deep-navy">
-              DT&apos;S <span className="font-bold">VACATION</span>
-            </span>
+            <Image
+              src="/images/logo.webp"
+              alt="DT's Vacation & Travel Ltd."
+              width={160}
+              height={160}
+              className="h-16 w-auto object-contain"
+            />
           </Link>
           <p className="text-gray-500 font-light leading-relaxed italic mb-8 max-w-md">
             &quot;DT&apos;s Vacation &amp; Travel Limited. Personalized and Professional Travel Service at its Best... You Ask, We Deliver!&quot;

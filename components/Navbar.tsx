@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -57,9 +58,14 @@ export default function Navbar() {
           
           {/* Brand Logo */}
           <Link href="/" className="flex items-center group">
-            <span className={`font-heading font-normal text-xl md:text-2xl tracking-[0.2em] transition-colors duration-500 ${isScrolled || isMobileMenuOpen ? "text-deep-navy" : "text-white"}`}>
-              DT&apos;S <span className="font-bold">VACATION</span>
-            </span>
+            <Image
+              src="/images/logo.webp"
+              alt="DT's Vacation & Travel Ltd."
+              width={160}
+              height={160}
+              className={`h-12 md:h-14 w-auto object-contain transition-all duration-500 ${isScrolled || isMobileMenuOpen ? "" : "brightness-0 invert"}`}
+              priority
+            />
           </Link>
 
           {/* Center Links (Desktop) */}
