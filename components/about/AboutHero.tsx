@@ -10,15 +10,15 @@ export default function AboutHero() {
       <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] rounded-full bg-tropical-gold/5 blur-[150px] pointer-events-none" />
 
       <div className="max-w-[1600px] mx-auto w-full px-6 md:px-12 lg:px-16 grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-        
+
         {/* LEFT: Biographical Text Content */}
         <div className="lg:col-span-6 z-10 order-2 lg:order-1 pt-8 lg:pt-0">
-          
+
           <div className="flex items-center gap-4 mb-6">
-             <div className="w-8 h-[1px] bg-tropical-gold" />
-             <p className="text-tropical-gold text-[10px] md:text-xs font-bold uppercase tracking-[0.3em]">
-               The Visionary
-             </p>
+            <div className="w-8 h-[1px] bg-tropical-gold" />
+            <p className="text-tropical-gold text-[10px] md:text-xs font-bold uppercase tracking-[0.3em]">
+              The Visionary
+            </p>
           </div>
 
           {/* Editorial Heading */}
@@ -27,7 +27,7 @@ export default function AboutHero() {
               Meet
             </span>
             <span className="block text-5xl md:text-6xl lg:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-tropical-gold to-yellow-200">
-              Denise Thomas.
+              Denise Thomas
             </span>
           </h1>
 
@@ -36,9 +36,9 @@ export default function AboutHero() {
           </h2>
 
           <p className="text-gray-400 text-base md:text-lg font-light leading-loose max-w-xl mb-12">
-            With over a decade of experience crafting unforgettable escapes, Denise leads DT&apos;s Vacation &amp; Travel Limited 
-            with a singular vision: to treat every traveler like family. Her roots in Jamaican culture 
-            and her unwavering faith set the standard for every itinerary, ensuring that your trip is 
+            With over a decade of experience crafting unforgettable escapes, Denise leads DT&apos;s Vacation &amp; Travel Limited
+            with a singular vision: to treat every traveler like family. Her roots in Jamaican culture
+            and her unwavering faith set the standard for every itinerary, ensuring that your trip is
             planned with exactly the same care you would give a close friend.
           </p>
 
@@ -50,7 +50,7 @@ export default function AboutHero() {
 
         {/* RIGHT: Framed Portrait Image */}
         <div className="lg:col-span-6 lg:col-start-8 relative flex justify-center lg:justify-end order-1 lg:order-2">
-          
+
           {/* Decorative Elements */}
           <div className="absolute -inset-4 bg-gradient-to-tr from-tropical-gold/20 to-blue-500/20 rounded-[3rem] blur-2xl opacity-50 pointer-events-none" />
 
@@ -66,14 +66,14 @@ export default function AboutHero() {
               sizes="(max-width: 1024px) 90vw, 50vw"
               priority
             />
-            
+
             {/* Glossy Overlay inside frame to make it feel like glass */}
             <div className="absolute inset-0 bg-gradient-to-br from-white/[0.05] to-transparent pointer-events-none z-20" />
-            
+
             {/* The Quote Card - Snapped to bottom of the frame */}
             <div className="absolute bottom-6 left-6 right-6 bg-[#000c1c]/70 backdrop-blur-xl border border-white/20 rounded-[1.5rem] p-6 shadow-2xl z-30 transform translate-y-2 opacity-90 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
               <svg className="w-6 h-6 text-tropical-gold mb-3 opacity-90" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
               </svg>
               <p className="text-white text-sm md:text-base font-light leading-relaxed italic">
                 &ldquo;Every journey I plan is a prayer answered — yours.&rdquo;
@@ -85,7 +85,7 @@ export default function AboutHero() {
             </div>
 
           </div>
-          
+
         </div>
 
       </div>
