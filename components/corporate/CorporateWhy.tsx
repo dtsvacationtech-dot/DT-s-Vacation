@@ -45,101 +45,117 @@ const pillars = [
 
 export default function CorporateWhy() {
   return (
-    <section className="py-24 bg-deep-navy" id="why-partner">
-      {/* Gold accent line at top */}
-      <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-tropical-gold/40 to-transparent mb-24" />
-
-      <div className="max-w-[1600px] mx-auto px-6 lg:px-16">
-
-        {/* Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-20">
-          <div>
-            <div className="flex items-center gap-4 mb-5">
-              <div className="w-8 h-[1px] bg-tropical-gold" />
-              <p className="text-tropical-gold text-[10px] font-bold uppercase tracking-[0.35em]">
-                Why Choose Us
-              </p>
-            </div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold text-white tracking-tight leading-[1.05]">
-              Why Partner with a<br />
-              <span className="text-tropical-gold">Disciplined Specialist?</span>
-            </h2>
+    <section className="relative bg-[#faf9f8]" id="why-partner">
+      
+      {/* Dark Header Strip for Navbar Contrast & Title */}
+      <div className="bg-deep-navy pt-40 pb-32 px-6 lg:px-16" style={{ backgroundImage: "url('/images/corporate_hero_skyline.webp')", backgroundPosition: "center", backgroundSize: "cover", backgroundBlendMode: "overlay", backgroundColor: "rgba(0,8,20,0.85)" }}>
+        <div className="max-w-[1600px] mx-auto">
+          <div className="flex items-center gap-4 mb-5">
+            <div className="w-8 h-[1px] bg-tropical-gold" />
+            <p className="text-tropical-gold text-[10px] md:text-xs font-bold uppercase tracking-[0.35em]">
+              Corporate Logistics
+            </p>
           </div>
-          <p className="text-gray-400 text-lg font-light leading-relaxed max-w-md lg:text-right">
-            We move past the fluff to provide level-headed, no-nonsense travel
-            management that keeps your business moving forward.
+          <h1 className="text-4xl md:text-5xl lg:text-7xl font-heading font-extrabold text-white tracking-tight leading-[1.05] mb-6">
+            Precision in Motion.
+          </h1>
+          <p className="text-gray-300 text-lg md:text-xl font-light leading-relaxed max-w-2xl mb-12">
+            In the corporate world, time is the ultimate currency. You need a
+            travel partner who is as meticulous and organized as your own
+            executive team.
           </p>
         </div>
+      </div>
 
-        {/* 4 Pillar Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-20">
-          {pillars.map((pillar, i) => (
-            <div
-              key={i}
-              className="group relative p-8 lg:p-10 rounded-[2rem] border border-white/10 bg-white/[0.03] hover:bg-white/[0.07] hover:border-tropical-gold/30 transition-all duration-500"
-            >
-              {/* Number */}
-              <span className="absolute top-8 right-8 text-white/5 font-heading font-extrabold text-7xl leading-none select-none">
-                {String(i + 1).padStart(2, "0")}
-              </span>
+      {/* Main Content Area - overlaps the dark header */}
+      <div className="max-w-[1600px] mx-auto px-6 lg:px-16 -mt-16 relative z-10">
+        
+        {/* Content Box */}
+        <div className="bg-white rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-gray-100 p-8 md:p-12 lg:p-20">
+          
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-16">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-heading font-bold text-deep-navy tracking-tight leading-tight">
+                Why Partner with a<br />
+                <span className="text-tropical-gold">Disciplined Specialist?</span>
+              </h2>
+            </div>
+            <p className="text-gray-500 text-lg font-light leading-relaxed max-w-md lg:text-right">
+              We move past the fluff to provide level-headed, no-nonsense travel
+              management that keeps your business moving forward.
+            </p>
+          </div>
 
-              {/* Icon */}
-              <div className="w-14 h-14 rounded-2xl bg-tropical-gold/10 border border-tropical-gold/20 flex items-center justify-center text-tropical-gold mb-6 group-hover:bg-tropical-gold/20 transition-colors duration-300">
-                {pillar.icon}
+          {/* 4 Pillar Cards - Light Theme */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-20">
+            {pillars.map((pillar, i) => (
+              <div
+                key={i}
+                className="group relative p-8 lg:p-10 rounded-2xl bg-gray-50 hover:bg-white border border-transparent hover:border-gray-200 hover:shadow-xl hover:shadow-black/5 transition-all duration-500"
+              >
+                {/* Number */}
+                <span className="absolute top-8 right-8 text-gray-100 font-heading font-extrabold text-6xl leading-none select-none transition-colors duration-500 group-hover:text-gray-50">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+
+                {/* Icon */}
+                <div className="w-14 h-14 rounded-2xl bg-deep-navy/5 border border-deep-navy/10 flex items-center justify-center text-deep-navy mb-6 group-hover:bg-tropical-gold group-hover:text-white transition-all duration-300 relative z-10">
+                  {pillar.icon}
+                </div>
+
+                <h3 className="text-xl font-heading font-bold text-deep-navy mb-4 tracking-wide relative z-10">
+                  {pillar.title}
+                </h3>
+                <p className="text-gray-600 font-light leading-relaxed relative z-10">
+                  {pillar.description}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Philosophy Strip */}
+          <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+            {/* Airplane Wing Image */}
+            <div className="absolute inset-0">
+              <ImageWithSkeleton
+                src="/images/corporate_airplane_wing.webp"
+                alt="Business travel at sunrise"
+                fill
+                className="object-cover object-center"
+                skeletonClassName="skeleton-shimmer-dark"
+                sizes="100vw"
+              />
+              <div className="absolute inset-0 bg-deep-navy/85" />
+            </div>
+
+            <div className="relative z-10 p-10 lg:p-16 flex flex-col lg:flex-row items-center justify-between gap-10">
+              <div className="max-w-2xl">
+                <p className="text-[11px] font-bold text-tropical-gold tracking-[0.3em] uppercase mb-4">
+                  Our Philosophy
+                </p>
+                <p className="text-white text-xl md:text-2xl font-light leading-relaxed">
+                  We bring a{" "}
+                  <span className="font-semibold text-tropical-gold">progressive mindset</span>{" "}
+                  to corporate logistics — combining the latest technology
+                  with devoted personal service. We handle the{" "}
+                  <em>&quot;how&quot;</em> so you can focus on the{" "}
+                  <em>&quot;why.&quot;</em>
+                </p>
               </div>
 
-              <h3 className="text-xl font-heading font-bold text-white mb-4 tracking-wide">
-                {pillar.title}
-              </h3>
-              <p className="text-gray-400 font-light leading-relaxed">
-                {pillar.description}
-              </p>
+              <a
+                href="mailto:dtvacationandtravel@gmail.com?subject=Corporate Consultation Request"
+                className="flex-shrink-0 inline-flex items-center gap-3 bg-tropical-gold text-deep-navy font-bold px-8 py-4 rounded-full hover:bg-yellow-300 transition-all duration-300 shadow-xl text-sm uppercase tracking-wider"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                Request Consultation
+              </a>
             </div>
-          ))}
-        </div>
-
-        {/* Philosophy Strip */}
-        <div className="relative rounded-[2rem] overflow-hidden border border-white/10">
-          {/* Airplane Wing Image */}
-          <div className="absolute inset-0">
-            <ImageWithSkeleton
-              src="/images/corporate_airplane_wing.webp"
-              alt="Business travel at sunrise"
-              fill
-              className="object-cover object-center"
-              skeletonClassName="skeleton-shimmer-dark"
-              sizes="100vw"
-            />
-            <div className="absolute inset-0 bg-deep-navy/85" />
           </div>
-
-          <div className="relative z-10 p-10 lg:p-16 flex flex-col lg:flex-row items-center justify-between gap-10">
-            <div className="max-w-2xl">
-              <p className="text-[11px] font-bold text-tropical-gold tracking-[0.3em] uppercase mb-4">
-                Our Philosophy
-              </p>
-              <p className="text-white text-xl md:text-2xl font-light leading-relaxed">
-                We bring a{" "}
-                <span className="font-semibold text-tropical-gold">progressive mindset</span>{" "}
-                to corporate logistics — combining the latest travel technology
-                with devoted personal service. We handle the{" "}
-                <em>&quot;how&quot;</em> so you can focus on the{" "}
-                <em>&quot;why.&quot;</em>
-              </p>
-            </div>
-
-            <a
-              href="mailto:dtvacationandtravel@gmail.com?subject=Corporate Consultation Request"
-              className="flex-shrink-0 inline-flex items-center gap-3 bg-tropical-gold text-deep-navy font-bold px-8 py-4 rounded-full hover:bg-yellow-300 transition-all duration-300 shadow-xl text-sm uppercase tracking-wider"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-              Request a Corporate Consultation
-            </a>
-          </div>
+          
         </div>
-
       </div>
     </section>
   );

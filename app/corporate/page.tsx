@@ -12,8 +12,7 @@ export const metadata: Metadata = {
 
 export default function CorporatePage() {
   return (
-    <main className="bg-deep-navy overflow-hidden">
-      <CorporateHero />
+    <main className="bg-[#faf9f8] overflow-hidden min-h-screen flex flex-col">
       <CorporateWhy />
       <CorporatePackingList />
       <CorporateCTA />
