@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import ChatWidget from "@/components/ChatWidget";
 import NewsletterModal from "@/components/home/NewsletterModal";
 import Footer from "@/components/Footer";
+import PageTransition from "@/components/PageTransition";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -33,7 +34,9 @@ export default function RootLayout({
     >
       <body className="min-h-screen flex flex-col font-body antialiased bg-[#000814] text-white">
         <Navbar />
-        <main className="flex-grow">{children}</main>
+        <main className="flex-grow">
+          <PageTransition>{children}</PageTransition>
+        </main>
         <Footer />
         <NewsletterModal />
         <ChatWidget />
