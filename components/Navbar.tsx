@@ -49,9 +49,10 @@ export default function Navbar() {
 
   // Determine active link key
   const getActiveHref = () => {
-    if (pathname === "/corporate") return "/corporate";
-    if (pathname === "/about") return "/about";
-    if (pathname === "/contact") return "/contact";
+    // pathname might have a trailing slash due to next.config.ts trailingSlash: true
+    if (pathname.startsWith("/corporate")) return "/corporate";
+    if (pathname.startsWith("/about")) return "/about";
+    if (pathname.startsWith("/contact")) return "/contact";
     return "/";
   };
   const activeHref = getActiveHref();
