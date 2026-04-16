@@ -87,11 +87,15 @@ export default function CorporatePackingList() {
               </div>
             </div>
 
-            {/* Briefcase Icon */}
-            <div className="hidden lg:flex w-16 h-16 rounded-2xl bg-gray-100 border border-gray-200 items-center justify-center">
-              <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
+            {/* High-End Packing Image */}
+            <div className="hidden lg:block relative w-full aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl mt-12 bg-gray-100 group">
+              <img 
+                src="/images/corporate_luggage.webp" 
+                alt="Premium corporate travel luggage in an exclusive airport lounge"
+                className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-[2000ms] ease-out"
+              />
+              {/* Optional soft gradient overlay for text readability if we add text later, or just a polish */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
             </div>
           </div>
 

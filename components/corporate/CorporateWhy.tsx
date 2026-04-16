@@ -73,17 +73,37 @@ export default function CorporateWhy() {
         {/* Content Box */}
         <div className="bg-white rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-gray-100 p-8 md:p-12 lg:p-20">
           
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-16">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-heading font-bold text-deep-navy tracking-tight leading-tight">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-24 items-center">
+            {/* Left: Text */}
+            <div className="lg:col-span-5 xl:col-span-4 lg:pr-8">
+              <h2 className="text-3xl md:text-4xl lg:text-[2.5rem] font-heading font-bold text-deep-navy tracking-tight leading-tight mb-8">
                 Why Partner with a<br />
                 <span className="text-tropical-gold">Disciplined Specialist?</span>
               </h2>
+              <p className="text-gray-500 text-lg font-light leading-relaxed mb-10">
+                We move past the fluff to provide level-headed, no-nonsense travel
+                management that keeps your business moving forward.
+              </p>
+              <div className="w-16 h-[2px] bg-gray-200"></div>
             </div>
-            <p className="text-gray-500 text-lg font-light leading-relaxed max-w-md lg:text-right">
-              We move past the fluff to provide level-headed, no-nonsense travel
-              management that keeps your business moving forward.
-            </p>
+
+            {/* Right: Stunning Image */}
+            <div className="lg:col-span-7 xl:col-span-8 relative">
+              <div className="relative w-full aspect-[16/10] md:aspect-[21/9] lg:aspect-[16/9] rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.15)] group">
+                <ImageWithSkeleton
+                  src="/images/corporate_exec.webp"
+                  alt="Corporate Executive Travel precision in motion"
+                  fill
+                  className="object-cover object-top hover:scale-105 transition-transform duration-[1500ms] ease-out"
+                  skeletonClassName="bg-gray-100"
+                  sizes="(max-width: 1024px) 100vw, 60vw"
+                />
+              </div>
+              <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-2xl shadow-xl border border-gray-100 max-w-xs hidden md:block">
+                <p className="text-deep-navy font-bold text-sm tracking-wide mb-1">Unmatched Efficiency</p>
+                <p className="text-gray-500 text-xs leading-relaxed">Streamlined itineraries designed entirely around your executive priorities.</p>
+              </div>
+            </div>
           </div>
 
           {/* 4 Pillar Cards - Light Theme */}
@@ -118,10 +138,10 @@ export default function CorporateWhy() {
             {/* Airplane Wing Image */}
             <div className="absolute inset-0">
               <ImageWithSkeleton
-                src="/images/corporate_airplane_wing.webp"
-                alt="Business travel at sunrise"
+                src="/images/corporate_team.webp"
+                alt="Corporate Retreat and Team Meeting Overlooking the Ocean"
                 fill
-                className="object-cover object-center"
+                className="object-cover object-[center_30%]"
                 skeletonClassName="skeleton-shimmer-dark"
                 sizes="100vw"
               />
