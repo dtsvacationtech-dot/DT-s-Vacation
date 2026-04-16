@@ -63,10 +63,10 @@ export default function Navbar() {
               alt="DT's Vacation & Travel Ltd."
               width={240}
               height={240}
-              className={`h-20 md:h-24 lg:h-28 w-auto object-contain transition-all duration-500 drop-shadow-[0_2px_10px_rgba(0,0,0,0.4)] ${
+              className={`w-auto object-contain transition-all duration-500 max-w-full drop-shadow-[0_2px_10px_rgba(0,0,0,0.4)] ${
                 isScrolled || isMobileMenuOpen 
-                  ? "drop-shadow-[0_2px_15px_rgba(0,0,0,0.6)]" 
-                  : ""
+                  ? "h-14 md:h-16 lg:h-20 drop-shadow-[0_2px_15px_rgba(0,0,0,0.6)]" 
+                  : "h-20 md:h-24 lg:h-28"
               }`}
               priority
             />
