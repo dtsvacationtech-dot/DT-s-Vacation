@@ -12,8 +12,7 @@ export const metadata: Metadata = {
 
 export default function WeddingPage() {
   return (
-    <main className="bg-[#fdf9f5] overflow-hidden min-h-screen flex flex-col">
-      <WeddingHero />
+    <main className="bg-[#fdf9f5] overflow-hidden min-h-screen flex flex-col pt-32">
       <WeddingWhy />
       <WeddingDifference />
       <WeddingCTA />

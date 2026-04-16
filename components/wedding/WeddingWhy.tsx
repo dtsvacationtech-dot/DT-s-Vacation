@@ -38,25 +38,29 @@ export default function WeddingWhy() {
           <div className="lg:col-span-5">
             <div className="flex items-center gap-4 mb-5">
               <div className="w-8 h-[1px] bg-[#d4a87a]" />
-              <p className="text-[#d4a87a] text-[10px] font-bold uppercase tracking-[0.4em]">
-                Why Trust Us
+              <p className="text-[#d4a87a] text-[10px] md:text-xs font-bold uppercase tracking-[0.35em]">
+                The Wedding Suite
               </p>
             </div>
-            <h2 className="text-4xl md:text-5xl font-heading font-bold text-[#3d2314] tracking-tight leading-tight mb-8">
-              Why Trust Us With
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-heading font-extrabold text-[#3d2314] tracking-tight leading-[1.05] mb-6">
+              A Journey as Unique
               <br />
-              <span className="text-[#c07a40]">Your Big Moment?</span>
+              <span className="text-[#c07a40]">as Your Bond.</span>
+            </h1>
+            <p className="text-[#7a5c44] text-lg font-light leading-relaxed mb-8">
+              Your wedding or honeymoon isn&apos;t just an event — it&apos;s the beginning of a
+              lifelong adventure. You deserve a planner who is as passionate and loving
+              as the occasion itself.
+            </p>
+            
+            <h2 className="text-2xl font-heading font-bold text-[#3d2314] mb-4">
+              Why trust us with your Big Moment?
             </h2>
             <p className="text-[#7a5c44] text-lg font-light leading-relaxed mb-6">
               At DT&apos;s Vacation &amp; Travel Ltd., we don&apos;t just book destinations
               — we curate the backdrop for your most cherished memories with a
-              caring and gentle touch.
-            </p>
-            <p className="text-[#7a5c44] text-lg font-light leading-relaxed">
-              From bold destination weddings to gentle, quiet honeymoon escapes,
-              we are{" "}
-              <span className="text-[#c07a40] font-medium">persistent in our pursuit</span>{" "}
-              of your perfection.
+              caring and gentle touch. From bold destination weddings to gentle, quiet honeymoon escapes,
+              we are <span className="text-[#c07a40] font-medium">persistent in our pursuit</span> of your perfection.
             </p>
           </div>
 
