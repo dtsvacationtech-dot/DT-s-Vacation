@@ -92,9 +92,9 @@ export default function CorporateWhy() {
               <div className="relative w-full aspect-[16/10] md:aspect-[21/9] lg:aspect-[16/9] rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.15)] group">
                 <ImageWithSkeleton
                   src="/images/corporate_exec.webp"
-                  alt="Corporate Executive Travel precision in motion"
+                  alt="Business partners celebrating successful corporate collaboration"
                   fill
-                  className="object-cover object-top hover:scale-105 transition-transform duration-[1500ms] ease-out"
+                  className="object-cover object-center hover:scale-105 transition-transform duration-[1500ms] ease-out"
                   skeletonClassName="bg-gray-100"
                   sizes="(max-width: 1024px) 100vw, 60vw"
                 />

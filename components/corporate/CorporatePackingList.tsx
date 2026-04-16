@@ -91,7 +91,7 @@ export default function CorporatePackingList() {
             <div className="hidden lg:block relative w-full aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl mt-12 bg-gray-100 group">
               <img 
                 src="/images/corporate_luggage.webp" 
-                alt="Premium corporate travel luggage in an exclusive airport lounge"
+                alt="Luxury corporate retreat destination with stunning mountain views"
                 className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-[2000ms] ease-out"
               />
               {/* Optional soft gradient overlay for text readability if we add text later, or just a polish */}
