@@ -12,9 +12,9 @@ export default function Footer() {
             <Image
               src="/images/logo.webp"
               alt="DT's Vacation & Travel Ltd."
-              width={160}
-              height={160}
-              className="h-16 w-auto object-contain"
+              width={240}
+              height={240}
+              className="h-24 md:h-28 w-auto object-contain drop-shadow-[0_2px_15px_rgba(0,0,0,0.6)]"
             />
           </Link>
           <p className="text-gray-500 font-light leading-relaxed italic mb-8 max-w-md">
