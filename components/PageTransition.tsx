@@ -1,49 +1,36 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function PageTransition({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const [displayChildren, setDisplayChildren] = useState(children);
-  const [stage, setStage] = useState<"idle" | "out" | "in">("idle");
-  const prevPathname = useRef(pathname);
+  const [stage, setStage] = useState<"out" | "in">("out");
 
   useEffect(() => {
-    if (prevPathname.current === pathname) {
-      // First render — fade in
-      setStage("in");
-      return;
-    }
-
-    // Route changed: play out → swap content → play in
+    // When route changes, immediately hide content
     setStage("out");
+    
+    // Wait a brief moment for DOM to update with new route content,
+    // then trigger the fade-in animation
     const timer = setTimeout(() => {
-      prevPathname.current = pathname;
-      setDisplayChildren(children);
-      setStage("in");
-    }, 300); // matches CSS transition duration
+      requestAnimationFrame(() => {
+        setStage("in");
+      });
+    }, 50);
 
     return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
-
-  // When children content changes during "in" stage, update display
-  useEffect(() => {
-    if (stage === "idle" || stage === "in") {
-      setDisplayChildren(children);
-    }
-  }, [children, stage]);
 
   return (
     <div
-      className="transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]"
+      className="transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]"
       style={{
         opacity: stage === "out" ? 0 : 1,
         transform: stage === "out" ? "translateY(12px)" : "translateY(0px)",
       }}
     >
-      {displayChildren}
+      {children}
     </div>
   );
 }
