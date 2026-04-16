@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -9,18 +9,16 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0, opacity: 0 });
-  const navRef = useRef<HTMLDivElement>(null);
+  const navContainerRef = useRef<HTMLDivElement>(null);
+  const linkRefs = useRef<Map<string, HTMLAnchorElement | null>>(new Map());
   const pathname = usePathname();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu on resize to desktop
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1024) setIsMobileMenuOpen(false);
@@ -29,13 +27,8 @@ export default function Navbar() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Prevent body scroll when mobile menu is open
   useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    document.body.style.overflow = isMobileMenuOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [isMobileMenuOpen]);
 
@@ -54,22 +47,22 @@ export default function Navbar() {
     { label: "About", href: "/about" },
   ];
 
-  // Determine the active link based on pathname
-  const getActivePath = () => {
+  // Determine active link key
+  const getActiveHref = () => {
     if (pathname === "/corporate") return "/corporate";
     if (pathname === "/about") return "/about";
     if (pathname === "/contact") return "/contact";
-    return "/"; // Home and all anchor links map to Home
+    return "/";
   };
-  const activePath = getActivePath();
+  const activeHref = getActiveHref();
 
-  // Slide the gold underline indicator to the active nav item
-  useEffect(() => {
-    if (!navRef.current) return;
-    const activeEl = navRef.current.querySelector<HTMLElement>("[data-active='true']");
-    if (activeEl) {
-      const parentRect = navRef.current.getBoundingClientRect();
-      const rect = activeEl.getBoundingClientRect();
+  // Update sliding indicator whenever active link or scroll state changes
+  const updateIndicator = useCallback(() => {
+    const el = linkRefs.current.get(activeHref);
+    const container = navContainerRef.current;
+    if (el && container) {
+      const parentRect = container.getBoundingClientRect();
+      const rect = el.getBoundingClientRect();
       setIndicatorStyle({
         left: rect.left - parentRect.left,
         width: rect.width,
@@ -78,7 +71,20 @@ export default function Navbar() {
     } else {
       setIndicatorStyle((prev) => ({ ...prev, opacity: 0 }));
     }
-  }, [pathname, isScrolled]);
+  }, [activeHref]);
+
+  useEffect(() => {
+    // Run immediately and also after a frame to handle layout shifts
+    updateIndicator();
+    const raf = requestAnimationFrame(updateIndicator);
+    return () => cancelAnimationFrame(raf);
+  }, [updateIndicator, isScrolled]);
+
+  // Recalculate on resize
+  useEffect(() => {
+    window.addEventListener("resize", updateIndicator);
+    return () => window.removeEventListener("resize", updateIndicator);
+  }, [updateIndicator]);
 
   return (
     <>
@@ -107,34 +113,35 @@ export default function Navbar() {
             />
           </Link>
 
-          {/* Center Links (Desktop) — with sliding gold indicator */}
-          <div ref={navRef} className="hidden lg:flex items-center space-x-10 relative">
-            {/* Animated gold underline */}
+          {/* Desktop Nav Links */}
+          <div ref={navContainerRef} className="hidden lg:flex items-center space-x-10 relative">
+            {/* Animated gold underline — slides smoothly between nav items */}
             <span
               aria-hidden
-              className="absolute bottom-[-6px] h-[2px] bg-tropical-gold rounded-full transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
+              className="absolute -bottom-1.5 h-[2px] bg-tropical-gold rounded-full pointer-events-none"
               style={{
                 left: indicatorStyle.left,
                 width: indicatorStyle.width,
                 opacity: indicatorStyle.opacity,
+                transition: "left 400ms cubic-bezier(0.34,1.56,0.64,1), width 400ms cubic-bezier(0.34,1.56,0.64,1), opacity 200ms ease",
               }}
             />
 
             {navLinks.map((item) => {
-              const isActive = item.href === activePath;
+              const isActive = item.href === activeHref;
               return (
                 <Link
                   key={item.label}
                   href={item.href}
-                  data-active={isActive ? "true" : undefined}
-                  className={`relative text-sm font-medium tracking-wide transition-all duration-300 pb-1.5 group ${
+                  ref={(el) => { linkRefs.current.set(item.href, el); }}
+                  className={`relative text-sm tracking-wide transition-all duration-300 pb-1.5 ${
                     isActive
                       ? isScrolled
-                        ? "text-deep-navy font-semibold"
-                        : "text-white font-semibold"
+                        ? "text-deep-navy font-bold"
+                        : "text-white font-bold"
                       : isScrolled
-                        ? "text-gray-500 hover:text-deep-navy"
-                        : "text-white/75 hover:text-white"
+                        ? "text-gray-500 hover:text-deep-navy font-medium"
+                        : "text-white/70 hover:text-white font-medium"
                   }`}
                 >
                   {item.label}
@@ -147,7 +154,9 @@ export default function Navbar() {
           <div className="flex items-center space-x-4 md:space-x-6">
             <button
               aria-label="Search"
-              className={`transition-colors duration-300 ${isScrolled || isMobileMenuOpen ? "text-deep-navy hover:text-tropical-gold" : "text-white hover:text-tropical-gold"}`}
+              className={`transition-colors duration-300 ${
+                isScrolled || isMobileMenuOpen ? "text-deep-navy hover:text-tropical-gold" : "text-white hover:text-tropical-gold"
+              }`}
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -155,35 +164,36 @@ export default function Navbar() {
             </button>
             <button
               aria-label="User Account"
-              className={`hidden md:block transition-colors duration-300 ${isScrolled || isMobileMenuOpen ? "text-deep-navy hover:text-tropical-gold" : "text-white hover:text-tropical-gold"}`}
+              className={`hidden md:block transition-colors duration-300 ${
+                isScrolled || isMobileMenuOpen ? "text-deep-navy hover:text-tropical-gold" : "text-white hover:text-tropical-gold"
+              }`}
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
               </svg>
             </button>
 
-            {/* Hamburger Menu (Mobile) */}
+            {/* Hamburger (Mobile) */}
             <button
               aria-label="Menu"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`lg:hidden transition-colors duration-300 ${isScrolled || isMobileMenuOpen ? "text-deep-navy" : "text-white"}`}
+              className={`lg:hidden transition-colors duration-300 ${
+                isScrolled || isMobileMenuOpen ? "text-deep-navy" : "text-white"
+              }`}
             >
-              {isMobileMenuOpen ? (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {isMobileMenuOpen ? (
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                ) : (
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              )}
+                )}
+              </svg>
             </button>
           </div>
-
         </div>
       </nav>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu */}
       <div
         className={`fixed inset-0 z-40 bg-white/95 backdrop-blur-2xl transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] lg:hidden ${
           isMobileMenuOpen
@@ -191,9 +201,9 @@ export default function Navbar() {
             : "opacity-0 -translate-y-full pointer-events-none"
         }`}
       >
-        <div className="flex flex-col items-center justify-center h-full gap-4 pt-20 px-8">
+        <div className="flex flex-col items-center justify-center h-full gap-3 pt-20 px-8">
           {navLinks.map((item, index) => {
-            const isActive = item.href === activePath;
+            const isActive = item.href === activeHref;
             return (
               <Link
                 key={item.label}
@@ -206,8 +216,6 @@ export default function Navbar() {
                 }`}
                 style={{
                   transitionDelay: isMobileMenuOpen ? `${index * 60}ms` : "0ms",
-                  transform: isMobileMenuOpen ? "translateY(0)" : "translateY(16px)",
-                  opacity: isMobileMenuOpen ? 1 : 0,
                 }}
               >
                 <span className="flex items-center justify-center gap-3">
@@ -220,7 +228,7 @@ export default function Navbar() {
             );
           })}
 
-          <div className="mt-8 pt-8 border-t border-gray-100 w-full max-w-sm flex items-center justify-center gap-6">
+          <div className="mt-8 pt-8 border-t border-gray-100 w-full max-w-sm flex justify-center">
             <a
               href="tel:8768569812"
               className="flex items-center gap-2 text-gray-500 hover:text-tropical-gold transition-colors"
