@@ -2,7 +2,7 @@ export default function CorporateCTA() {
   return (
     <div className="bg-[#faf9f8]">
       {/* ── Our Promise Section ── */}
-      <section className="py-20 lg:py-32 px-6 lg:px-16 text-center max-w-[1200px] mx-auto">
+      <section className="pt-8 pb-20 lg:pt-10 lg:pb-32 px-6 lg:px-16 text-center max-w-[1200px] mx-auto">
         <p className="text-tropical-gold text-xs font-bold uppercase tracking-[0.4em] mb-6">
           Our Promise
         </p>
