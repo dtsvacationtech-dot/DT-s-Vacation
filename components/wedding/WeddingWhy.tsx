@@ -85,22 +85,29 @@ export default function WeddingWhy() {
           </div>
         </div>
 
-        {/* ── 4 Pillars ── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-24">
+        {/* ── 4 Pillars (Premium iOS Cards) ── */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
           {pillars.map((p, i) => (
             <div
               key={i}
-              className="group bg-white rounded-2xl p-8 lg:p-10 border border-[#f0ddc8] hover:border-[#d4a87a]/40 hover:shadow-[0_8px_30px_rgba(180,120,60,0.12)] hover:-translate-y-1 transition-all duration-500"
+              className="group relative bg-white rounded-[2rem] p-8 lg:p-10 border border-[#f0ddc8]/60 shadow-[0_20px_40px_-15px_rgba(180,120,60,0.08)] hover:shadow-[0_30px_60px_-15px_rgba(180,120,60,0.15)] hover:-translate-y-1.5 transition-all duration-500 overflow-hidden"
             >
-              <div className="flex items-start gap-5">
-                <div className="w-14 h-14 flex-shrink-0 rounded-2xl bg-[#fdf0e0] border border-[#f0ddc8] flex items-center justify-center text-2xl group-hover:bg-[#d4a87a]/20 transition-colors duration-300">
+              {/* Subtle ambient interior glow */}
+              <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-[#fdf0e0]/50 to-transparent rounded-full blur-3xl -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              
+              <div className="flex flex-col sm:flex-row items-start gap-6">
+                {/* Floating Circular Badge */}
+                <div className="w-16 h-16 flex-shrink-0 rounded-full bg-gradient-to-br from-white to-[#fdf9f5] border border-[#f0ddc8] shadow-[0_8px_16px_-6px_rgba(180,120,60,0.2)] flex items-center justify-center text-2xl group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 z-10 relative">
                   {p.icon}
+                  {/* Small glow behind icon */}
+                  <div className="absolute inset-0 bg-[#d4a87a] blur-xl opacity-0 group-hover:opacity-20 rounded-full transition-opacity duration-500 -z-10" />
                 </div>
-                <div>
-                  <h3 className="text-xl font-heading font-bold text-[#3d2314] mb-3 tracking-wide">
+                
+                <div className="z-10 relative pt-1">
+                  <h3 className="text-xl md:text-2xl font-heading font-extrabold text-[#3d2314] mb-3 tracking-tight group-hover:text-[#c07a40] transition-colors duration-300">
                     {p.title}
                   </h3>
-                  <p className="text-[#7a5c44] font-light leading-relaxed">
+                  <p className="text-[#7a5c44]/90 font-light leading-relaxed text-[15px] md:text-base">
                     {p.description}
                   </p>
                 </div>
