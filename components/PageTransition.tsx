@@ -24,10 +24,10 @@ export default function PageTransition({ children }: { children: React.ReactNode
 
   return (
     <div
-      className="transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]"
+      className="transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
       style={{
         opacity: stage === "out" ? 0 : 1,
-        transform: stage === "out" ? "translateY(12px)" : "translateY(0px)",
+        transform: stage === "out" ? "translateY(8px)" : "translateY(0px)",
       }}
     >
       {children}

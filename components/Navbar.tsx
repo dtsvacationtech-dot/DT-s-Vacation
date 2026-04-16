@@ -124,7 +124,7 @@ export default function Navbar() {
                 left: indicatorStyle.left,
                 width: indicatorStyle.width,
                 opacity: indicatorStyle.opacity,
-                transition: "left 400ms cubic-bezier(0.34,1.56,0.64,1), width 400ms cubic-bezier(0.34,1.56,0.64,1), opacity 200ms ease",
+                transition: "left 500ms cubic-bezier(0.22, 1, 0.36, 1), width 500ms cubic-bezier(0.22, 1, 0.36, 1), opacity 300ms ease",
               }}
             />
 
