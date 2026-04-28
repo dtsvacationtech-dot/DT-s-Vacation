@@ -2,6 +2,7 @@
 
 import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
 import { useState } from "react";
+import Link from "next/link";
 
 type Tour = {
   id: number;
@@ -115,9 +116,10 @@ export default function ToursShowcase() {
         <div className="flex flex-col md:flex-row w-full min-h-[600px] md:h-[600px] gap-4 md:gap-6">
           
           {tours.map((tour, index) => (
-            <div 
+            <Link 
+              href="/tours"
               key={tour.id}
-              className="relative flex-1 min-h-[200px] rounded-[2rem] md:rounded-[3rem] overflow-hidden group cursor-pointer transition-all duration-[800ms] ease-[cubic-bezier(0.25,1,0.5,1)] md:hover:flex-[1.5] opacity-0 animate-[fade-in-up_0.8s_ease-out_forwards]"
+              className="relative flex-1 min-h-[200px] rounded-[2rem] md:rounded-[3rem] overflow-hidden group cursor-pointer transition-all duration-[800ms] ease-[cubic-bezier(0.25,1,0.5,1)] md:hover:flex-[1.5] opacity-0 animate-[fade-in-up_0.8s_ease-out_forwards] block"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               {/* Background Image */}
@@ -157,7 +159,7 @@ export default function ToursShowcase() {
                 </div>
               </div>
 
-            </div>
+            </Link>
           ))}
 
         </div>

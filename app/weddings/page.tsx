@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import WeddingHero from "@/components/wedding/WeddingHero";
 import WeddingWhy from "@/components/wedding/WeddingWhy";
 import WeddingDifference from "@/components/wedding/WeddingDifference";
 import WeddingCTA from "@/components/wedding/WeddingCTA";
+
 
 export const metadata: Metadata = {
   title: "The Wedding Suite | DT's Vacation & Travel Limited",

@@ -1,6 +1,7 @@
 "use client";
 
 import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
+import Link from "next/link";
 
 const hotels = [
   {
@@ -87,7 +88,7 @@ const stats = [
 
 export default function ServiceCards() {
   return (
-    <section className="py-24 bg-white overflow-hidden" id="hotels">
+    <section className="pt-24 pb-12 bg-white overflow-hidden" id="hotels">
       <div className="max-w-[1600px] mx-auto px-6 lg:px-16">
 
         {/* ── Section Header ── */}
@@ -142,11 +143,12 @@ export default function ServiceCards() {
         </div>
 
         {/* ── Hotel Cards Grid ── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {hotels.map((hotel) => (
-            <div
+            <Link
+              href="/hotels"
               key={hotel.id}
-              className="group relative bg-[#faf9f8] rounded-[2rem] overflow-hidden shadow-glass hover:shadow-2xl transition-all duration-500 ease-out flex flex-col cursor-pointer border border-gray-100"
+              className="group relative bg-[#faf9f8] rounded-[2rem] overflow-hidden shadow-glass hover:shadow-2xl transition-all duration-500 ease-out flex flex-col cursor-pointer border border-gray-100 block"
             >
               {/* DT's Pick badge */}
               {hotel.badge && (
@@ -202,20 +204,12 @@ export default function ServiceCards() {
                   <span className="text-sm leading-relaxed">{hotel.location}</span>
                 </div>
 
-                <div className="mt-auto pt-6 border-t border-gray-100 flex items-end justify-between">
-                  <div>
-                    <span className="text-xs font-bold text-gray-400 uppercase tracking-wider block mb-1">
-                      Rates starting from
-                    </span>
-                    <div className="flex items-baseline gap-1">
-                      <span className="text-lg font-bold text-deep-navy">US$</span>
-                      <span className="text-3xl font-extrabold text-deep-navy">
-                        {hotel.price}
-                      </span>
-                    </div>
-                  </div>
+                <div className="mt-auto pt-6 border-t border-gray-100 flex items-center justify-between">
+                  <span className="text-sm font-bold text-tropical-gold uppercase tracking-widest group-hover:text-deep-navy transition-colors">
+                    Explore Hotel
+                  </span>
 
-                  <button
+                  <div
                     className="w-12 h-12 rounded-full bg-[#faf9f8] flex items-center justify-center text-deep-navy group-hover:bg-deep-navy group-hover:text-white transition-colors duration-300 shadow-sm"
                     aria-label={`View ${hotel.name}`}
                   >
@@ -232,10 +226,10 @@ export default function ServiceCards() {
                         d="M14 5l7 7m0 0l-7 7m7-7H3"
                       />
                     </svg>
-                  </button>
+                  </div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

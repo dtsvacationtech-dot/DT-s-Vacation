@@ -1,6 +1,10 @@
+"use client";
+
 import Image from "next/image";
+import { useEnquiry } from "@/context/EnquiryContext";
 
 export default function WeddingWhy() {
+  const { openModal } = useEnquiry();
   return (
     <section className="bg-[#fdf9f5]">
       {/* ── Hero Intro Section ── */}
@@ -180,15 +184,16 @@ export default function WeddingWhy() {
                 start to your forever.&rdquo;
               </p>
             </div>
-            <a
-              href="mailto:dtvacationandtravel@gmail.com?subject=Wedding Planning Enquiry"
-              className="flex-shrink-0 inline-flex items-center gap-3 bg-[#d4a87a] text-[#1a0a06] font-bold px-7 py-4 rounded-full hover:bg-[#f0c89a] transition-all duration-300 shadow-xl text-sm uppercase tracking-wider whitespace-nowrap"
+            <button
+              onClick={() => openModal("wedding")}
+              className="cursor-pointer flex-shrink-0 inline-flex items-center gap-3 bg-[#d4a87a] text-[#1a0a06] font-bold px-7 py-4 rounded-full hover:bg-[#f0c89a] transition-all duration-300 shadow-xl text-sm uppercase tracking-wider whitespace-nowrap"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                <circle cx="12" cy="16" r="5" strokeWidth={2} />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.5l-2.5 4h5l-2.5-4zM12 4.5v-2m-3 3l-1.5-1.5m7.5 1.5l1.5-1.5" />
               </svg>
               Start Planning
-            </a>
+            </button>
           </div>
         </div>
       </div>

@@ -7,7 +7,7 @@ export const heroSlides = [
     cardTitle: "Hotels",
     image: "/images/hero_hotels.webp",
     ctaText: "Discover Hotels",
-    ctaLink: "#hotels",
+    ctaLink: "/hotels",
   },
   {
     id: 2,
@@ -17,7 +17,7 @@ export const heroSlides = [
     cardTitle: "Corporate",
     image: "/images/hero_corporate.webp",
     ctaText: "Plan a Retreat",
-    ctaLink: "#corporate",
+    ctaLink: "/corporate",
   },
   {
     id: 3,
@@ -27,7 +27,7 @@ export const heroSlides = [
     cardTitle: "Weddings",
     image: "/images/hero_weddings.webp",
     ctaText: "Start Planning",
-    ctaLink: "#weddings",
+    ctaLink: "/weddings",
   },
   {
     id: 4,
@@ -37,7 +37,7 @@ export const heroSlides = [
     cardTitle: "Cruises",
     image: "/images/hero_cruises.webp",
     ctaText: "View Voyages",
-    ctaLink: "#cruises",
+    ctaLink: "/cruises",
   },
   {
     id: 5,
@@ -45,9 +45,9 @@ export const heroSlides = [
     title: "Explore the Unknown Wonders",
     description: "Venture deep into lush jungles, hidden waterfalls, and rich historical cultures. Premium guided excursions designed for the perfect balance of thrill and luxury.",
     cardTitle: "Tours",
-    image: "/images/hero_tours.webp",
+    image: "https://images.unsplash.com/photo-1598284533036-6e4cd91de43c?q=80&w=2674&auto=format&fit=crop",
     ctaText: "Find an Adventure",
-    ctaLink: "#tours",
+    ctaLink: "/tours",
   }
 ];
 

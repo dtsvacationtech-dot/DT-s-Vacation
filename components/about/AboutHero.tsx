@@ -4,15 +4,15 @@ import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
 
 export default function AboutHero() {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-deep-navy pt-28 pb-20">
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-deep-navy pt-36 md:pt-48 pb-24">
       {/* Background Radial Glow */}
       <div className="absolute top-[-10%] lg:top-[10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-blue-500/10 blur-[120px] pointer-events-none" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] rounded-full bg-tropical-gold/5 blur-[150px] pointer-events-none" />
 
-      <div className="max-w-[1600px] mx-auto w-full px-6 md:px-12 lg:px-16 grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+      <div className="max-w-[1600px] mx-auto w-full px-6 md:px-12 lg:px-16 grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
 
         {/* LEFT: Biographical Text Content */}
-        <div className="lg:col-span-6 z-10 order-2 lg:order-1 pt-8 lg:pt-0">
+        <div className="lg:col-span-6 z-10 order-2 lg:order-1">
 
           <div className="flex items-center gap-4 mb-6">
             <div className="w-8 h-[1px] bg-tropical-gold" />

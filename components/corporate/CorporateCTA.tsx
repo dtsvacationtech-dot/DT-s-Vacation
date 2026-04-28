@@ -1,4 +1,11 @@
+"use client";
+
+import { useEnquiry } from "@/context/EnquiryContext";
+import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
+
 export default function CorporateCTA() {
+  const { openModal } = useEnquiry();
+
   return (
     <div className="bg-[#faf9f8]">
       {/* ── Our Promise Section ── */}
@@ -44,21 +51,23 @@ export default function CorporateCTA() {
               takes to build a travel system that works.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
-              <a
-                href="mailto:dtvacationandtravel@gmail.com?subject=Corporate Consultation Request"
-                className="inline-flex items-center justify-center gap-3 bg-tropical-gold text-deep-navy font-bold px-8 py-4 lg:px-10 lg:py-5 rounded-full hover:bg-yellow-300 transition-all duration-300 shadow-xl shadow-tropical-gold/20 text-sm uppercase tracking-wider w-full sm:w-auto"
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-3xl mx-auto">
+              <button
+                onClick={() => openModal("corporate")}
+                className="cursor-pointer flex items-center justify-center gap-3 bg-tropical-gold text-deep-navy font-bold py-4 px-8 rounded-full hover:bg-yellow-300 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 shadow-[0_8px_30px_rgba(235,180,0,0.2)] text-sm uppercase tracking-wider w-full sm:flex-1 whitespace-nowrap"
               >
-                <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
                 Request Consultation
-              </a>
+              </button>
               <a
-                href="tel:8768569812"
-                className="inline-flex items-center justify-center gap-3 bg-white/5 backdrop-blur-sm border border-white/10 text-white font-bold px-8 py-4 lg:px-10 lg:py-5 rounded-full hover:bg-white/10 hover:border-white/20 transition-all duration-300 text-sm uppercase tracking-wider w-full sm:w-auto"
+                href="https://wa.me/18768569812"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="cursor-pointer flex items-center justify-center gap-3 bg-white/5 backdrop-blur-md border border-white/20 text-white font-bold py-4 px-8 rounded-full hover:bg-white/10 hover:border-white/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 text-sm uppercase tracking-wider w-full sm:flex-1 whitespace-nowrap"
               >
-                <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
                 (876) 856-9812

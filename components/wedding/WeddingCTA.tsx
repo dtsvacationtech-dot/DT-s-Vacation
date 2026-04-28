@@ -1,4 +1,10 @@
+"use client";
+
+import { useEnquiry } from "@/context/EnquiryContext";
+
 export default function WeddingCTA() {
+  const { openModal } = useEnquiry();
+
   return (
     <section className="bg-[#fdf9f5] px-4 md:px-8 lg:px-16 pb-24">
       <div className="max-w-[1400px] mx-auto rounded-[2.5rem] lg:rounded-[3rem] p-10 md:p-16 lg:p-24 text-center relative overflow-hidden border border-[#d4a87a]/20 shadow-[0_40px_80px_rgba(180,120,60,0.12)] bg-gradient-to-br from-[#3d2314] via-[#5a3220] to-[#1a0a06]">
@@ -25,21 +31,24 @@ export default function WeddingCTA() {
             One conversation is all it takes to turn your dream wedding into an
             intentional, beautifully orchestrated reality.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
-            <a
-              href="mailto:dtvacationandtravel@gmail.com?subject=Wedding Planning Enquiry"
-              className="inline-flex items-center justify-center gap-3 bg-[#d4a87a] text-[#1a0a06] font-bold px-8 py-4 lg:px-10 lg:py-5 rounded-full hover:bg-[#f0c89a] transition-all duration-300 shadow-xl text-sm uppercase tracking-wider w-full sm:w-auto"
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-3xl mx-auto">
+            <button
+              onClick={() => openModal("wedding")}
+              className="cursor-pointer flex items-center justify-center gap-3 bg-[#d4a87a] text-[#1a0a06] font-bold py-4 px-8 rounded-full hover:bg-[#f0c89a] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 shadow-[0_8px_30px_rgba(212,168,122,0.2)] text-sm uppercase tracking-wider w-full sm:flex-1 whitespace-nowrap"
             >
-              <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <circle cx="12" cy="16" r="5" strokeWidth={2} />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.5l-2.5 4h5l-2.5-4zM12 4.5v-2m-3 3l-1.5-1.5m7.5 1.5l1.5-1.5" />
               </svg>
-              Start Planning Your Dream Wedding
-            </a>
+              Start Planning
+            </button>
             <a
-              href="tel:8768569812"
-              className="inline-flex items-center justify-center gap-3 bg-white/5 border border-white/10 text-white font-bold px-8 py-4 lg:px-10 lg:py-5 rounded-full hover:bg-white/10 hover:border-white/20 transition-all duration-300 text-sm uppercase tracking-wider w-full sm:w-auto"
+              href="https://wa.me/18768569812"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cursor-pointer flex items-center justify-center gap-3 bg-white/5 backdrop-blur-md border border-white/20 text-white font-bold py-4 px-8 rounded-full hover:bg-white/10 hover:border-white/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 text-sm uppercase tracking-wider w-full sm:flex-1 whitespace-nowrap"
             >
-              <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
               </svg>
               (876) 856-9812

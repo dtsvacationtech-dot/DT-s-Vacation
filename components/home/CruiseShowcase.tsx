@@ -1,4 +1,5 @@
 import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
+import Link from "next/link";
 
 export default function CruiseShowcase() {
   // Data derived from the official Wix content
@@ -68,14 +69,17 @@ export default function CruiseShowcase() {
 
         {/* Action Button */}
         <div className="mt-12 md:mt-16 flex justify-center">
-          <button className="group relative overflow-hidden bg-deep-navy text-white px-10 py-4 rounded-full font-bold shadow-[0_10px_30px_rgba(0,20,49,0.2)] hover:bg-tropical-gold hover:shadow-[0_10px_40px_rgba(235,180,0,0.3)] hover:-translate-y-1 transition-all duration-300">
+          <Link 
+            href="/cruises"
+            className="group relative overflow-hidden bg-deep-navy text-white px-10 py-4 rounded-full font-bold shadow-[0_10px_30px_rgba(0,20,49,0.2)] hover:bg-tropical-gold hover:shadow-[0_10px_40px_rgba(235,180,0,0.3)] hover:-translate-y-1 transition-all duration-300 cursor-pointer inline-block"
+          >
             <span className="relative z-10 flex items-center gap-2">
               EXPLORE CRUISES
               <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </span>
-          </button>
+          </Link>
         </div>
 
       </div>

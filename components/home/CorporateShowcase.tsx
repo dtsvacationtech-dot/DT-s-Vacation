@@ -1,9 +1,14 @@
+"use client";
+
 import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
 import Link from "next/link";
+import { useEnquiry } from "@/context/EnquiryContext";
 
 export default function CorporateShowcase() {
+  const { openModal } = useEnquiry();
+
   return (
-    <section className="py-24 bg-white" id="corporate">
+    <section className="pt-12 pb-24 bg-white" id="corporate">
       <div className="max-w-[1600px] mx-auto px-6 lg:px-16">
         
         {/* Premium Corporate Split Card */}
@@ -48,15 +53,15 @@ export default function CorporateShowcase() {
             </div>
 
             <div className="mt-14 flex flex-col sm:flex-row gap-4">
-              <Link
-                href="/corporate"
-                className="inline-flex items-center gap-2 bg-tropical-gold text-deep-navy px-8 py-4 rounded-full font-bold hover:bg-white hover:scale-105 transition-all duration-300 shadow-xl shadow-black/20"
+              <button
+                onClick={() => openModal("corporate")}
+                className="inline-flex items-center justify-center gap-2 bg-tropical-gold text-deep-navy px-8 py-4 rounded-full font-bold hover:bg-white hover:scale-105 transition-all duration-300 shadow-xl shadow-black/20 cursor-pointer"
               >
                 Plan Your Event
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
-              </Link>
+              </button>
               <Link
                 href="/corporate"
                 className="inline-flex items-center gap-2 border border-white/20 text-white px-8 py-4 rounded-full font-bold hover:bg-white/10 transition-all duration-300 text-sm"

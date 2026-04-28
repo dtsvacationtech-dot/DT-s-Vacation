@@ -130,3 +130,17 @@ h1, h2, h3, h4, h5, h6 {
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
+
+/* ── Enquiry Modal Animations ── */
+@keyframes slide-up {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+@keyframes scale-in {
+  from { transform: scale(0.94); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+.animate-slide-up { animation: slide-up 0.42s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+.animate-scale-in { animation: scale-in 0.35s cubic-bezier(0.25, 1, 0.5, 1) forwards; }

@@ -6,6 +6,8 @@ import ChatWidget from "@/components/ChatWidget";
 import NewsletterModal from "@/components/home/NewsletterModal";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
+import { EnquiryProvider } from "@/context/EnquiryContext";
+import GlobalEnquiryModal from "@/components/ui/GlobalEnquiryModal";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -32,14 +34,17 @@ export default function RootLayout({
       lang="en"
       className={`${montserrat.variable} ${openSans.variable} scroll-smooth`}
     >
-      <body className="min-h-screen flex flex-col font-body antialiased bg-[#000814] text-white">
-        <Navbar />
-        <main className="flex-grow">
-          <PageTransition>{children}</PageTransition>
-        </main>
-        <Footer />
-        <NewsletterModal />
-        <ChatWidget />
+      <body className="min-h-screen flex flex-col font-body antialiased bg-[#000814] text-white overflow-x-hidden w-full">
+        <EnquiryProvider>
+          <Navbar />
+          <main className="flex-grow">
+            <PageTransition>{children}</PageTransition>
+          </main>
+          <Footer />
+          <NewsletterModal />
+          <ChatWidget />
+          <GlobalEnquiryModal />
+        </EnquiryProvider>
       </body>
     </html>
   );

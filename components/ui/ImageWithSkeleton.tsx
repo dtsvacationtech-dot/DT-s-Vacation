@@ -33,8 +33,8 @@ export default function ImageWithSkeleton({
       {/* Actual Image (fades in once loaded) */}
       <Image
         {...props}
-        className={`${className} transition-opacity duration-700 ease-out ${
-          isLoaded ? "opacity-100" : "opacity-0"
+        className={`${className} transition-all duration-700 ease-out ${
+          !isLoaded ? "!opacity-0" : ""
         }`}
         onLoad={(e) => {
           setIsLoaded(true);

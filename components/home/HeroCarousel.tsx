@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { heroSlides } from "@/lib/mockData";
 import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
+import Link from "next/link";
 
 export default function HeroCarousel() {
   const [current, setCurrent] = useState(0);
@@ -81,14 +82,12 @@ export default function HeroCarousel() {
               </p>
               
               <div className="flex items-center gap-5">
-                <button aria-label="Favorite" className="group p-2.5 border border-tropical-gold/30 rounded-full hover:bg-tropical-gold/10 hover:border-tropical-gold transition-all duration-300 backdrop-blur-md">
-                  <svg className="w-6 h-6 text-tropical-gold group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                  </svg>
-                </button>
-                <button className="bg-white/10 hover:bg-white text-white hover:text-[#000c1c] shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] backdrop-blur-md border border-white/20 font-bold py-3 px-8 rounded-full transition-all duration-500 text-base">
+                <Link 
+                  href={heroSlides[current].ctaLink}
+                  className="bg-white/10 hover:bg-white text-white hover:text-[#000c1c] shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] backdrop-blur-md border border-white/20 font-bold py-3 px-8 rounded-full transition-all duration-500 text-base cursor-pointer inline-block"
+                >
                   {heroSlides[current].ctaText}
-                </button>
+                </Link>
               </div>
             </div>
           </div>

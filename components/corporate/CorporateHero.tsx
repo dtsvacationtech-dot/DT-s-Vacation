@@ -1,7 +1,11 @@
+"use client";
+
 import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
 import Link from "next/link";
+import { useEnquiry } from "@/context/EnquiryContext";
 
 export default function CorporateHero() {
+  const { openModal } = useEnquiry();
   return (
     <section className="relative min-h-screen flex flex-col justify-end overflow-hidden bg-deep-navy">
       {/* Background Image */}
@@ -61,15 +65,15 @@ export default function CorporateHero() {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4">
-            <a
-              href="mailto:dtvacationandtravel@gmail.com?subject=Corporate Consultation Request"
-              className="inline-flex items-center gap-3 bg-tropical-gold text-deep-navy font-bold px-8 py-4 rounded-full hover:bg-yellow-300 transition-all duration-300 shadow-xl shadow-tropical-gold/20 text-sm uppercase tracking-wider"
+            <button
+              onClick={() => openModal("corporate")}
+              className="cursor-pointer inline-flex items-center gap-3 bg-tropical-gold text-deep-navy font-bold px-8 py-4 rounded-full hover:bg-yellow-300 transition-all duration-300 shadow-xl shadow-tropical-gold/20 text-sm uppercase tracking-wider"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
               Request a Consultation
-            </a>
+            </button>
             <a
               href="#why-partner"
               className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-bold px-8 py-4 rounded-full hover:bg-white/20 transition-all duration-300 text-sm uppercase tracking-wider"

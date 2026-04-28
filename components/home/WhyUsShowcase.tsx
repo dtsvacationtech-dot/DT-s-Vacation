@@ -1,4 +1,8 @@
+"use client";
+import { useEnquiry } from "@/context/EnquiryContext";
+
 export default function WhyUsShowcase() {
+  const { openModal } = useEnquiry();
   const features = [
     {
       title: "Personalized Service",
@@ -85,7 +89,10 @@ export default function WhyUsShowcase() {
           <p className="text-gray-500 font-medium mb-4">
             Ready to experience the DT's standard?
           </p>
-          <button className="bg-deep-navy text-white px-10 py-4 rounded-full font-bold shadow-[0_10px_20px_rgba(0,20,49,0.2)] hover:bg-tropical-gold hover:shadow-[0_10px_20px_rgba(235,180,0,0.3)] hover:-translate-y-1 transition-all duration-300">
+          <button 
+            onClick={() => openModal("hotels")}
+            className="bg-deep-navy text-white px-10 py-4 rounded-full font-bold shadow-[0_10px_20px_rgba(0,20,49,0.2)] hover:bg-tropical-gold hover:shadow-[0_10px_20px_rgba(235,180,0,0.3)] hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+          >
             Consult a Travel Expert
           </button>
         </div>

@@ -1,6 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
+import { useEnquiry } from "@/context/EnquiryContext";
+import Link from "next/link";
 
 const mainImages = [
   "/images/wedding_jamaica_main_1776112259228.webp",
@@ -22,6 +24,7 @@ const peopleImages = [
 
 export default function WeddingShowcase() {
   const [current, setCurrent] = useState(0);
+  const { openModal } = useEnquiry();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -47,15 +50,21 @@ export default function WeddingShowcase() {
               Say &apos;I do&apos; on pristine white sand beaches at golden hour. Let us orchestrate your breathtaking destination wedding with elegant floral designs, premium hospitality, and flawless coordination. Over the years, we have brought hundreds of unique luxury weddings to life across the Caribbean.
             </p>
             <div className="flex items-center gap-6">
-              <button className="bg-deep-navy text-white px-8 py-4 rounded-full font-bold shadow-xl shadow-deep-navy/20 hover:scale-105 transition-transform duration-300">
+              <button 
+                onClick={() => openModal("wedding")}
+                className="bg-deep-navy text-white px-8 py-4 rounded-full font-bold shadow-xl shadow-deep-navy/20 hover:scale-105 transition-transform duration-300 cursor-pointer"
+              >
                 Start Planning
               </button>
-              <button className="text-deep-navy font-bold uppercase tracking-wider text-sm flex items-center gap-2 hover:text-tropical-gold transition-colors">
+              <Link 
+                href="/weddings"
+                className="text-deep-navy font-bold uppercase tracking-wider text-sm flex items-center gap-2 hover:text-tropical-gold transition-colors cursor-pointer"
+              >
                 View Gallery
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
-              </button>
+              </Link>
             </div>
             
             {/* Slide Indicators */}
@@ -83,7 +92,7 @@ export default function WeddingShowcase() {
                   src={src} 
                   alt={`Luxury Wedding ${idx + 1}`} 
                   fill 
-                  className={`object-cover transition-opacity duration-1000 ease-in-out scale-[1.03] group-hover:scale-110 ${current === idx ? "opacity-100" : "opacity-0"}`}
+                  className={`object-cover transition-all duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] scale-[1.03] group-hover:scale-110 ${current === idx ? "opacity-100" : "opacity-0"}`}
                   sizes="(max-width: 768px) 50vw, 33vw"
                   priority={idx === 0}
                 />
@@ -99,7 +108,7 @@ export default function WeddingShowcase() {
                   src={src} 
                   alt={`Wedding Detail ${idx + 1}`} 
                   fill 
-                  className={`object-cover transition-opacity duration-1000 ease-in-out scale-[1.03] group-hover:scale-110 ${current === idx ? "opacity-100" : "opacity-0"}`}
+                  className={`object-cover transition-all duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] scale-[1.03] group-hover:scale-110 ${current === idx ? "opacity-100" : "opacity-0"}`}
                   sizes="(max-width: 768px) 50vw, 33vw"
                 />
               ))}
@@ -113,7 +122,7 @@ export default function WeddingShowcase() {
                   src={src} 
                   alt={`Wedding Reception ${idx + 1}`} 
                   fill 
-                  className={`object-cover transition-opacity duration-1000 ease-in-out scale-[1.03] group-hover:scale-110 ${current === idx ? "opacity-100" : "opacity-0"}`}
+                  className={`object-cover transition-all duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] scale-[1.03] group-hover:scale-110 ${current === idx ? "opacity-100" : "opacity-0"}`}
                   sizes="(max-width: 768px) 50vw, 33vw"
                 />
               ))}
