@@ -51,7 +51,7 @@ export default function HotelsSearch() {
   };
 
   return (
-    <div className="bg-white/30 backdrop-blur-3xl border border-white/40 p-6 md:p-8 rounded-[2rem] shadow-[0_15px_50px_rgba(0,0,0,0.3)] w-full max-w-6xl mx-auto transform translate-y-12 relative">
+    <div className="bg-white/30 backdrop-blur-3xl border border-white/40 p-5 md:p-8 rounded-[2rem] shadow-[0_15px_50px_rgba(0,0,0,0.3)] w-full max-w-6xl mx-auto transform translate-y-6 md:translate-y-12 relative">
       <form onSubmit={handleSearch} className="flex flex-col md:flex-row items-center gap-4">
 
         {/* Destination */}
