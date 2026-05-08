@@ -6,16 +6,16 @@ import { buildExpediaHotelUrl } from "@/lib/expedia";
 const hotels = [
   {
     id: 1,
-    name: "Catalonia Montego Bay",
-    location: "Montego Bay, Jamaica",
+    name: "Iberostar Grand Rose Hall",
+    location: "Rose Hall, Montego Bay, Jamaica",
     region: "Caribbean",
     flag: "🇯🇲",
-    price: "112",
-    stars: 4,
-    image: "/images/hotel_catalonia.webp",
+    price: "189",
+    stars: 5,
+    image: "/images/hotel_iberostar.webp",
     badge: "DT's Pick",
-    denisesNote: "I've personally visited. The beach is pristine and the staff genuinely go above and beyond.",
-    expediaDestination: "Catalonia Montego Bay",
+    denisesNote: "Stunning adults-only resort. The infinity pool at night is magical — world-class service every step of the way.",
+    expediaDestination: "Iberostar Grand Rose Hall Jamaica",
   },
   {
     id: 2,

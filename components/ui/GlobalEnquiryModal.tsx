@@ -220,11 +220,12 @@ export default function GlobalEnquiryModal() {
         </div>
 
         {/* ── Slides Container ── */}
-        <div className="overflow-hidden w-full relative">
+        <div className="overflow-x-hidden w-full relative">
           <div 
             className="flex w-[300%] transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] items-start"
             style={{ transform: `translateX(-${(step - 1) * 33.333333}%)` }}
           >
+
             
             {/* ── Step 1: Contact ── */}
             <div className="w-1/3 shrink-0 px-6 pb-8 space-y-5 transition-opacity duration-300" 
@@ -309,7 +310,7 @@ export default function GlobalEnquiryModal() {
             </div>
 
             {/* Travel Dates */}
-            <div className="relative z-50">
+            <div>
               <label className="block text-white/70 text-xs font-semibold uppercase tracking-wider mb-2">
                 Travel Dates <span className="text-white/30 font-normal normal-case">(optional)</span>
               </label>
@@ -318,6 +319,7 @@ export default function GlobalEnquiryModal() {
                 endDate={form.travelDateEnd}
                 onChange={(start, end) => setForm({ ...form, travelDateStart: start, travelDateEnd: end })}
                 accentColor={meta.accentColor}
+                inline
               />
               
               {/* Duration Badge */}

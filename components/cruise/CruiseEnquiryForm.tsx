@@ -6,7 +6,7 @@ import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
 export default function CruiseEnquiryForm() {
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   const [formHeight, setFormHeight] = useState<number | "auto">("auto");
   const step1Ref = useRef<HTMLDivElement>(null);
   const step2Ref = useRef<HTMLDivElement>(null);
@@ -20,12 +20,12 @@ export default function CruiseEnquiryForm() {
         setFormHeight(currentRef.current.offsetHeight);
       }
     };
-    
+
     // Measure on mount and when step changes
     updateHeight();
     // Tiny delay to ensure browser has rendered layout
     const timeout = setTimeout(updateHeight, 30);
-    
+
     // Also update if window resizes
     window.addEventListener("resize", updateHeight);
     return () => {
@@ -101,7 +101,7 @@ export default function CruiseEnquiryForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     // Construct email body
     const subject = encodeURIComponent(`New Cruise Enquiry from ${formData.name}`);
     const body = encodeURIComponent(`
@@ -132,7 +132,7 @@ Looking forward to hearing from you!
 
     // In a real app this would call an API, here we use mailto for static export
     window.location.href = `mailto:dtvacationandtravel@gmail.com?subject=${subject}&body=${body}`;
-    
+
     setTimeout(() => {
       setIsSubmitting(false);
       setStep(1); // Reset
@@ -145,12 +145,12 @@ Looking forward to hearing from you!
   return (
     <section className="pt-12 md:pt-20 pb-24 md:pb-32 bg-[#faf9f8]" id="cruise-enquiry">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-16">
-        
+
         <div className="bg-white rounded-[2.5rem] lg:rounded-[3rem] shadow-[0_30px_60px_rgba(0,10,40,0.08)] flex flex-col lg:flex-row border border-gray-100 relative">
-          
+
           {/* Left Side: Form Area */}
           <div className="w-full lg:w-1/2 p-8 md:p-12 lg:p-16 flex flex-col justify-center">
-            
+
             <div className="mb-10">
               <p className="text-tropical-gold text-[10px] font-bold uppercase tracking-[0.35em] mb-4">
                 Smart Enquiry
@@ -166,19 +166,18 @@ Looking forward to hearing from you!
             {/* Progress Indicator */}
             <div className="flex items-center justify-between mb-12 relative max-w-[280px]">
               <div className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-[2px] bg-gray-100 z-0" />
-              <div 
-                className="absolute left-0 top-1/2 -translate-y-1/2 h-[2px] bg-deep-navy z-0 transition-all duration-500 ease-out" 
+              <div
+                className="absolute left-0 top-1/2 -translate-y-1/2 h-[2px] bg-deep-navy z-0 transition-all duration-500 ease-out"
                 style={{ width: step === 1 ? "0%" : step === 2 ? "50%" : "100%" }}
               />
-              
+
               {[1, 2, 3].map((num) => (
-                <div 
+                <div
                   key={num}
-                  className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold relative z-10 transition-all duration-300 ${
-                    step >= num 
-                      ? "bg-deep-navy text-white shadow-[0_0_10px_rgba(0,45,98,0.3)]" 
+                  className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold relative z-10 transition-all duration-300 ${step >= num
+                      ? "bg-deep-navy text-white shadow-[0_0_10px_rgba(0,45,98,0.3)]"
                       : "bg-white text-gray-400 border-2 border-gray-100"
-                  }`}
+                    }`}
                 >
                   {step > num ? (
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
@@ -188,12 +187,12 @@ Looking forward to hearing from you!
             </div>
 
             {/* Form Steps */}
-            <form 
-              onSubmit={handleSubmit} 
+            <form
+              onSubmit={handleSubmit}
               className="relative w-full transition-[height] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-[height]"
               style={{ height: formHeight === "auto" ? "auto" : `${formHeight}px` }}
             >
-              
+
               {/* STEP 1 */}
               <div ref={step1Ref} className={`transition-all duration-500 absolute top-0 left-0 w-full ${step === 1 ? "opacity-100 translate-x-0 pointer-events-auto" : "opacity-0 -translate-x-10 pointer-events-none"}`}>
                 <div className="space-y-6">
@@ -221,7 +220,7 @@ Looking forward to hearing from you!
               {/* STEP 2 */}
               <div ref={step2Ref} className={`transition-all duration-500 absolute top-0 left-0 w-full ${step === 2 ? "opacity-100 translate-x-0 pointer-events-auto" : step < 2 ? "opacity-0 translate-x-10 pointer-events-none" : "opacity-0 -translate-x-10 pointer-events-none"}`}>
                 <div className="space-y-8">
-                  
+
                   {/* Party Size Steppers */}
                   <div className="grid grid-cols-2 gap-6">
                     <div className="bg-gray-50 border border-gray-200 rounded-2xl p-5">
@@ -238,8 +237,8 @@ Looking forward to hearing from you!
                           onChange={(e) => {
                             let val = e.target.value;
                             if (val.length > 1 && val.startsWith('0')) val = val.replace(/^0+/, '');
-                            setFormData(prev => ({ 
-                              ...prev, 
+                            setFormData(prev => ({
+                              ...prev,
                               adults: val === "" ? "" : Math.max(1, parseInt(val, 10) || 1)
                             }));
                           }}
@@ -250,7 +249,7 @@ Looking forward to hearing from you!
                         </button>
                       </div>
                     </div>
-                    
+
                     <div className="bg-gray-50 border border-gray-200 rounded-2xl p-5">
                       <label className="block text-xs font-bold text-deep-navy uppercase tracking-wider mb-4 text-center">Children</label>
                       <div className="flex items-center justify-between">
@@ -265,8 +264,8 @@ Looking forward to hearing from you!
                           onChange={(e) => {
                             let val = e.target.value;
                             if (val.length > 1 && val.startsWith('0')) val = val.replace(/^0+/, '');
-                            setFormData(prev => ({ 
-                              ...prev, 
+                            setFormData(prev => ({
+                              ...prev,
                               children: val === "" ? "" : Math.max(0, parseInt(val, 10))
                             }));
                           }}
@@ -288,13 +287,11 @@ Looking forward to hearing from you!
                           key={opt}
                           type="button"
                           onClick={() => setPillValue("duration", opt)}
-                          className={`px-4 py-2.5 rounded-full text-xs font-bold transition-all duration-300 border ${
-                            idx === 4 ? "col-span-2" : ""
-                          } ${
-                            formData.duration === opt 
+                          className={`px-4 py-2.5 rounded-full text-xs font-bold transition-all duration-300 border ${idx === 4 ? "col-span-2" : ""
+                            } ${formData.duration === opt
                               ? "bg-deep-navy border-deep-navy text-white shadow-[0_5px_15px_-5px_rgba(0,45,98,0.5)] scale-[1.02]"
                               : "bg-white border-gray-200 text-gray-400 hover:border-deep-navy hover:text-deep-navy"
-                          }`}
+                            }`}
                         >
                           {opt}
                         </button>
@@ -317,7 +314,7 @@ Looking forward to hearing from you!
               {/* STEP 3 */}
               <div ref={step3Ref} className={`transition-all duration-500 absolute top-0 left-0 w-full ${step === 3 ? "opacity-100 translate-x-0 pointer-events-auto" : "opacity-0 translate-x-10 pointer-events-none"}`}>
                 <div className="space-y-6">
-                  
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-xs font-bold text-deep-navy uppercase tracking-wider mb-2">Departure Port / City</label>
@@ -341,14 +338,14 @@ Looking forward to hearing from you!
                     </div>
                     <div>
                       <label className="block text-xs font-bold text-deep-navy uppercase tracking-wider mb-2">Ideal Travel Date *</label>
-                      <input 
-                        type="date" 
-                        name="date" 
-                        value={formData.date} 
-                        onChange={handleChange} 
+                      <input
+                        type="date"
+                        name="date"
+                        value={formData.date}
+                        onChange={handleChange}
                         min={new Date().toISOString().split('T')[0]}
-                        required 
-                        className="w-full bg-gray-50 border border-gray-200 rounded-xl px-5 py-4 outline-none focus:border-deep-navy focus:bg-white transition-all text-sm cursor-text" 
+                        required
+                        className="w-full bg-gray-50 border border-gray-200 rounded-xl px-5 py-4 outline-none focus:border-deep-navy focus:bg-white transition-all text-sm cursor-text"
                       />
                     </div>
                   </div>
@@ -361,9 +358,8 @@ Looking forward to hearing from you!
                     <button
                       type="button"
                       onClick={() => setDestOpen(prev => !prev)}
-                      className={`cursor-pointer w-full text-left bg-gray-50 border rounded-xl px-5 py-4 transition-all text-sm flex items-center justify-between gap-3 ${
-                        destOpen ? "border-deep-navy bg-white" : "border-gray-200"
-                      }`}
+                      className={`cursor-pointer w-full text-left bg-gray-50 border rounded-xl px-5 py-4 transition-all text-sm flex items-center justify-between gap-3 ${destOpen ? "border-deep-navy bg-white" : "border-gray-200"
+                        }`}
                     >
                       <span className={`flex-1 text-left truncate pr-2 ${formData.destinations.length === 0 ? "text-gray-400" : "text-deep-navy font-bold"}`}>
                         {formData.destinations.length === 0
@@ -407,15 +403,13 @@ Looking forward to hearing from you!
                               key={dest}
                               type="button"
                               onClick={() => toggleDestination(dest)}
-                              className={`cursor-pointer w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-200 ${
-                                formData.destinations.includes(dest)
+                              className={`cursor-pointer w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-200 ${formData.destinations.includes(dest)
                                   ? "bg-deep-navy/5 text-deep-navy font-semibold"
                                   : "text-gray-700 hover:bg-gray-50"
-                              }`}
+                                }`}
                             >
-                              <div className={`flex-[0_0_16px] w-[16px] h-[16px] rounded-[4px] border-2 flex items-center justify-center transition-all ${
-                                formData.destinations.includes(dest) ? "bg-tropical-gold border-tropical-gold" : "border-gray-300"
-                              }`}>
+                              <div className={`flex-[0_0_16px] w-[16px] h-[16px] rounded-[4px] border-2 flex items-center justify-center transition-all ${formData.destinations.includes(dest) ? "bg-tropical-gold border-tropical-gold" : "border-gray-300"
+                                }`}>
                                 {formData.destinations.includes(dest) && (
                                   <svg width="10" height="10" className="text-deep-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
                                 )}
@@ -431,15 +425,13 @@ Looking forward to hearing from you!
                               key={dest}
                               type="button"
                               onClick={() => toggleDestination(dest)}
-                              className={`cursor-pointer w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-200 ${
-                                formData.destinations.includes(dest)
+                              className={`cursor-pointer w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-200 ${formData.destinations.includes(dest)
                                   ? "bg-deep-navy/5 text-deep-navy font-semibold"
                                   : "text-gray-700 hover:bg-gray-50"
-                              }`}
+                                }`}
                             >
-                              <div className={`flex-[0_0_16px] w-[16px] h-[16px] rounded-[4px] border-2 flex items-center justify-center transition-all ${
-                                formData.destinations.includes(dest) ? "bg-tropical-gold border-tropical-gold" : "border-gray-300"
-                              }`}>
+                              <div className={`flex-[0_0_16px] w-[16px] h-[16px] rounded-[4px] border-2 flex items-center justify-center transition-all ${formData.destinations.includes(dest) ? "bg-tropical-gold border-tropical-gold" : "border-gray-300"
+                                }`}>
                                 {formData.destinations.includes(dest) && (
                                   <svg width="10" height="10" className="text-deep-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
                                 )}
@@ -470,7 +462,7 @@ Looking forward to hearing from you!
                   </div>
 
                 </div>
-                
+
                 <div className="mt-8 flex justify-between items-center">
                   <button type="button" onClick={() => setStep(2)} className="text-sm font-bold text-gray-400 hover:text-deep-navy cursor-pointer transition-colors uppercase tracking-wider">
                     Back
@@ -497,18 +489,18 @@ Looking forward to hearing from you!
             />
             {/* Elegant gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-r from-[#faf9f8] to-transparent w-32" />
-            
+
             {/* Trust badge */}
             <div className="absolute bottom-16 right-16 bg-white/10 backdrop-blur-md border border-white/20 p-8 rounded-3xl max-w-sm">
               <div className="flex gap-2 mb-4">
-                {[1,2,3,4,5].map(star => (
-                   <svg key={star} className="w-5 h-5 text-tropical-gold" fill="currentColor" viewBox="0 0 20 20">
-                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                   </svg>
+                {[1, 2, 3, 4, 5].map(star => (
+                  <svg key={star} className="w-5 h-5 text-tropical-gold" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
                 ))}
               </div>
-              <p className="text-white font-medium italic mb-4">"DT's Vacation perfectly coordinated our family cruise for 12 people. Every detail was flawless."</p>
-              <p className="text-white/60 text-xs font-bold uppercase tracking-widest">— The Robinson Family</p>
+              <p className="text-white font-medium italic mb-4">"DT's Vacation perfectly coordinated our family cruise for 7 people. Every detail was flawless."</p>
+              <p className="text-white/60 text-xs font-bold uppercase tracking-widest">— The Addam's Family</p>
             </div>
           </div>
 

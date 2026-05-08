@@ -6,12 +6,12 @@ import Link from "next/link";
 const hotels = [
   {
     id: 1,
-    name: "Catalonia Montego Bay",
-    location: "Montego Bay, Jamaica",
+    name: "Iberostar Grand Rose Hall",
+    location: "Rose Hall, Montego Bay, Jamaica",
     region: "Caribbean",
     flag: "🇯🇲",
-    price: "112",
-    image: "/images/hotel_catalonia.webp",
+    price: "189",
+    image: "/images/hotel_iberostar.webp",
     badge: "DT's Pick",
   },
   {

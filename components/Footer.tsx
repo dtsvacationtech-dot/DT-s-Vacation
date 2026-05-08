@@ -119,8 +119,8 @@ export default function Footer() {
       <div className="max-w-[1600px] mx-auto pt-8 border-t border-gray-200 flex flex-col md:flex-row items-center justify-between text-xs text-gray-400 font-medium tracking-wide">
         <p>© {new Date().getFullYear()} DT&apos;s Vacation &amp; Travel Limited. All rights reserved.</p>
         <div className="flex gap-6 mt-4 md:mt-0">
-          <Link href="#" className="hover:text-deep-navy transition-colors">Privacy Policy</Link>
-          <Link href="#" className="hover:text-deep-navy transition-colors">Terms of Service</Link>
+          <Link href="/privacy" className="hover:text-deep-navy transition-colors">Privacy Policy</Link>
+          <Link href="/terms" className="hover:text-deep-navy transition-colors">Terms of Service</Link>
         </div>
       </div>
     </footer>

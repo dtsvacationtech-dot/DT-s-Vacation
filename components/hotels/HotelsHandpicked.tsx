@@ -10,7 +10,7 @@ export default function HotelsHandpicked() {
       title: "Jamaican Luxury",
       subtitle: "DT's Homeland Picks",
       description: "Sandals, Iberostar, Grand Palladium — the best all-inclusive resorts where Denise has personally stayed.",
-      image: "/images/hotel_catalonia.webp", 
+      image: "/images/hotel_iberostar.webp", 
       destination: "Montego Bay, Jamaica",
       badge: "DT's Homeland",
       color: "from-[#0F3B20]/90 to-black/80", // Jamaican green hue

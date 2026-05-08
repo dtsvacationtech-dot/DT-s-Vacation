@@ -45,7 +45,7 @@ export const heroSlides = [
     title: "Explore the Unknown Wonders",
     description: "Venture deep into lush jungles, hidden waterfalls, and rich historical cultures. Premium guided excursions designed for the perfect balance of thrill and luxury.",
     cardTitle: "Tours",
-    image: "https://images.unsplash.com/photo-1598284533036-6e4cd91de43c?q=80&w=2674&auto=format&fit=crop",
+    image: "/images/hero_tours.webp",
     ctaText: "Find an Adventure",
     ctaLink: "/tours",
   }

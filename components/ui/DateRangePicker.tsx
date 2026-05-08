@@ -8,12 +8,14 @@ interface DateRangePickerProps {
   onChange: (start: string, end: string) => void;
   accentColor: string;
   theme?: "dark" | "light";
+  /** Render the calendar inline (no absolute positioning) — use inside modals */
+  inline?: boolean;
 }
 
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-export default function DateRangePicker({ startDate, endDate, onChange, accentColor, theme = "dark" }: DateRangePickerProps) {
+export default function DateRangePicker({ startDate, endDate, onChange, accentColor, theme = "dark", inline = false }: DateRangePickerProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [currentDate, setCurrentDate] = useState(new Date()); // Controls the left month view
   const [hoverDate, setHoverDate] = useState<string | null>(null);
@@ -185,10 +187,14 @@ export default function DateRangePicker({ startDate, endDate, onChange, accentCo
       </button>
 
       {isOpen && (
-        <div className={`absolute top-full mt-2 left-0 z-50 p-4 sm:p-5 border rounded-2xl shadow-2xl w-[300px] sm:w-[350px] animate-scale-in origin-top backdrop-blur-xl ${
+        <div className={`${
+          inline
+            ? "mt-2 w-full" 
+            : "absolute top-full mt-2 left-0 z-50 w-[300px] sm:w-[350px] animate-scale-in origin-top"
+        } p-4 sm:p-5 border rounded-2xl shadow-2xl backdrop-blur-xl ${
           theme === "light" 
             ? "bg-white border-gray-100" 
-            : "bg-black/90 border-white/10"
+            : "bg-black/60 border-white/10"
         }`}>
           
           <div className="flex items-center justify-between mb-4">
