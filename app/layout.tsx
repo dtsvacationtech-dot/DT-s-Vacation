@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Montserrat, Open_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-import ChatWidget from "@/components/ChatWidget";
 import NewsletterModal from "@/components/home/NewsletterModal";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
@@ -42,7 +41,6 @@ export default function RootLayout({
           </main>
           <Footer />
           <NewsletterModal />
-          <ChatWidget />
           <GlobalEnquiryModal />
         </EnquiryProvider>
       </body>
