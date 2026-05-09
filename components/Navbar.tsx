@@ -144,7 +144,7 @@ export default function Navbar() {
 
         {/* === Main Navbar === */}
         <div className={`max-w-[1600px] w-full mx-auto px-5 md:px-8 lg:px-16 flex items-center justify-between pointer-events-auto transition-all duration-500 ${
-          isScrolled || isMobileMenuOpen ? "py-2 md:py-3" : "py-3 md:py-5"
+          isScrolled || isMobileMenuOpen ? "py-1.5 md:py-3" : "py-2 md:py-5"
         }`}>
 
           {/* Brand Logo */}
@@ -157,7 +157,7 @@ export default function Navbar() {
               className={`w-auto object-contain transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] max-w-full drop-shadow-[0_2px_10px_rgba(0,0,0,0.4)] ${
                 isScrolled || isMobileMenuOpen
                   ? "h-8 md:h-12 lg:h-14 drop-shadow-[0_2px_15px_rgba(0,0,0,0.6)]"
-                  : "h-14 md:h-24 lg:h-28"
+                  : "h-10 md:h-24 lg:h-28"
               }`}
               priority
             />

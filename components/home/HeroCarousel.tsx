@@ -92,8 +92,8 @@ export default function HeroCarousel() {
             </div>
           </div>
 
-          {/* Right Column: Carousel Selection Cards */}
-          <div className="w-full xl:w-7/12 flex gap-3 md:gap-4 overflow-x-auto pb-4 snap-x hide-scrollbar">
+          {/* Right Column: Carousel Selection Cards — hidden on very small mobile */}
+          <div className="hidden sm:flex w-full xl:w-7/12 gap-3 md:gap-4 overflow-x-auto pb-4 snap-x hide-scrollbar">
             {heroSlides.map((slide, index) => {
               const isActive = index === current;
               return (
@@ -102,8 +102,8 @@ export default function HeroCarousel() {
                   onClick={() => handleSetCurrent(index)}
                   className={`relative flex-shrink-0 transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] overflow-hidden rounded-[1rem] md:rounded-[1.5rem] cursor-pointer group snap-start shadow-2xl ${
                     isActive 
-                      ? "w-36 h-[200px] md:w-60 md:h-[380px] shadow-[0_20px_40px_rgba(0,0,0,0.5)]" 
-                      : "w-28 h-[170px] md:w-44 md:h-[320px] brightness-75 hover:brightness-100 mt-4 md:mt-8 hover:-translate-y-2"
+                      ? "w-28 h-[150px] sm:w-36 sm:h-[180px] md:w-60 md:h-[380px] shadow-[0_20px_40px_rgba(0,0,0,0.5)]" 
+                      : "w-20 h-[130px] sm:w-28 sm:h-[155px] md:w-44 md:h-[320px] brightness-75 hover:brightness-100 mt-3 sm:mt-4 md:mt-8 hover:-translate-y-2"
                   }`}
                 >
                   <ImageWithSkeleton
