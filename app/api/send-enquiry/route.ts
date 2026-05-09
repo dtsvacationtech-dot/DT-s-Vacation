@@ -91,7 +91,7 @@ export async function POST(req: NextRequest) {
       resend.emails.send({
         from: FROM_EMAIL,
         to: AGENCY_EMAIL,
-        reply_to: data.email,   // ← Agency can hit "Reply" to respond directly to customer
+        replyTo: data.email,   // ← Agency can hit "Reply" to respond directly to customer
         subject: `New Enquiry [${data.serviceType ?? "General"}] from ${customerName}`,
         html: agencyEnquiryHtml(customerName, data),
       }),
