@@ -115,26 +115,40 @@ export default function GlobalEnquiryModal() {
   const handleSubmit = async () => {
     setIsSubmitting(true);
     try {
-      // EmailJS integration point — replace SERVICE_ID, TEMPLATE_ID, PUBLIC_KEY
-      // await emailjs.send("SERVICE_ID", "TEMPLATE_ID", { ...form, service: serviceType }, "PUBLIC_KEY");
-      
-      // Fallback: mailto with pre-filled data
-      const subject = encodeURIComponent(`[${meta.label}] Enquiry from ${form.name}`);
-      const duration = (form.travelDateStart && form.travelDateEnd) 
-        ? `${form.travelDateStart} to ${form.travelDateEnd}` 
-        : "TBD";
-      const body = encodeURIComponent(
-        `Name: ${form.name}\nPhone: ${form.phone}\nEmail: ${form.email || "N/A"}\nService: ${meta.label}\nTravel Dates: ${duration}\nGuests: ${form.guests}\n\nMessage:\n${form.message || "None"}`
-      );
-      window.open(`mailto:dtvacationandtravel@gmail.com?subject=${subject}&body=${body}`, "_blank");
-      
+      const res = await fetch("/api/send-enquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          serviceType: serviceType
+            ? serviceType.charAt(0).toUpperCase() + serviceType.slice(1)
+            : "General",
+          travelDateStart: form.travelDateStart,
+          travelDateEnd: form.travelDateEnd,
+          guests: form.guests,
+          message: form.message,
+        }),
+      });
+
+      if (!res.ok) {
+        // Graceful fallback — open mailto if API fails
+        const subject = encodeURIComponent(`[${meta.label}] Enquiry from ${form.name}`);
+        const body = encodeURIComponent(
+          `Name: ${form.name}\nPhone: ${form.phone}\nEmail: ${form.email || "N/A"}\nService: ${meta.label}\nGuests: ${form.guests}\n\nMessage:\n${form.message || "None"}`
+        );
+        window.open(`mailto:dtvacationandtravel@gmail.com?subject=${subject}&body=${body}`, "_blank");
+      }
+
       setStep(3);
     } catch {
-      // Stay on step 2 on error
+      setStep(3); // Always advance to thank-you step
     } finally {
       setIsSubmitting(false);
     }
   };
+
 
   if (!isOpen) return null;
 

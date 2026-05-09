@@ -1,7 +1,34 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function Footer() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.includes("@")) return;
+    setStatus("loading");
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      if (res.ok) {
+        setStatus("success");
+        setEmail("");
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
+  };
+
   return (
     <footer className="bg-[#faf9f8] text-deep-navy pt-20 pb-10 px-6 lg:px-16 border-t border-gray-200">
       <div className="max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16 mb-16">
@@ -92,26 +119,40 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* Newsletter Subscription */}
         <div className="flex flex-col lg:col-span-1">
           <h4 className="text-deep-navy font-bold tracking-wider mb-4">Stay Inspired</h4>
           <p className="text-gray-500 text-sm mb-6 leading-relaxed font-light">
             Subscribe to our newsletter and be the first to receive exclusive travel offers, special promotions, and luxurious destination inspiration.
           </p>
-          <form className="flex flex-col gap-3">
-            <input 
-              type="email" 
-              placeholder="Your email address" 
-              required
-              className="w-full bg-white border border-gray-200 rounded-full px-6 py-3.5 text-deep-navy placeholder-gray-400 focus:outline-none focus:border-tropical-gold focus:ring-1 focus:ring-tropical-gold transition-all shadow-sm"
-            />
-            <button 
-              type="submit"
-              className="w-full bg-deep-navy text-white font-bold px-8 py-3.5 rounded-full hover:bg-tropical-gold hover:shadow-lg transition-all duration-300"
-            >
-              Subscribe
-            </button>
-          </form>
+
+          {status === "success" ? (
+            <div className="bg-tropical-gold/10 border border-tropical-gold/30 rounded-2xl px-5 py-4 text-center">
+              <p className="text-deep-navy font-bold text-sm mb-1">🎉 You&apos;re on the list!</p>
+              <p className="text-gray-500 text-xs">Check your inbox for a welcome email.</p>
+            </div>
+          ) : (
+            <form onSubmit={handleSubscribe} className="flex flex-col gap-3">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Your email address"
+                required
+                disabled={status === "loading"}
+                className="w-full bg-white border border-gray-200 rounded-full px-6 py-3.5 text-deep-navy placeholder-gray-400 focus:outline-none focus:border-tropical-gold focus:ring-1 focus:ring-tropical-gold transition-all shadow-sm disabled:opacity-60"
+              />
+              <button
+                type="submit"
+                disabled={status === "loading"}
+                className="w-full bg-deep-navy text-white font-bold px-8 py-3.5 rounded-full hover:bg-tropical-gold hover:text-deep-navy hover:shadow-lg transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
+              >
+                {status === "loading" ? "Subscribing..." : "Subscribe"}
+              </button>
+              {status === "error" && (
+                <p className="text-red-500 text-xs text-center">Something went wrong. Please try again.</p>
+              )}
+            </form>
+          )}
         </div>
 
       </div>

@@ -98,46 +98,46 @@ export default function CruiseEnquiryForm() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    try {
+      const res = await fetch("/api/send-enquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          serviceType: "Cruises",
+          adults: formData.adults,
+          children: formData.children,
+          duration: formData.duration,
+          departurePort: formData.departurePort,
+          destinations: formData.destinations,
+          date: formData.date,
+          message: formData.message,
+        }),
+      });
 
-    // Construct email body
-    const subject = encodeURIComponent(`New Cruise Enquiry from ${formData.name}`);
-    const body = encodeURIComponent(`
-Hi DT's Vacation & Travel Team,
-
-I am interested in booking a cruise. Here are my details:
-
---- Traveler Info ---
-Name: ${formData.name}
-Email: ${formData.email}
-Phone: ${formData.phone}
-
---- Party Size ---
-Adults: ${formData.adults}
-Children: ${formData.children}
-
---- Voyage Details ---
-Duration: ${formData.duration}
-Preferred Destination: ${formData.destinations.length > 0 ? formData.destinations.join(", ") : "Open to any"}
-Preferred Departure Port: ${formData.departurePort}
-Target Travel Date: ${formData.date || "Not specified"}
-
---- Additional Notes ---
-${formData.message || "None"}
-
-Looking forward to hearing from you!
-    `);
-
-    // In a real app this would call an API, here we use mailto for static export
-    window.location.href = `mailto:dtvacationandtravel@gmail.com?subject=${subject}&body=${body}`;
-
-    setTimeout(() => {
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        // Fallback to mailto
+        const subject = encodeURIComponent(`New Cruise Enquiry from ${formData.name}`);
+        const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nAdults: ${formData.adults}\nChildren: ${formData.children}\nDuration: ${formData.duration}\nDestinations: ${formData.destinations.join(", ") || "Any"}\nDate: ${formData.date || "TBD"}\n\n${formData.message}`);
+        window.location.href = `mailto:dtvacationandtravel@gmail.com?subject=${subject}&body=${body}`;
+        setSubmitted(true);
+      }
+    } catch {
+      setSubmitted(true);
+    } finally {
       setIsSubmitting(false);
-      setStep(1); // Reset
-    }, 1500);
+    }
   };
+
 
   const isStep1Valid = formData.name.length > 2 && formData.email.includes("@") && formData.phone.length > 5;
   const isStep3Valid = !!formData.date; // Require date for demo purposes
