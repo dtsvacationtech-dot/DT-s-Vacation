@@ -75,22 +75,34 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // ── 2. Confirmation email to customer ─────────────────────────────────
+    // ── 2 & 3. Send both emails in PARALLEL — agency always gets notified ──
     const customerName = data.firstName ?? data.name ?? "Traveler";
-    await getResend().emails.send({
-      from: FROM_EMAIL,
-      to: data.email,
-      subject: "✅ We've Received Your Enquiry — DT's Vacation & Travel",
-      html: customerConfirmationHtml(customerName, data),
-    });
+    const resend = getResend();
 
-    // ── 3. Full enquiry details to agency ─────────────────────────────────
-    await getResend().emails.send({
-      from: FROM_EMAIL,
-      to: AGENCY_EMAIL,
-      subject: `🗺️ New Enquiry [${data.serviceType ?? "General"}] from ${customerName}`,
-      html: agencyEnquiryHtml(customerName, data),
-    });
+    const [customerResult, agencyResult] = await Promise.allSettled([
+      // Customer confirmation
+      resend.emails.send({
+        from: FROM_EMAIL,
+        to: data.email,
+        subject: "We've Received Your Enquiry — DT's Vacation & Travel",
+        html: customerConfirmationHtml(customerName, data),
+      }),
+      // Agency notification — always sent independently
+      resend.emails.send({
+        from: FROM_EMAIL,
+        to: AGENCY_EMAIL,
+        reply_to: data.email,   // ← Agency can hit "Reply" to respond directly to customer
+        subject: `New Enquiry [${data.serviceType ?? "General"}] from ${customerName}`,
+        html: agencyEnquiryHtml(customerName, data),
+      }),
+    ]);
+
+    if (customerResult.status === "rejected") {
+      console.error("Customer email failed:", customerResult.reason);
+    }
+    if (agencyResult.status === "rejected") {
+      console.error("Agency email failed:", agencyResult.reason);
+    }
 
     return NextResponse.json({ success: true });
   } catch (err) {
@@ -98,6 +110,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Something went wrong. Please try again." }, { status: 500 });
   }
 }
+
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Customer Confirmation Email
@@ -119,14 +132,22 @@ function customerConfirmationHtml(name: string, data: EnquiryPayload): string {
         <!-- HEADER -->
         <tr>
           <td style="background:linear-gradient(135deg,#000C1C 0%,#002D62 55%,#003380 100%);padding:50px 40px 44px;text-align:center;">
-            <p style="margin:0 0 10px;color:#D4A017;font-size:11px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;">DT's Vacation &amp; Travel Ltd.</p>
-            <div style="width:64px;height:64px;background:rgba(212,160,23,0.15);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin-bottom:16px;">
-              <span style="font-size:28px;">✅</span>
-            </div>
+            <p style="margin:0 0 20px;color:#D4A017;font-size:11px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;">DT's Vacation &amp; Travel Ltd.</p>
+            <table cellpadding="0" cellspacing="0" style="margin:0 auto 20px;">
+              <tr>
+                <td width="72" height="72" style="background:rgba(212,160,23,0.18);border-radius:50%;text-align:center;vertical-align:middle;">
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto;">
+                    <circle cx="12" cy="12" r="12" fill="rgba(212,160,23,0.25)"/>
+                    <path d="M6.5 12.5L10 16L17.5 8.5" stroke="#D4A017" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </td>
+              </tr>
+            </table>
             <h1 style="margin:0 0 10px;color:#ffffff;font-size:28px;font-weight:800;line-height:1.2;">Enquiry Received!</h1>
             <p style="margin:0;color:rgba(255,255,255,0.7);font-size:15px;line-height:1.6;">We'll be in touch as soon as possible.</p>
           </td>
         </tr>
+
 
         <!-- GREETING -->
         <tr>
