@@ -46,6 +46,26 @@ export default function TrustBar() {
             </div>
           ))}
         </div>
+
+        {/* ── Official Credentials Strip ── */}
+        <div className={`mt-12 pt-8 border-t border-gray-100 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs text-gray-500 font-semibold uppercase tracking-wider transform transition-all duration-1000 delay-500 ${
+          isVisible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+        }`}>
+          <div className="flex items-center gap-2">
+            <span className="text-base">🇯🇲</span>
+            <span className="text-deep-navy font-bold">Jamaica Ministry of Tourism</span> Registered
+          </div>
+          <span className="text-gray-300 hidden sm:inline">&bull;</span>
+          <div className="flex items-center gap-2">
+            <span className="text-base">🌴</span>
+            <span className="text-deep-navy font-bold">Jamaica Tourist Board</span> Affiliated
+          </div>
+          <span className="text-gray-300 hidden sm:inline">&bull;</span>
+          <div className="flex items-center gap-2">
+            <span className="text-base">🏨</span>
+            <span className="text-deep-navy font-bold">Expedia TAAP</span> Travel Partner
+          </div>
+        </div>
       </div>
     </section>
   );

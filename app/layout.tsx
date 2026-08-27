@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { EnquiryProvider } from "@/context/EnquiryContext";
 import GlobalEnquiryModal from "@/components/ui/GlobalEnquiryModal";
+import PromotionsModal from "@/components/home/PromotionsModal";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -42,6 +43,7 @@ export default function RootLayout({
           <Footer />
           <NewsletterModal />
           <GlobalEnquiryModal />
+          <PromotionsModal />
         </EnquiryProvider>
       </body>
     </html>

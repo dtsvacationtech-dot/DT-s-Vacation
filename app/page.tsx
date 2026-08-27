@@ -5,6 +5,7 @@ import ServiceCards from "@/components/home/ServiceCards";
 import ManifestoMarquee from "@/components/home/ManifestoMarquee";
 import WeddingShowcase from "@/components/home/WeddingShowcase";
 import CorporateShowcase from "@/components/home/CorporateShowcase";
+import AccreditationsShowcase from "@/components/home/AccreditationsShowcase";
 import WhyUsShowcase from "@/components/home/WhyUsShowcase";
 import CruiseShowcase from "@/components/home/CruiseShowcase";
 import ToursShowcase from "@/components/home/ToursShowcase";
@@ -18,6 +19,7 @@ export default function Home() {
       <ServiceCards />
       <CorporateShowcase />
       <WeddingShowcase />
+      <AccreditationsShowcase />
       <WhyUsShowcase />
       <CruiseShowcase />
       <ToursShowcase />

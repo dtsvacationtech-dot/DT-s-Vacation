@@ -1,14 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Resend } from "resend";
-
-const AGENCY_EMAIL = "dtvacationandtravel@gmail.com";
-const FROM_EMAIL = process.env.EMAIL_FROM ?? "DT's Vacation <onboarding@resend.dev>";
-
-function getResend() {
-  const key = process.env.RESEND_API_KEY;
-  if (!key) throw new Error("RESEND_API_KEY is not configured.");
-  return new Resend(key);
-}
+import { sendEmail, AGENCY_EMAIL } from "@/lib/emailSender";
 
 // ─── Type for all enquiry forms ───────────────────────────────────────────────
 interface EnquiryPayload {
@@ -42,7 +33,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Valid email is required." }, { status: 400 });
     }
 
-    // ── 1. Save to Supabase enquiries table ───────────────────────────────
+    // ── 1. Save to Supabase enquiries table (if configured) ────────────────
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
@@ -75,36 +66,33 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // ── 2 & 3. Send both emails in PARALLEL — agency always gets notified ──
+    // ── 2 & 3. Dispatch Emails (Direct Gmail SMTP or Resend) ───────────────
     const customerName = data.firstName ?? data.name ?? "Traveler";
-    const resend = getResend();
 
     const [customerResult, agencyResult] = await Promise.allSettled([
       // Customer confirmation
-      resend.emails.send({
-        from: FROM_EMAIL,
+      sendEmail({
         to: data.email,
         subject: "We've Received Your Enquiry — DT's Vacation & Travel",
         html: customerConfirmationHtml(customerName, data),
       }),
-      // Agency notification — always sent independently
-      resend.emails.send({
-        from: FROM_EMAIL,
+      // Agency notification
+      sendEmail({
         to: AGENCY_EMAIL,
-        replyTo: data.email,   // ← Agency can hit "Reply" to respond directly to customer
+        replyTo: data.email,
         subject: `New Enquiry [${data.serviceType ?? "General"}] from ${customerName}`,
         html: agencyEnquiryHtml(customerName, data),
       }),
     ]);
 
     if (customerResult.status === "rejected") {
-      console.error("Customer email failed:", customerResult.reason);
+      console.error("Customer email error:", customerResult.reason);
     }
     if (agencyResult.status === "rejected") {
-      console.error("Agency email failed:", agencyResult.reason);
+      console.error("Agency email error:", agencyResult.reason);
     }
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, message: "Enquiry submitted successfully." });
   } catch (err) {
     console.error("Send-enquiry API error:", err);
     return NextResponse.json({ error: "Something went wrong. Please try again." }, { status: 500 });

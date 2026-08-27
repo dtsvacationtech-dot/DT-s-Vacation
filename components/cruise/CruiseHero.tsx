@@ -1,5 +1,4 @@
 import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
-import Link from "next/link";
 
 export default function CruiseHero() {
   return (
@@ -22,15 +21,6 @@ export default function CruiseHero() {
 
       {/* Gold accent line at top */}
       <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-tropical-gold to-transparent z-20" />
-
-      {/* Breadcrumb */}
-      <div className="absolute top-32 left-6 lg:left-16 z-20">
-        <nav className="flex items-center gap-2 text-white/40 text-xs font-medium tracking-widest uppercase">
-          <Link href="/" className="hover:text-tropical-gold transition-colors">Home</Link>
-          <span>/</span>
-          <span className="text-tropical-gold">Cruises</span>
-        </nav>
-      </div>
 
       {/* Hero Content */}
       <div className="relative z-10 max-w-[1600px] mx-auto w-full px-6 lg:px-16 pb-24 pt-48">
@@ -78,12 +68,6 @@ export default function CruiseHero() {
               </svg>
             </a>
           </div>
-        </div>
-
-        {/* Bottom scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
-          <span className="text-white text-[10px] tracking-widest uppercase">Scroll</span>
-          <div className="w-[1px] h-8 bg-white/50 animate-pulse" />
         </div>
       </div>
     </section>

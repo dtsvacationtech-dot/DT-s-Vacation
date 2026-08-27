@@ -6,7 +6,6 @@ const nextConfig: NextConfig = {
   //   - Newsletter subscriptions (Supabase)
   //   - Customer enquiry emails (Resend)
   // Static export mode disables API routes entirely. Do NOT add it back.
-  trailingSlash: true,
   images: {
     unoptimized: true,
     qualities: [85],

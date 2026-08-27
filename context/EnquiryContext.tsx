@@ -2,13 +2,16 @@
 
 import { createContext, useContext, useState, ReactNode } from "react";
 
-export type ServiceType = "wedding" | "corporate" | "tours" | "hotels";
+export type ServiceType = "wedding" | "corporate" | "tours" | "hotels" | "cruises";
 
 interface EnquiryContextValue {
   isOpen: boolean;
   serviceType: ServiceType | null;
   openModal: (service: ServiceType) => void;
   closeModal: () => void;
+  isPromotionsOpen: boolean;
+  openPromotions: () => void;
+  closePromotions: () => void;
 }
 
 const EnquiryContext = createContext<EnquiryContextValue | null>(null);
@@ -16,6 +19,7 @@ const EnquiryContext = createContext<EnquiryContextValue | null>(null);
 export function EnquiryProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
   const [serviceType, setServiceType] = useState<ServiceType | null>(null);
+  const [isPromotionsOpen, setIsPromotionsOpen] = useState(false);
 
   const openModal = (service: ServiceType) => {
     setServiceType(service);
@@ -25,11 +29,35 @@ export function EnquiryProvider({ children }: { children: ReactNode }) {
 
   const closeModal = () => {
     setIsOpen(false);
-    document.body.style.overflow = "";
+    if (!isPromotionsOpen) {
+      document.body.style.overflow = "";
+    }
+  };
+
+  const openPromotions = () => {
+    setIsPromotionsOpen(true);
+    document.body.style.overflow = "hidden";
+  };
+
+  const closePromotions = () => {
+    setIsPromotionsOpen(false);
+    if (!isOpen) {
+      document.body.style.overflow = "";
+    }
   };
 
   return (
-    <EnquiryContext.Provider value={{ isOpen, serviceType, openModal, closeModal }}>
+    <EnquiryContext.Provider
+      value={{
+        isOpen,
+        serviceType,
+        openModal,
+        closeModal,
+        isPromotionsOpen,
+        openPromotions,
+        closePromotions,
+      }}
+    >
       {children}
     </EnquiryContext.Provider>
   );

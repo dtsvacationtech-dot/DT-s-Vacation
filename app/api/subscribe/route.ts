@@ -1,14 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Resend } from "resend";
-
-const AGENCY_EMAIL = "dtvacationandtravel@gmail.com";
-const FROM_EMAIL = process.env.EMAIL_FROM ?? "DT's Vacation <onboarding@resend.dev>";
-
-function getResend() {
-  const key = process.env.RESEND_API_KEY;
-  if (!key) throw new Error("RESEND_API_KEY is not configured.");
-  return new Resend(key);
-}
+import { sendEmail, AGENCY_EMAIL } from "@/lib/emailSender";
 
 export async function POST(req: NextRequest) {
   try {
@@ -40,23 +31,21 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // ── 2. Send thank-you email to subscriber ─────────────────────────────
-    await getResend().emails.send({
-      from: FROM_EMAIL,
-      to: email,
-      subject: "🌴 Welcome to DT's Vacation & Travel — You're In!",
-      html: subscriberWelcomeHtml(email),
-    });
+    // ── 2. Dispatch Emails (Direct Gmail SMTP or Resend) ──────────────────
+    await Promise.allSettled([
+      sendEmail({
+        to: email,
+        subject: "🌴 Welcome to DT's Vacation & Travel — You're In!",
+        html: subscriberWelcomeHtml(email),
+      }),
+      sendEmail({
+        to: AGENCY_EMAIL,
+        subject: `New Newsletter Subscriber: ${email}`,
+        html: agencySubscriberNotifyHtml(email),
+      }),
+    ]);
 
-    // ── 3. Notify agency ──────────────────────────────────────────────────
-    await getResend().emails.send({
-      from: FROM_EMAIL,
-      to: AGENCY_EMAIL,
-      subject: `New Newsletter Subscriber: ${email}`,
-      html: agencySubscriberNotifyHtml(email),
-    });
-
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, message: "Subscribed successfully." });
   } catch (err) {
     console.error("Subscribe API error:", err);
     return NextResponse.json({ error: "Something went wrong. Please try again." }, { status: 500 });

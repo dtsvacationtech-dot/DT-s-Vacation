@@ -49,6 +49,16 @@ const SERVICE_META: Record<
       </svg>
     ),
   },
+  cruises: {
+    label: "Cruise Voyages",
+    color: "from-[#001a3d] via-[#002D62] to-[#000c1c]",
+    accentColor: "#D4A017",
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+      </svg>
+    ),
+  },
 };
 
 interface FormData {
@@ -102,8 +112,13 @@ export default function GlobalEnquiryModal() {
 
   const validateStep1 = () => {
     const errs: Partial<FormData> = {};
-    if (!form.name.trim()) errs.name = "Name is required";
-    if (!form.phone.trim()) errs.phone = "Phone number is required";
+    if (!form.name.trim()) errs.name = "Full Name is required";
+    if (!form.phone.trim()) errs.phone = "Phone number (WhatsApp) is required";
+    if (!form.email.trim()) {
+      errs.email = "Email address is required";
+    } else if (!form.email.includes("@") || !form.email.includes(".")) {
+      errs.email = "Please enter a valid email address";
+    }
     setErrors(errs);
     return Object.keys(errs).length === 0;
   };
@@ -291,7 +306,7 @@ export default function GlobalEnquiryModal() {
             {/* Email */}
             <div>
               <label className="block text-white/70 text-xs font-semibold uppercase tracking-wider mb-2">
-                Email Address <span className="text-white/30 font-normal normal-case">(optional)</span>
+                Email Address <span style={{ color: meta.accentColor }}>*</span>
               </label>
               <input
                 type="email"
@@ -299,7 +314,11 @@ export default function GlobalEnquiryModal() {
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                 className="w-full bg-white/10 border border-white/10 text-white placeholder-white/30 rounded-xl px-4 py-3.5 text-sm outline-none focus:border-white/40 focus:bg-white/15 transition-all"
+                style={{ caretColor: meta.accentColor }}
               />
+              {errors.email && (
+                <p className="mt-1.5 text-xs" style={{ color: meta.accentColor }}>{errors.email}</p>
+              )}
             </div>
 
             <button

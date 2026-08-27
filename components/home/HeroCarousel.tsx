@@ -1,182 +1,194 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { heroSlides } from "@/lib/mockData";
 import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
 import Link from "next/link";
+import { useEnquiry } from "@/context/EnquiryContext";
 
 export default function HeroCarousel() {
-  const [current, setCurrent] = useState(0);
-  const [previous, setPrevious] = useState(0);
-  const length = heroSlides.length;
+  const [activeIdx, setActiveIdx] = useState(0);
+  const { openPromotions } = useEnquiry();
 
-  const handleSetCurrent = (newIndex: number) => {
-    setPrevious(current);
-    setCurrent(newIndex);
-  };
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      handleSetCurrent(current === length - 1 ? 0 : current + 1);
-    }, 6000);
-    return () => clearInterval(timer);
-  }, [current, length]);
-
-  const nextSlide = () => handleSetCurrent(current === length - 1 ? 0 : current + 1);
-  const prevSlide = () => handleSetCurrent(current === 0 ? length - 1 : current - 1);
+  const currentSlide = heroSlides[activeIdx] || heroSlides[0];
 
   return (
-    <section className="relative h-screen w-full overflow-hidden bg-deep-navy font-body">
-      {/* Background Layer */}
+    <section className="relative min-h-[92vh] lg:min-h-screen w-full overflow-hidden bg-deep-navy font-body flex flex-col justify-between pt-32 sm:pt-36 md:pt-40 lg:pt-44 pb-8 lg:pb-12">
+      
+      {/* ── Background Slides (Cinematic Cross-Fade) ── */}
       {heroSlides.map((slide, index) => {
-        const isActiveBg = index === current;
-        const isPreviousBg = index === previous;
-        
+        const isActive = index === activeIdx;
         return (
-        <div
-          key={slide.id}
-          className={`absolute inset-0 transition-opacity duration-[1500ms] ease-in-out ${
-            isActiveBg ? "opacity-100 z-10" : isPreviousBg ? "opacity-100 z-0" : "opacity-0 -z-10"
-          }`}
-        >
-          <div className="absolute inset-0 w-full h-full overflow-hidden">
-            <ImageWithSkeleton
-              src={slide.image}
-              alt={slide.title}
-              fill
-              quality={85}
-              skeletonClassName="skeleton-shimmer-dark"
-              className={`object-cover object-center transform transition-transform ease-out duration-[20000ms] ${
-                index === current ? "scale-100" : "scale-110"
-              }`}
-              priority={index === 0}
-              sizes="100vw"
-            />
+          <div
+            key={slide.id}
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out pointer-events-none ${
+              isActive ? "opacity-100 z-0" : "opacity-0 -z-10"
+            }`}
+          >
+            <div className="absolute inset-0 w-full h-full overflow-hidden">
+              <ImageWithSkeleton
+                src={slide.image}
+                alt={slide.title}
+                fill
+                quality={85}
+                skeletonClassName="skeleton-shimmer-dark"
+                className={`object-cover object-center transform transition-transform duration-[10000ms] ease-out ${
+                  isActive ? "scale-105" : "scale-100"
+                }`}
+                priority={index === 0}
+                sizes="100vw"
+              />
+            </div>
+            {/* Cinematic Gradient Overlays */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[#000c1c]/95 via-[#000c1c]/60 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#000c1c] via-[#000c1c]/40 to-transparent" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_40%,rgba(212,160,23,0.12)_0%,transparent_60%)]" />
           </div>
-          {/* Cinematic Gradients */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#000c1c]/95 via-[#000c1c]/50 to-transparent pointer-events-none"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-[#000c1c] via-transparent to-transparent pointer-events-none opacity-90"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(0,45,98,0.2)_0%,transparent_60%)] pointer-events-none"></div>
-        </div>
         );
       })}
 
-      {/* Main Content Layout */}
-      <div className="relative z-10 w-full h-full flex flex-col justify-end pb-32 md:pb-24">
-        <div className="max-w-[1600px] mx-auto w-full px-5 md:px-8 lg:px-16 flex flex-col xl:flex-row justify-between items-end gap-8 xl:gap-8">
-          
-          {/* Left Column: Typography & Intent */}
-          <div className="w-full xl:w-5/12 text-white relative mb-4">
-            <div
-               key={`content-${current}`}
-               className="animate-fade-in-up"
-            >
-              <p className="text-tropical-gold font-bold tracking-[0.2em] mb-4 uppercase text-[11px] drop-shadow-md">
-                {heroSlides[current].locationTag}
-              </p>
-              <h1 className="text-4xl md:text-5xl lg:text-[52px] font-bold leading-[1.15] mb-5 tracking-tight drop-shadow-xl text-white">
-                {heroSlides[current].title}
-              </h1>
-              <p className="text-gray-200 text-base md:text-lg font-light mb-10 max-w-lg leading-relaxed drop-shadow-md">
-                {heroSlides[current].description}
-              </p>
-              
-              <div className="flex items-center gap-5">
-                <Link 
-                  href={heroSlides[current].ctaLink}
-                  className="bg-white/10 hover:bg-white text-white hover:text-[#000c1c] shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] backdrop-blur-md border border-white/20 font-bold py-3 px-8 rounded-full transition-all duration-500 text-base cursor-pointer inline-block"
-                >
-                  {heroSlides[current].ctaText}
-                </Link>
-              </div>
+      {/* ── Main Hero Content Area (Balanced with comfortable gap below Navbar) ── */}
+      <div className="relative z-10 max-w-[1700px] mx-auto w-full px-4 md:px-8 lg:px-12 flex-1 flex flex-col justify-center pt-2 md:pt-4">
+        <div className="max-w-3xl text-white">
+          <div key={`hero-info-${currentSlide.id}`} className="animate-fade-in-up">
+            
+            {/* Special Offers Pill Banner */}
+            <div className="mb-3.5 inline-block">
+              <button
+                type="button"
+                onClick={openPromotions}
+                className="cursor-pointer inline-flex items-center gap-2.5 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 px-3.5 py-1.5 rounded-full text-xs text-white transition-all shadow-lg group hover:scale-[1.02] active:scale-[0.98]"
+              >
+                <span className="flex h-2 w-2 relative">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-tropical-gold opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-tropical-gold"></span>
+                </span>
+                <span className="font-bold text-tropical-gold uppercase tracking-wider text-[10px] md:text-[11px]">Special Offers Available</span>
+                <span className="text-white/50 hidden sm:inline">•</span>
+                <span className="text-white/90 hidden sm:inline text-xs">Easter &amp; Island Hopper Specials</span>
+                <span className="text-tropical-gold group-hover:translate-x-1 transition-transform ml-1 font-bold">→</span>
+              </button>
             </div>
-          </div>
 
-          {/* Right Column: Carousel Selection Cards — hidden on very small mobile */}
-          <div className="hidden sm:flex w-full xl:w-7/12 gap-3 md:gap-4 overflow-x-auto pb-4 snap-x hide-scrollbar">
-            {heroSlides.map((slide, index) => {
-              const isActive = index === current;
-              return (
-                <button
-                  key={slide.id}
-                  onClick={() => handleSetCurrent(index)}
-                  className={`relative flex-shrink-0 transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] overflow-hidden rounded-[1rem] md:rounded-[1.5rem] cursor-pointer group snap-start shadow-2xl ${
-                    isActive 
-                      ? "w-28 h-[150px] sm:w-36 sm:h-[180px] md:w-60 md:h-[380px] shadow-[0_20px_40px_rgba(0,0,0,0.5)]" 
-                      : "w-20 h-[130px] sm:w-28 sm:h-[155px] md:w-44 md:h-[320px] brightness-75 hover:brightness-100 mt-3 sm:mt-4 md:mt-8 hover:-translate-y-2"
-                  }`}
-                >
+            {/* Location Tag */}
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-8 h-[2px] bg-tropical-gold" />
+              <p className="text-tropical-gold font-bold tracking-[0.25em] uppercase text-xs drop-shadow-md">
+                {currentSlide.locationTag}
+              </p>
+            </div>
+
+            {/* Title */}
+            <h1 className="text-3.5xl sm:text-5xl md:text-6xl lg:text-[4.25rem] font-heading font-extrabold leading-[1.06] mb-4 md:mb-5 tracking-tight drop-shadow-2xl text-white">
+              {currentSlide.title}
+            </h1>
+
+            {/* Description */}
+            <p className="text-gray-200 text-sm sm:text-base md:text-lg font-light mb-6 md:mb-7 max-w-2xl leading-relaxed drop-shadow-md">
+              {currentSlide.description}
+            </p>
+
+            {/* Main Action Buttons */}
+            <div className="flex flex-wrap items-center gap-3.5 md:gap-4">
+              <Link
+                href={currentSlide.ctaLink}
+                className="bg-tropical-gold hover:bg-yellow-300 text-deep-navy font-bold py-3.5 md:py-4 px-7 md:px-8 rounded-full transition-all duration-300 text-xs md:text-sm uppercase tracking-wider shadow-[0_8px_25px_rgba(212,160,23,0.3)] hover:scale-105 active:scale-95 flex items-center gap-2.5"
+              >
+                <span>{currentSlide.ctaText}</span>
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </Link>
+
+              <button
+                type="button"
+                onClick={openPromotions}
+                className="bg-white/10 hover:bg-white/20 text-white font-bold py-3.5 md:py-4 px-5 md:px-6 rounded-full transition-all duration-300 text-xs md:text-sm uppercase tracking-wider backdrop-blur-md border border-white/20 flex items-center gap-2 cursor-pointer hover:scale-105 active:scale-95"
+              >
+                <span>🔥</span>
+                <span>View Promotions</span>
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      {/* ── 5 Business Areas (Side-by-Side, Hover Scale, Direct Link, No Auto-Advance) ── */}
+      <div className="relative z-20 max-w-[1700px] mx-auto w-full px-4 md:px-8 lg:px-12 mt-4 lg:mt-6">
+        <div className="flex items-center justify-between mb-2.5">
+          <p className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.25em] text-white/70">
+            Explore All 5 Business Areas
+          </p>
+        </div>
+
+        {/* 5-Column Side-by-Side Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-3.5 w-full">
+          {heroSlides.map((slide, index) => {
+            const isSelected = index === activeIdx;
+            return (
+              <Link
+                key={slide.id}
+                href={slide.ctaLink}
+                onMouseEnter={() => setActiveIdx(index)}
+                onFocus={() => setActiveIdx(index)}
+                className={`group relative overflow-hidden rounded-2xl p-3.5 md:p-4 flex flex-col justify-end transition-all duration-300 ease-out cursor-pointer border ${
+                  isSelected
+                    ? "h-32 sm:h-40 md:h-48 bg-white/15 border-tropical-gold shadow-[0_10px_30px_rgba(212,160,23,0.3)] scale-[1.03] ring-1 ring-tropical-gold/50"
+                    : "h-28 sm:h-36 md:h-44 bg-black/40 border-white/10 hover:border-white/30 hover:bg-white/10 hover:scale-[1.02] opacity-85 hover:opacity-100"
+                }`}
+              >
+                {/* Background Thumbnail */}
+                <div className="absolute inset-0 z-0">
                   <ImageWithSkeleton
                     src={slide.image}
                     alt={slide.cardTitle}
                     fill
                     skeletonClassName="skeleton-shimmer-dark"
-                    className="object-cover transition-transform duration-[2000ms] ease-out group-hover:scale-110"
-                    sizes="(max-width: 768px) 150px, 240px"
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                    sizes="(max-width: 768px) 160px, 300px"
                   />
-                  <div className={`absolute inset-0 bg-gradient-to-t transition-all duration-500 ${isActive ? "from-[#000c1c]/90 via-[#000c1c]/10 to-transparent" : "from-[#000c1c]/80 via-black/30 to-transparent"}`}></div>
-                  <div className={`absolute left-3 md:left-6 text-left transition-all duration-500 ease-out ${isActive ? "bottom-4 md:bottom-8" : "bottom-3 md:bottom-6"}`}>
-                    <p className="text-tropical-gold text-[10px] font-bold uppercase mb-[2px] tracking-[0.2em] drop-shadow-md">
-                      Jamaica
-                    </p>
-                    <h3 className={`text-white font-bold leading-tight drop-shadow-lg ${isActive ? "text-base md:text-2xl" : "text-sm md:text-lg text-gray-200"}`}>
-                      {slide.cardTitle}
-                    </h3>
+                  <div className={`absolute inset-0 transition-all duration-300 ${
+                    isSelected 
+                      ? "bg-gradient-to-t from-deep-navy via-deep-navy/70 to-transparent opacity-95"
+                      : "bg-gradient-to-t from-deep-navy via-black/60 to-black/30 group-hover:opacity-85"
+                  }`} />
+                </div>
+
+                {/* Content */}
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between gap-1 mb-0.5">
+                    <span className="text-tropical-gold text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em]">
+                      0{index + 1}
+                    </span>
+                    <span className={`w-2 h-2 rounded-full transition-all ${
+                      isSelected ? "bg-tropical-gold scale-125" : "bg-white/30 group-hover:bg-white/70"
+                    }`} />
                   </div>
-                </button>
-              );
-            })}
-          </div>
 
+                  <h3 className={`font-heading font-extrabold leading-tight transition-colors ${
+                    isSelected ? "text-white text-base md:text-lg" : "text-white/90 text-sm md:text-base group-hover:text-white"
+                  }`}>
+                    {slide.cardTitle}
+                  </h3>
+
+                  <div className="flex items-center justify-between mt-1.5 pt-1.5 border-t border-white/10">
+                    <span className="text-[9px] md:text-[10px] text-white/70 font-medium group-hover:text-tropical-gold transition-colors">
+                      Open Page →
+                    </span>
+                  </div>
+                </div>
+
+                {/* Top Active Gold Bar Indicator */}
+                {isSelected && (
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-tropical-gold" />
+                )}
+              </Link>
+            );
+          })}
         </div>
       </div>
 
-      {/* Bottom Navigation Controls */}
-      <div className="absolute bottom-0 w-full h-20 md:h-32 flex items-center bg-transparent z-20">
-        <div className="max-w-[1600px] mx-auto w-full px-5 md:px-8 lg:px-16 flex items-center justify-between">
-          
-          <div className="flex items-center gap-4">
-            <button 
-              onClick={prevSlide}
-              className="w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/50 text-white flex items-center justify-center hover:bg-white hover:text-deep-navy transition-all backdrop-blur-sm"
-              aria-label="Previous Slide"
-            >
-              <svg className="w-4 h-4 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 19l-7-7 7-7" /></svg>
-            </button>
-            <button 
-              onClick={nextSlide}
-              className="w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/50 text-white flex items-center justify-center hover:bg-white hover:text-deep-navy transition-all backdrop-blur-sm"
-              aria-label="Next Slide"
-            >
-              <svg className="w-4 h-4 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" /></svg>
-            </button>
-          </div>
-
-          <div className="flex-1 px-4 md:px-12 flex items-center">
-            <div className="w-full h-[2px] bg-white/20 relative">
-              <div 
-                className="absolute top-0 left-0 h-full bg-white transition-all duration-500 ease-out"
-                style={{ width: `${((current + 1) / length) * 100}%` }}
-              ></div>
-            </div>
-          </div>
-
-          <div className="text-4xl md:text-7xl font-light text-white tracking-tighter">
-            0{current + 1}
-          </div>
-        </div>
-      </div>
-
-      {/* Hide Scrollbar Style Inject */}
-      <style dangerouslySetInnerHTML={{__html: `
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .hide-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `}} />
     </section>
   );
 }

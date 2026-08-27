@@ -49,30 +49,10 @@ const pillars = [
 export default function CorporateWhy() {
   const { openModal } = useEnquiry();
   return (
-    <section className="relative bg-[#faf9f8]" id="why-partner">
+    <section className="relative bg-[#faf9f8] pt-12 sm:pt-16 md:pt-20 pb-16 md:pb-24" id="why-partner">
       
-      {/* Dark Header Strip for Navbar Contrast & Title */}
-      <div className="bg-deep-navy pt-40 pb-32 px-6 lg:px-16" style={{ backgroundImage: "url('/images/corporate_hero_skyline.webp')", backgroundPosition: "center", backgroundSize: "cover", backgroundBlendMode: "overlay", backgroundColor: "rgba(0,8,20,0.85)" }}>
-        <div className="max-w-[1600px] mx-auto">
-          <div className="flex items-center gap-4 mb-5">
-            <div className="w-8 h-[1px] bg-tropical-gold" />
-            <p className="text-tropical-gold text-[10px] md:text-xs font-bold uppercase tracking-[0.35em]">
-              Corporate Logistics
-            </p>
-          </div>
-          <h1 className="text-4xl md:text-5xl lg:text-7xl font-heading font-extrabold text-white tracking-tight leading-[1.05] mb-6">
-            Precision in Motion.
-          </h1>
-          <p className="text-gray-300 text-lg md:text-xl font-light leading-relaxed max-w-2xl mb-12">
-            In the corporate world, time is the ultimate currency. You need a
-            travel partner who is as meticulous and organized as your own
-            executive team.
-          </p>
-        </div>
-      </div>
-
-      {/* Main Content Area - overlaps the dark header */}
-      <div className="max-w-[1600px] mx-auto px-6 lg:px-16 -mt-16 relative z-10">
+      {/* Main Content Area */}
+      <div className="max-w-[1600px] mx-auto px-6 lg:px-16 relative z-10">
         
         {/* Content Box */}
         <div className="bg-white rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-gray-100 p-8 md:p-12 lg:p-20">

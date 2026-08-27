@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import CruiseHero from "@/components/cruise/CruiseHero";
 import CruiseWhy from "@/components/cruise/CruiseWhy";
 import CruiseDestinations from "@/components/cruise/CruiseDestinations";
 import CruiseEnquiryForm from "@/components/cruise/CruiseEnquiryForm";
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
 export default function CruisesPage() {
   return (
     <main className="bg-[#faf9f8] overflow-hidden min-h-screen flex flex-col">
+      <CruiseHero />
       <CruiseWhy />
       <CruiseDestinations />
       <CruiseEnquiryForm />

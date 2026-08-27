@@ -37,6 +37,19 @@ export default function WeddingWhy() {
               passionate and loving as the occasion itself.
             </p>
 
+            {/* CTA Button */}
+            <div className="flex flex-wrap gap-4 mb-10">
+              <button
+                onClick={() => openModal("wedding")}
+                className="cursor-pointer inline-flex items-center gap-3 bg-[#c07a40] hover:bg-[#a66530] text-white font-bold px-8 py-4 rounded-full transition-all duration-300 shadow-xl shadow-[#c07a40]/25 text-sm uppercase tracking-wider hover:scale-105 active:scale-95"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+                <span>Start Planning Your Wedding</span>
+              </button>
+            </div>
+
             {/* Divider */}
             <div className="w-16 h-[2px] bg-gradient-to-r from-[#d4a87a] to-[#f0c89a] rounded-full mb-10" />
 

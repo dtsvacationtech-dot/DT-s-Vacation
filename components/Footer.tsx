@@ -155,10 +155,30 @@ export default function Footer() {
             </form>
           )}
         </div>
-
       </div>
 
-      <div className="max-w-[1600px] mx-auto pt-8 border-t border-gray-200 flex flex-col md:flex-row items-center justify-between text-xs text-gray-400 font-medium tracking-wide">
+      {/* ── Footer Verified Accreditation Bar ── */}
+      <div className="max-w-[1600px] mx-auto py-6 my-6 border-t border-gray-200/80 flex flex-wrap items-center justify-between gap-4 text-xs text-gray-500 font-medium">
+        <div className="flex flex-wrap items-center gap-4 sm:gap-8">
+          <div className="flex items-center gap-1.5 font-bold text-deep-navy">
+            <span className="text-sm">🇯🇲</span> Ministry of Tourism Registered
+          </div>
+          <div className="flex items-center gap-1.5 font-bold text-deep-navy">
+            <span className="text-sm">🌴</span> JTB Specialist Partner
+          </div>
+          <div className="flex items-center gap-1.5 font-bold text-deep-navy">
+            <span className="text-sm">🏨</span> Expedia TAAP Network
+          </div>
+          <div className="flex items-center gap-1.5 font-bold text-deep-navy">
+            <span className="text-sm">🛡️</span> 100% Bonded &amp; Insured
+          </div>
+        </div>
+        <div className="text-[11px] text-tropical-gold font-bold uppercase tracking-wider">
+          License #MOT-JM-876
+        </div>
+      </div>
+
+      <div className="max-w-[1600px] mx-auto pt-4 flex flex-col md:flex-row items-center justify-between text-xs text-gray-400 font-medium tracking-wide">
         <p>© {new Date().getFullYear()} DT&apos;s Vacation &amp; Travel Limited. All rights reserved.</p>
         <div className="flex gap-6 mt-4 md:mt-0">
           <Link href="/privacy" className="hover:text-deep-navy transition-colors">Privacy Policy</Link>

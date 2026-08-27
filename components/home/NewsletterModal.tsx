@@ -10,22 +10,24 @@ export default function NewsletterModal() {
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
-    if (hasTriggered) return;
+    if (typeof window === "undefined") return;
+    const dismissed = sessionStorage.getItem("dt_newsletter_dismissed");
+    if (dismissed || hasTriggered) return;
 
-    // Trigger on time (15s)
+    // Trigger on time (30s) — relaxed from 15s to not disturb initial reading
     const timer = setTimeout(() => {
-      if (!hasTriggered) {
+      if (!sessionStorage.getItem("dt_newsletter_dismissed")) {
         setIsOpen(true);
         setHasTriggered(true);
       }
-    }, 15000);
+    }, 30000);
 
-    // Trigger on scroll (50%)
+    // Trigger on scroll (70%)
     const handleScroll = () => {
-      if (hasTriggered) return;
+      if (sessionStorage.getItem("dt_newsletter_dismissed") || hasTriggered) return;
       const scrolled = window.scrollY;
       const maxScroll = document.body.scrollHeight - window.innerHeight;
-      if (scrolled > maxScroll * 0.5) {
+      if (scrolled > maxScroll * 0.7) {
         setIsOpen(true);
         setHasTriggered(true);
       }
@@ -39,6 +41,31 @@ export default function NewsletterModal() {
     };
   }, [hasTriggered]);
 
+  const handleClose = () => {
+    setIsOpen(false);
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("dt_newsletter_dismissed", "true");
+    }
+  };
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !email.includes("@")) return;
+    try {
+      await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+    } catch {
+      // ignore
+    }
+    setSubmitted(true);
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("dt_newsletter_dismissed", "true");
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -46,7 +73,7 @@ export default function NewsletterModal() {
       {/* Backdrop (Dark Frost) */}
       <div 
         className="absolute inset-0 bg-[#000c1c]/80 backdrop-blur-md transition-opacity"
-        onClick={() => setIsOpen(false)}
+        onClick={handleClose}
       />
 
       {/* Luxury iOS-style Modal Content */}
@@ -54,7 +81,7 @@ export default function NewsletterModal() {
         
         {/* Glass Close Button */}
         <button 
-          onClick={() => setIsOpen(false)}
+          onClick={handleClose}
           className="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/30 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-black/50 hover:text-tropical-gold z-20 transition-all duration-300"
           aria-label="Close"
         >
@@ -102,7 +129,7 @@ export default function NewsletterModal() {
                 Expect intentional inspiration and unmatched luxury features in your inbox soon.
               </p>
               <button 
-                onClick={() => setIsOpen(false)}
+                onClick={handleClose}
                 className="mt-6 text-tropical-gold hover:text-white transition-colors duration-300 text-sm font-medium border-b border-transparent hover:border-white"
               >
                 Close Window
@@ -115,10 +142,7 @@ export default function NewsletterModal() {
               </p>
               
               <form 
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  setSubmitted(true);
-                }}
+                onSubmit={handleFormSubmit}
                 className="flex flex-col space-y-4"
               >
                 {/* iOS Glass Input Field */}

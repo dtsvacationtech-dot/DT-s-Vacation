@@ -324,7 +324,7 @@ export default function CruiseEnquiryForm() {
                           name="departurePort"
                           value={formData.departurePort}
                           onChange={handleChange}
-                          placeholder="e.g. Bangkok, Dubai, Miami, London..."
+                          placeholder="e.g. Barbados, Trinidad, Montego Bay, Miami..."
                           className="w-full bg-gray-50 border border-gray-200 rounded-xl pl-5 pr-12 py-4 outline-none focus:border-deep-navy focus:bg-white transition-all text-sm"
                         />
                         <div className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
@@ -334,7 +334,22 @@ export default function CruiseEnquiryForm() {
                           </svg>
                         </div>
                       </div>
-                      <p className="text-[10px] text-gray-400 mt-1.5 ml-1">Type any city or port — we operate worldwide</p>
+                      <div className="flex flex-wrap gap-1.5 mt-2">
+                        {["Barbados", "Trinidad", "Montego Bay", "Miami", "Ft. Lauderdale", "Nassau"].map((port) => (
+                          <button
+                            key={port}
+                            type="button"
+                            onClick={() => setFormData((prev) => ({ ...prev, departurePort: port }))}
+                            className={`text-[10px] font-bold px-2 py-0.5 rounded-md transition-all cursor-pointer ${
+                              formData.departurePort === port
+                                ? "bg-deep-navy text-tropical-gold border border-tropical-gold/40"
+                                : "bg-gray-100 hover:bg-gray-200 text-gray-600 border border-gray-200"
+                            }`}
+                          >
+                            +{port}
+                          </button>
+                        ))}
+                      </div>
                     </div>
                     <div>
                       <label className="block text-xs font-bold text-deep-navy uppercase tracking-wider mb-2">Ideal Travel Date *</label>
