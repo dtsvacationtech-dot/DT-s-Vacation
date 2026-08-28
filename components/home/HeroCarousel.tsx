@@ -13,7 +13,7 @@ export default function HeroCarousel() {
   const currentSlide = heroSlides[activeIdx] || heroSlides[0];
 
   return (
-    <section className="relative min-h-[92vh] lg:min-h-screen w-full overflow-hidden bg-deep-navy font-body flex flex-col justify-between pt-32 sm:pt-36 md:pt-40 lg:pt-44 pb-8 lg:pb-12">
+    <section className="relative min-h-[92vh] lg:min-h-screen w-full overflow-hidden bg-deep-navy font-body flex flex-col justify-between pt-32 sm:pt-36 md:pt-40 lg:pt-48 pb-8 lg:pb-12">
       
       {/* ── Background Slides (Cinematic Cross-Fade) ── */}
       {heroSlides.map((slide, index) => {

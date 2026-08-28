@@ -153,12 +153,12 @@ export default function Navbar() {
             <Image
               src="/images/logo.webp"
               alt="DT's Vacation & Travel Ltd."
-              width={260}
-              height={260}
+              width={320}
+              height={320}
               className={`w-auto object-contain transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)] ${
                 isScrolled || isMobileMenuOpen
-                  ? "h-10 md:h-12 lg:h-14"
-                  : "h-12 md:h-18 lg:h-20"
+                  ? "h-10 md:h-12 lg:h-16"
+                  : "h-12 md:h-18 lg:h-28"
               }`}
               priority
             />
