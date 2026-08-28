@@ -3,51 +3,65 @@ import { sendEmail, AGENCY_EMAIL } from "@/lib/emailSender";
 
 export async function POST(req: NextRequest) {
   try {
-    const { email } = await req.json();
+    let email = "";
+    try {
+      const body = await req.json();
+      email = body?.email ?? "";
+    } catch {
+      return NextResponse.json({ error: "Invalid request payload." }, { status: 400 });
+    }
 
     if (!email || !email.includes("@")) {
       return NextResponse.json({ error: "Invalid email address." }, { status: 400 });
     }
 
-    // ── 1. Save to Supabase ────────────────────────────────────────────────
+    // ── 1. Save to Supabase (if configured) ────────────────────────────────
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-    if (supabaseUrl && supabaseKey) {
-      const res = await fetch(`${supabaseUrl}/rest/v1/subscribers`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "apikey": supabaseKey,
-          "Authorization": `Bearer ${supabaseKey}`,
-          "Prefer": "return=minimal",
-        },
-        body: JSON.stringify({ email }),
-      });
+    if (supabaseUrl && supabaseKey && supabaseUrl.startsWith("http")) {
+      try {
+        const res = await fetch(`${supabaseUrl}/rest/v1/subscribers`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            apikey: supabaseKey,
+            Authorization: `Bearer ${supabaseKey}`,
+            Prefer: "return=minimal",
+          },
+          body: JSON.stringify({ email }),
+        });
 
-      // Ignore 409 (already subscribed) — treat as success
-      if (!res.ok && res.status !== 409) {
-        console.error("Supabase insert error:", res.status);
+        // Ignore 409 (already subscribed) — treat as success
+        if (!res.ok && res.status !== 409) {
+          console.error("Supabase insert error:", res.status, await res.text().catch(() => ""));
+        }
+      } catch (sbErr) {
+        console.error("Supabase fetch error (non-fatal):", sbErr);
       }
     }
 
     // ── 2. Dispatch Emails (Direct Gmail SMTP or Resend) ──────────────────
-    await Promise.allSettled([
-      sendEmail({
-        to: email,
-        subject: "🌴 Welcome to DT's Vacation & Travel — You're In!",
-        html: subscriberWelcomeHtml(email),
-      }),
-      sendEmail({
-        to: AGENCY_EMAIL,
-        subject: `New Newsletter Subscriber: ${email}`,
-        html: agencySubscriberNotifyHtml(email),
-      }),
-    ]);
+    try {
+      await Promise.allSettled([
+        sendEmail({
+          to: email,
+          subject: "🌴 Welcome to DT's Vacation & Travel — You're In!",
+          html: subscriberWelcomeHtml(email),
+        }),
+        sendEmail({
+          to: AGENCY_EMAIL,
+          subject: `New Newsletter Subscriber: ${email}`,
+          html: agencySubscriberNotifyHtml(email),
+        }),
+      ]);
+    } catch (emailErr) {
+      console.error("Newsletter email dispatch error (non-fatal):", emailErr);
+    }
 
     return NextResponse.json({ success: true, message: "Subscribed successfully." });
-  } catch (err) {
-    console.error("Subscribe API error:", err);
+  } catch (err: any) {
+    console.error("Subscribe API unexpected error:", err?.message || err);
     return NextResponse.json({ error: "Something went wrong. Please try again." }, { status: 500 });
   }
 }

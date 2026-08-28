@@ -27,7 +27,12 @@ interface EnquiryPayload {
 
 export async function POST(req: NextRequest) {
   try {
-    const data: EnquiryPayload = await req.json();
+    let data: EnquiryPayload;
+    try {
+      data = await req.json();
+    } catch {
+      return NextResponse.json({ error: "Invalid request payload." }, { status: 400 });
+    }
 
     if (!data.email?.includes("@")) {
       return NextResponse.json({ error: "Valid email is required." }, { status: 400 });
@@ -37,64 +42,72 @@ export async function POST(req: NextRequest) {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-    if (supabaseUrl && supabaseKey) {
-      const res = await fetch(`${supabaseUrl}/rest/v1/enquiries`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "apikey": supabaseKey,
-          "Authorization": `Bearer ${supabaseKey}`,
-          "Prefer": "return=minimal",
-        },
-        body: JSON.stringify({
-          first_name: data.firstName ?? data.name ?? "",
-          last_name: data.lastName ?? "",
-          email: data.email,
-          phone: data.phone,
-          destination: data.destination ?? data.destinations?.join(", ") ?? "",
-          travel_date_start: data.travelDateStart ?? data.date ?? null,
-          travel_date_end: data.travelDateEnd ?? null,
-          adults: Number(data.adults ?? data.guests ?? 1),
-          children: Number(data.children ?? 0),
-          message: data.message ?? "",
-          service_type: data.serviceType ?? "General",
-        }),
-      });
+    if (supabaseUrl && supabaseKey && supabaseUrl.startsWith("http")) {
+      try {
+        const res = await fetch(`${supabaseUrl}/rest/v1/enquiries`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            apikey: supabaseKey,
+            Authorization: `Bearer ${supabaseKey}`,
+            Prefer: "return=minimal",
+          },
+          body: JSON.stringify({
+            first_name: data.firstName ?? data.name ?? "",
+            last_name: data.lastName ?? "",
+            email: data.email,
+            phone: data.phone,
+            destination: data.destination ?? data.destinations?.join(", ") ?? "",
+            travel_date_start: data.travelDateStart ?? data.date ?? null,
+            travel_date_end: data.travelDateEnd ?? null,
+            adults: Number(data.adults ?? data.guests ?? 1),
+            children: Number(data.children ?? 0),
+            message: data.message ?? "",
+            service_type: data.serviceType ?? "General",
+          }),
+        });
 
-      if (!res.ok) {
-        console.error("Supabase enquiry insert error:", res.status, await res.text());
+        if (!res.ok) {
+          console.error("Supabase enquiry insert error:", res.status, await res.text().catch(() => ""));
+        }
+      } catch (sbErr) {
+        console.error("Supabase enquiry connection error (non-fatal):", sbErr);
       }
     }
 
     // ── 2 & 3. Dispatch Emails (Direct Gmail SMTP or Resend) ───────────────
     const customerName = data.firstName ?? data.name ?? "Traveler";
 
-    const [customerResult, agencyResult] = await Promise.allSettled([
-      // Customer confirmation
-      sendEmail({
-        to: data.email,
-        subject: "We've Received Your Enquiry — DT's Vacation & Travel",
-        html: customerConfirmationHtml(customerName, data),
-      }),
-      // Agency notification
-      sendEmail({
-        to: AGENCY_EMAIL,
-        replyTo: data.email,
-        subject: `New Enquiry [${data.serviceType ?? "General"}] from ${customerName}`,
-        html: agencyEnquiryHtml(customerName, data),
-      }),
-    ]);
+    try {
+      const [customerResult, agencyResult] = await Promise.allSettled([
+        // Customer confirmation
+        sendEmail({
+          to: data.email,
+          subject: "We've Received Your Enquiry — DT's Vacation & Travel",
+          html: customerConfirmationHtml(customerName, data),
+        }),
+        // Agency notification
+        sendEmail({
+          to: AGENCY_EMAIL,
+          replyTo: data.email,
+          subject: `New Enquiry [${data.serviceType ?? "General"}] from ${customerName}`,
+          html: agencyEnquiryHtml(customerName, data),
+        }),
+      ]);
 
-    if (customerResult.status === "rejected") {
-      console.error("Customer email error:", customerResult.reason);
-    }
-    if (agencyResult.status === "rejected") {
-      console.error("Agency email error:", agencyResult.reason);
+      if (customerResult.status === "rejected") {
+        console.error("Customer email error:", customerResult.reason);
+      }
+      if (agencyResult.status === "rejected") {
+        console.error("Agency email error:", agencyResult.reason);
+      }
+    } catch (emailErr) {
+      console.error("Enquiry email dispatch error (non-fatal):", emailErr);
     }
 
     return NextResponse.json({ success: true, message: "Enquiry submitted successfully." });
-  } catch (err) {
-    console.error("Send-enquiry API error:", err);
+  } catch (err: any) {
+    console.error("Send-enquiry API error:", err?.message || err);
     return NextResponse.json({ error: "Something went wrong. Please try again." }, { status: 500 });
   }
 }
