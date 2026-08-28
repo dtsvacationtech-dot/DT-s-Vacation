@@ -8,6 +8,7 @@ import PageTransition from "@/components/PageTransition";
 import { EnquiryProvider } from "@/context/EnquiryContext";
 import GlobalEnquiryModal from "@/components/ui/GlobalEnquiryModal";
 import PromotionsModal from "@/components/home/PromotionsModal";
+import ExtensionErrorSuppressor from "@/components/ExtensionErrorSuppressor";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -36,6 +37,7 @@ export default function RootLayout({
     >
       <body className="min-h-screen flex flex-col font-body antialiased bg-[#000814] text-white overflow-x-hidden w-full">
         <EnquiryProvider>
+          <ExtensionErrorSuppressor />
           <Navbar />
           <main className="flex-grow">
             <PageTransition>{children}</PageTransition>

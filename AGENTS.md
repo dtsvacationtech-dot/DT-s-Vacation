@@ -28,19 +28,22 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 ---
 
-## 📧 Email System (In Progress — Awaiting Sender Account)
+## 📧 Email System (Active — Direct Gmail SMTP)
 
 ### Enquiry Flow
-When a customer fills out the Global Enquiry Modal or any page enquiry form, the system should:
-1. Send an **email notification** to the agency: `dtvacationandtravel@gmail.com`
-2. Send a **confirmation email** to the customer (using the email they provided in the form)
-3. Store the enquiry data in Supabase `enquiries` table
+When a customer fills out the Global Enquiry Modal or any page enquiry form, the system automatically:
+1. Sends an **internal email notification** with full lead details to the agency: `dtvacationandtravel@gmail.com`
+2. Sends an **instant luxury confirmation email** to the customer
+3. Stores the enquiry data in Supabase `enquiries` table (if Supabase is configured)
 
-### Sender Email
-- **Receiver (Agency):** `dtvacationandtravel@gmail.com`
-- **Sender Account:** ⏳ **PENDING — Owner is currently signing up for a sender email service.**
-  - When ready, configure as `RESEND_API_KEY` (preferred) or `SMTP_*` variables in Vercel environment.
-  - The API Route for sending email should be: `app/api/send-enquiry/route.ts`
+### Email Credentials (100% Free via Nodemailer)
+- **Email Dispatcher:** `lib/emailSender.ts` (supports Gmail SMTP & fallback)
+- **Agency & Sender:** `dtvacationandtravel@gmail.com`
+- **Environment Variables Required on Vercel:**
+  ```env
+  GMAIL_USER=dtvacationandtravel@gmail.com
+  GMAIL_APP_PASSWORD=xrlhjcqspqkonhmv
+  ```
 
 ### Data Collected in Enquiry Forms
 The forms collect: `firstName`, `lastName`, `email`, `phone (WhatsApp)`, `destination`, `travelDateStart`, `travelDateEnd`, `adults`, `children`, `message`, `serviceType` (Hotels/Cruises/Tours/Wedding/Corporate).
