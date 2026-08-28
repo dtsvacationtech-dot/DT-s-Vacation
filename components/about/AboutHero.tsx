@@ -27,7 +27,7 @@ export default function AboutHero() {
               Meet
             </span>
             <span className="block text-5xl md:text-6xl lg:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-tropical-gold to-yellow-200">
-              Denise Thomas
+              Denise
             </span>
           </h1>
 
@@ -43,7 +43,7 @@ export default function AboutHero() {
           </p>
 
           <div className="font-serif text-3xl md:text-4xl text-white/30 italic opacity-80">
-            Denise Thomas
+            Denise
           </div>
 
         </div>
@@ -59,7 +59,7 @@ export default function AboutHero() {
             <div className="absolute inset-0 bg-deep-navy/20 group-hover:bg-transparent transition-all duration-700 z-10 pointer-events-none" />
             <ImageWithSkeleton
               src="/images/Denis Profile.webp"
-              alt="Denise Thomas – Founder"
+              alt="Denise – Founder"
               fill
               className="object-cover object-top transition-transform duration-[10s] group-hover:scale-105"
               skeletonClassName="skeleton-shimmer-dark"
@@ -80,7 +80,7 @@ export default function AboutHero() {
               </p>
               <div className="mt-4 flex items-center gap-3">
                 <div className="w-8 h-[1px] bg-tropical-gold" />
-                <p className="text-tropical-gold text-[10px] font-bold tracking-[0.2em] uppercase">Denise T.</p>
+                <p className="text-tropical-gold text-[10px] font-bold tracking-[0.2em] uppercase">Denise</p>
               </div>
             </div>
 

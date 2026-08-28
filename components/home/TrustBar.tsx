@@ -53,17 +53,17 @@ export default function TrustBar() {
         }`}>
           <div className="flex items-center gap-2">
             <span className="text-base">🇯🇲</span>
-            <span className="text-deep-navy font-bold">Jamaica Ministry of Tourism</span> Registered
-          </div>
-          <span className="text-gray-300 hidden sm:inline">&bull;</span>
-          <div className="flex items-center gap-2">
-            <span className="text-base">🌴</span>
-            <span className="text-deep-navy font-bold">Jamaica Tourist Board</span> Affiliated
+            <span className="text-deep-navy font-bold">Jamaica Ministry of Tourism</span> Licensed
           </div>
           <span className="text-gray-300 hidden sm:inline">&bull;</span>
           <div className="flex items-center gap-2">
             <span className="text-base">🏨</span>
-            <span className="text-deep-navy font-bold">Expedia TAAP</span> Travel Partner
+            <span className="text-deep-navy font-bold">Expedia TAAP</span> Global Partner
+          </div>
+          <span className="text-gray-300 hidden sm:inline">&bull;</span>
+          <div className="flex items-center gap-2">
+            <span className="text-base">🛡️</span>
+            <span className="text-deep-navy font-bold">Verified Travel Governance</span>
           </div>
         </div>
       </div>

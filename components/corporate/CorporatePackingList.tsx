@@ -164,7 +164,7 @@ export default function CorporatePackingList() {
                     your bags are safe allows you to stay in &apos;work-mode&apos; or
                     &apos;relax-mode&apos; without worry.&rdquo;
                   </p>
-                  <p className="text-indigo-400 text-xs font-semibold mt-3">— Denise Thomas</p>
+                  <p className="text-indigo-400 text-xs font-semibold mt-3">— Denise</p>
                 </div>
               </div>
             </div>
