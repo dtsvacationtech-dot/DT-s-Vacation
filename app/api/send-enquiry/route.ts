@@ -142,7 +142,7 @@ function customerConfirmationHtml(name: string, data: EnquiryPayload): string {
           <td style="background:#ffffff;padding:40px 40px 0;">
             <p style="margin:0 0 16px;color:#1a2840;font-size:16px;line-height:1.7;">Dear <strong>${name}</strong>,</p>
             <p style="margin:0 0 24px;color:#475569;font-size:15px;line-height:1.7;">
-              Thank you for reaching out to us! We've successfully received your <strong>${service}</strong> enquiry and our specialist team will review your details and contact you as quickly as possible — typically within <strong>24 hours</strong>.
+              Thank you for reaching out to us! We've successfully received your <strong>${service}</strong> enquiry and our specialist team will review your details and contact you as quickly as possible — typically within <strong>24–48 hours</strong>.
             </p>
           </td>
         </tr>
@@ -172,8 +172,8 @@ function customerConfirmationHtml(name: string, data: EnquiryPayload): string {
             <table width="100%" cellpadding="0" cellspacing="0">
               ${[
                 ["1","Review","Our specialists review your travel preferences"],
-                ["2","Custom Proposal","We craft a personalized itinerary &amp; pricing for you"],
-                ["3","Get in Touch","We contact you via email or WhatsApp to finalize details"],
+                ["2","Get in Touch","We contact you via email or WhatsApp to finalize details"],
+                ["3","Custom Proposal","We craft a personalized itinerary &amp; pricing for you"],
               ].map(([num, title, desc]) => `
               <tr>
                 <td style="padding:10px 0;border-bottom:1px solid #f1f5f9;">
