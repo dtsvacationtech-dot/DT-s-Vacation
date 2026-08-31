@@ -1,0 +1,230 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-heading: 'Montserrat', sans-serif;
+    --font-thai: 'Prompt', 'Montserrat', sans-serif;
+    --gold-primary: #D4AF37;
+    --gold-light: #F3E5AB;
+    --gold-dark: #997A15;
+    --bg-black: #0B0B0C;
+    --bg-card: #141417;
+  }
+
+  body {
+    background-color: #08080A;
+    color: #E2E8F0;
+    font-family: var(--font-thai);
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+/* Custom Luxury Gradients & Effects */
+.gold-gradient-text {
+  background: linear-gradient(135deg, #FFF0B3 0%, #D4AF37 50%, #AA820A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-gradient-bg {
+  background: linear-gradient(135deg, #ECC853 0%, #D4AF37 50%, #99750A 100%);
+}
+
+.luxury-card {
+  background: linear-gradient(145deg, rgba(24, 24, 30, 0.85) 0%, rgba(12, 12, 15, 0.95) 100%);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.8), 0 0 15px rgba(212, 175, 55, 0.05);
+}
+
+.luxury-card-gold {
+  background: linear-gradient(145deg, #242016 0%, #0e0c08 100%);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  box-shadow: 0 10px 25px rgba(212, 175, 55, 0.15);
+}
+
+.gold-glow {
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.35);
+}
+
+.gold-glow-subtle {
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.15);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0d0d10;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2a35;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #D4AF37;
+}
+
+/* Luxury Card Shimmer & Holographic Sweeping Animation */
+@keyframes shimmer-sweep {
+  0% {
+    transform: translateX(-180%) skewX(-25deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.75;
+  }
+  50% {
+    opacity: 0.75;
+  }
+  100% {
+    transform: translateX(280%) skewX(-25deg);
+    opacity: 0;
+  }
+}
+
+.card-shimmer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.08) 20%,
+    rgba(255, 235, 160, 0.55) 50%,
+    rgba(255, 255, 255, 0.15) 80%,
+    transparent 100%
+  );
+  animation: shimmer-sweep 3.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  pointer-events: none;
+}
+
+@keyframes gold-pulse {
+  0%, 100% {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.9), 0 0 14px rgba(212, 175, 55, 0.22);
+  }
+  50% {
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.95), 0 0 22px rgba(212, 175, 55, 0.45);
+  }
+}
+
+.card-gold-pulse {
+  animation: gold-pulse 3.8s ease-in-out infinite;
+}
+
+/* ========================================================================= */
+/* 🌟 MEMBERSHIP CARD AURA ANIMATIONS (SILVER / GOLD / PLATINUM)             */
+/* ========================================================================= */
+
+/* 1. Silver Aura: แสงสีขาวกระพริบระยิบระยับเล็กๆ (Subtle sparkling white aura) */
+@keyframes aura-flicker-silver {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(0.96);
+    box-shadow: 
+      0 0 10px 2px rgba(255, 255, 255, 0.8),
+      0 0 18px 4px rgba(215, 235, 255, 0.5),
+      0 0 28px 6px rgba(180, 210, 255, 0.3);
+  }
+  25% {
+    opacity: 0.95;
+    transform: scale(1.03);
+    box-shadow: 
+      0 0 16px 4px rgba(255, 255, 255, 1),
+      0 0 26px 8px rgba(230, 245, 255, 0.8),
+      0 0 38px 12px rgba(200, 225, 255, 0.5);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(0.98);
+    box-shadow: 
+      0 0 12px 3px rgba(255, 255, 255, 0.85),
+      0 0 20px 5px rgba(215, 235, 255, 0.55),
+      0 0 30px 8px rgba(180, 210, 255, 0.35);
+  }
+  75% {
+    opacity: 0.88;
+    transform: scale(1.02);
+    box-shadow: 
+      0 0 15px 4px rgba(255, 255, 255, 0.95),
+      0 0 24px 7px rgba(225, 240, 255, 0.75),
+      0 0 34px 10px rgba(190, 220, 255, 0.45);
+  }
+}
+
+.aura-silver {
+  position: absolute;
+  inset: -5px;
+  border-radius: 12px;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.7) 10%, rgba(200, 225, 255, 0.4) 55%, transparent 85%);
+  animation: aura-flicker-silver 2s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 2. Gold Aura: สีทองกระพริบ ออร่าขนาดปานกลาง (Medium glowing & pulsing warm gold aura) */
+@keyframes aura-pulse-gold {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(0.96);
+    box-shadow: 
+      0 0 16px 4px rgba(255, 215, 0, 0.85),
+      0 0 30px 8px rgba(212, 175, 55, 0.6),
+      0 0 46px 14px rgba(255, 180, 0, 0.35);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+    box-shadow: 
+      0 0 26px 8px rgba(255, 215, 0, 1),
+      0 0 45px 14px rgba(212, 175, 55, 0.85),
+      0 0 65px 20px rgba(255, 170, 0, 0.55);
+  }
+}
+
+.aura-gold {
+  position: absolute;
+  inset: -8px;
+  border-radius: 16px;
+  background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.8) 15%, rgba(212, 175, 55, 0.5) 60%, transparent 88%);
+  animation: aura-pulse-gold 2.8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 3. Platinum Aura: สีม่วงใหญ่ขึ้น ออร่าหรูหราอลังการ (Larger expansive royal purple aura) */
+@keyframes aura-pulse-platinum {
+  0%, 100% {
+    opacity: 0.65;
+    transform: scale(0.96);
+    box-shadow: 
+      0 0 22px 6px rgba(192, 132, 252, 0.9),
+      0 0 42px 14px rgba(168, 85, 247, 0.7),
+      0 0 65px 22px rgba(147, 51, 234, 0.45);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+    box-shadow: 
+      0 0 35px 10px rgba(216, 180, 254, 1),
+      0 0 60px 20px rgba(192, 132, 252, 0.9),
+      0 0 90px 30px rgba(168, 85, 247, 0.65);
+  }
+}
+
+.aura-platinum {
+  position: absolute;
+  inset: -12px;
+  border-radius: 20px;
+  background: radial-gradient(ellipse at center, rgba(192, 132, 252, 0.85) 15%, rgba(147, 51, 234, 0.55) 60%, transparent 90%);
+  animation: aura-pulse-platinum 3.2s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
