@@ -331,9 +331,24 @@ export const PromotionPage: FC<Props> = ({
             </div>
 
             {/* ⚡ FLASH SALE BIG HERO BANNER */}
-            <div className="rounded-2xl border border-[#deb34a]/60 bg-gradient-to-r from-[#17140e] via-[#100f0b] to-[#0a0a0c] overflow-hidden shadow-xl flex items-stretch relative">
+            <div className="rounded-2xl border border-[#deb34a]/60 bg-[#17140e] overflow-hidden shadow-xl relative min-h-[142px] flex items-stretch">
+              {/* Right Image with Smooth Cinematic Fade */}
+              <div className="absolute right-0 top-0 bottom-0 w-[65%] sm:w-[60%] overflow-hidden pointer-events-none select-none">
+                <img 
+                  src="/images/promo_flash_hero.webp" 
+                  alt="Flash Sale" 
+                  className="w-full h-full object-cover object-right"
+                />
+                {/* Smooth multi-stage gradient fade from solid left to transparent right */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#17140e] via-[#17140e]/75 via-30% to-transparent" />
+                <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-[#17140e] to-transparent" />
+                <span className="absolute bottom-2 right-2 px-1.5 py-0.5 rounded bg-black/75 backdrop-blur-xs text-[8.5px] font-mono text-zinc-300 z-10 border border-white/10">
+                  1/5
+                </span>
+              </div>
+
               {/* Left Info */}
-              <div className="p-3.5 flex-1 flex flex-col justify-between space-y-2 z-10">
+              <div className="p-3.5 relative z-10 max-w-[50%] flex flex-col justify-between space-y-2">
                 <div className="flex items-center gap-1.5 text-[#DEB34A]">
                   <Zap className="w-4 h-4 fill-[#DEB34A]" />
                   <span className="text-xs font-extrabold tracking-wider font-['Montserrat']">
@@ -382,19 +397,6 @@ export const PromotionPage: FC<Props> = ({
                   <span>ดูเพิ่มเติม</span>
                   <span>›</span>
                 </button>
-              </div>
-
-              {/* Right Image */}
-              <div className="w-[145px] relative shrink-0">
-                <img 
-                  src="/images/promo_flash_hero.webp" 
-                  alt="Flash Sale" 
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-[#17140e] via-transparent to-transparent" />
-                <span className="absolute bottom-2 right-2 px-1.5 py-0.5 rounded bg-black/70 text-[8.5px] font-mono text-zinc-300">
-                  1/5
-                </span>
               </div>
             </div>
 
