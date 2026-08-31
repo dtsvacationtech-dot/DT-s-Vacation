@@ -8,6 +8,7 @@ import {
   Zap, 
   Gift, 
   Calendar, 
+  Clock,
   ShieldCheck, 
   X, 
   CheckCircle2, 
@@ -321,9 +322,6 @@ export const PromotionPage: FC<Props> = ({
                 {/* Smooth multi-stage gradient fade from solid left to transparent right */}
                 <div className="absolute inset-0 bg-gradient-to-r from-[#17140e] via-[#17140e]/75 via-30% to-transparent" />
                 <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-[#17140e] to-transparent" />
-                <span className="absolute bottom-2 right-2 px-1.5 py-0.5 rounded bg-black/75 backdrop-blur-xs text-[8.5px] font-mono text-zinc-300 z-10 border border-white/10">
-                  1/5
-                </span>
               </div>
 
               {/* Left Info */}
@@ -505,16 +503,11 @@ export const PromotionPage: FC<Props> = ({
                 <div className="absolute top-2.5 left-2.5 w-10 h-10 rounded-full bg-[#deb34a] text-black font-extrabold text-xs font-mono flex items-center justify-center shadow-lg border border-white/40">
                   {selectedDeal.badge}
                 </div>
-
-                {/* Pagination Indicator */}
-                <span className="absolute bottom-2.5 right-2.5 px-2 py-0.5 rounded bg-black/70 text-[9px] font-mono text-zinc-300">
-                  1/5
-                </span>
               </div>
             </div>
 
             {/* Title & Category Info */}
-            <div className="space-y-1 pt-0.5">
+            <div className="space-y-1.5 pt-0.5">
               <span className="text-[9px] font-bold text-[#DEB34A] tracking-wider uppercase font-['Montserrat'] block">
                 {selectedDeal.category}
               </span>
@@ -525,13 +518,19 @@ export const PromotionPage: FC<Props> = ({
                 {selectedDeal.subtitle}
               </p>
 
-              <div className="flex items-center gap-2 pt-1">
-                <div className="flex items-center gap-1 text-[9.5px] text-zinc-400">
-                  <Calendar className="w-3.5 h-3.5 text-[#DEB34A]" />
-                  <span>{selectedDeal.validity}</span>
+              {/* E-Voucher Expiration Card */}
+              <div className="mt-2.5 p-2.5 rounded-xl bg-gradient-to-r from-[#1c170d] to-[#110f09] border border-[#deb34a]/40 flex items-center justify-between shadow-sm">
+                <div className="flex items-center gap-2">
+                  <div className="w-7 h-7 rounded-lg bg-[#deb34a]/15 border border-[#deb34a]/30 flex items-center justify-center text-[#DEB34A]">
+                    <Clock className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <span className="text-[9px] text-zinc-400 block font-medium">วันหมดอายุของ E-Voucher</span>
+                    <span className="text-[11px] font-bold text-[#DEB34A] font-mono">{selectedDeal.validity}</span>
+                  </div>
                 </div>
                 <span className="text-[8.5px] px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-300 border border-zinc-700 font-medium">
-                  ทุกวัน
+                  ใช้ได้ทุกวัน
                 </span>
               </div>
             </div>
