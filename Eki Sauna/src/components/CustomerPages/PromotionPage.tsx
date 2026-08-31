@@ -205,11 +205,16 @@ export const PromotionPage: FC<Props> = ({
   return (
     <div className="min-h-screen w-full bg-[#050507] text-[#E0E0E0] font-['Prompt',sans-serif] flex flex-col items-center justify-start p-3 sm:p-4 select-none pb-12 relative overflow-x-hidden">
       
-      {/* Bamboo Silhouette Background Watermark */}
-      <div 
-        className="absolute top-0 right-0 w-[200px] h-[180px] bg-no-repeat bg-contain opacity-25 pointer-events-none z-0"
-        style={{ backgroundImage: "url('/images/shop_bamboo.webp')" }}
-      />
+      {/* Luxury Dark Japanese Bamboo Header Background */}
+      <div className="absolute top-0 left-0 right-0 h-[280px] pointer-events-none z-0 overflow-hidden">
+        <img 
+          src="/images/bg_promo_header.webp" 
+          alt="" 
+          className="w-full h-full object-cover object-top opacity-90"
+        />
+        {/* Soft Bottom Fade into Background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-[#050507]" />
+      </div>
 
       {/* Main Container */}
       <div className="w-full max-w-[390px] space-y-3.5 relative z-10">
