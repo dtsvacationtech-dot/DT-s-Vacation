@@ -71,7 +71,7 @@ const PROMO_DEALS: PromoDeal[] = [
     badgeType: "free",
     title: "รับฟรี! เครื่องดื่ม Welcome Drink",
     subtitle: "เมื่อใช้บริการ Onsen & Sauna (จำกัด 1 สิทธิ์ / ใบเสร็จ)",
-    image: "/images/promo_deal_drink.webp",
+    image: "/images/coupon_drink.webp",
     validity: "1 ก.ย. 2567 - 30 ก.ย. 2567",
     price: 0,
     originalPrice: 120,
