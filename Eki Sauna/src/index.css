@@ -119,30 +119,20 @@
 }
 
 /* ========================================================================= */
-/* 🌟 LUXURY MEMBERSHIP CARD AURA ANIMATIONS (ULTRA-SMOOTH)                  */
+/* 🌟 LUXURY MEMBERSHIP CARD AURA ANIMATIONS (SYNCHRONIZED UNISON)           */
 /* ========================================================================= */
 
-/* 1. Silver Aura: แสงสีขาวกระพริบนุ่มนวลระยิบระยับ (Smooth flickering subtle white aura) */
-@keyframes aura-silver-smooth {
+/* 1. Silver Aura: แสงสีขาวประกายนุ่มนวล (Synchronized 3.0s) */
+@keyframes aura-silver-sync {
   0%, 100% {
     opacity: 0.35;
     transform: scale(0.98);
-    filter: blur(8px);
+    filter: blur(7px);
   }
-  30% {
+  50% {
     opacity: 0.85;
     transform: scale(1.03);
     filter: blur(10px);
-  }
-  60% {
-    opacity: 0.45;
-    transform: scale(0.99);
-    filter: blur(8px);
-  }
-  80% {
-    opacity: 0.75;
-    transform: scale(1.02);
-    filter: blur(9px);
   }
 }
 
@@ -151,20 +141,20 @@
   inset: -6px;
   border-radius: 14px;
   background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.8) 25%, rgba(210, 230, 255, 0.4) 60%, transparent 80%);
-  animation: aura-silver-smooth 3.2s ease-in-out infinite;
+  animation: aura-silver-sync 3.0s ease-in-out infinite;
   pointer-events: none;
   z-index: 0;
 }
 
-/* 2. Gold Aura: แสงสีทองเรืองรองนุ่มนวลปานกลาง (Smooth medium radiant golden pulse) */
-@keyframes aura-gold-smooth {
+/* 2. Gold Aura: แสงสีทองอบอุ่นเรืองรอง (Synchronized 3.0s) */
+@keyframes aura-gold-sync {
   0%, 100% {
-    opacity: 0.4;
+    opacity: 0.40;
     transform: scale(0.97);
-    filter: blur(12px);
+    filter: blur(11px);
   }
   50% {
-    opacity: 0.9;
+    opacity: 0.90;
     transform: scale(1.06);
     filter: blur(16px);
   }
@@ -175,17 +165,17 @@
   inset: -10px;
   border-radius: 18px;
   background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.85) 25%, rgba(212, 175, 55, 0.45) 60%, transparent 82%);
-  animation: aura-gold-smooth 3.6s ease-in-out infinite;
+  animation: aura-gold-sync 3.0s ease-in-out infinite;
   pointer-events: none;
   z-index: 0;
 }
 
-/* 3. Platinum Aura: แสงสีม่วงแผ่อลังการนุ่มนวล (Smooth large royal purple aura) */
-@keyframes aura-platinum-smooth {
+/* 3. Platinum Aura: แสงสีม่วงแผ่ขยายอลังการ (Synchronized 3.0s) */
+@keyframes aura-platinum-sync {
   0%, 100% {
     opacity: 0.45;
     transform: scale(0.96);
-    filter: blur(14px);
+    filter: blur(13px);
   }
   50% {
     opacity: 0.95;
@@ -199,7 +189,7 @@
   inset: -14px;
   border-radius: 22px;
   background: radial-gradient(ellipse at center, rgba(192, 132, 252, 0.9) 25%, rgba(147, 51, 234, 0.5) 60%, transparent 85%);
-  animation: aura-platinum-smooth 4.0s ease-in-out infinite;
+  animation: aura-platinum-sync 3.0s ease-in-out infinite;
   pointer-events: none;
   z-index: 0;
 }
