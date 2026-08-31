@@ -87,27 +87,6 @@ const PROMO_DEALS: PromoDeal[] = [
     ]
   },
   {
-    id: "promo-spa-15",
-    category: "ONSEN & SAUNA",
-    badge: "-15%",
-    badgeType: "discount",
-    title: "ส่วนลดสปาและทรีตเมนต์ 15%",
-    subtitle: "ให้ร่างกายและจิตใจได้ผ่อนคลาย ด้วยทรีตเมนต์คุณภาพ",
-    image: "/images/promo_deal_spa.webp",
-    validity: "1 ก.ย. 2567 - 30 ก.ย. 2567",
-    price: 1020,
-    originalPrice: 1200,
-    details: [
-      "รับส่วนลด 15% สำหรับทุกแพ็กเกจสปา นวดอโรมา และทรีตเมนต์ผิวกาย",
-      "กรุณาจองเวลาล่วงหน้าอย่างน้อย 1 วัน",
-      "ไม่สามารถใช้ร่วมกับบัตรกำนัลอื่นได้"
-    ],
-    terms: [
-      "แสดง E-Voucher ก่อนเข้ารับบริการ",
-      "สามารถใช้สิทธิ์ได้ที่ EKI Onsen & Sauna เท่านั้น"
-    ]
-  },
-  {
     id: "promo-member-x2",
     category: "MEMBER ONLY",
     badge: "SPECIAL",
