@@ -554,17 +554,12 @@ export const CustomerLineView: FC<Props> = ({ member, myVouchers, onBuyVoucher }
                 tier.tier === 'GOLD' ? 'aura-gold' :
                 tier.tier === 'BLACK_DIAMOND' ? 'aura-platinum' : '';
 
-              const dropShadowClass = 
-                tier.tier === 'SILVER' ? 'drop-shadow-[0_0_8px_rgba(255,255,255,0.7)]' :
-                tier.tier === 'GOLD' ? 'drop-shadow-[0_0_12px_rgba(255,215,0,0.8)]' :
-                tier.tier === 'BLACK_DIAMOND' ? 'drop-shadow-[0_0_16px_rgba(192,132,252,0.9)]' : '';
-
               return (
                 <div 
                   key={tier.tier}
-                  className={`p-4 rounded-2xl border bg-[#141419] space-y-2.5 transition-all ${
+                  className={`p-4 rounded-2xl border bg-[#141419] space-y-2.5 transition-all overflow-hidden ${
                     member.tier === tier.tier 
-                      ? 'border-amber-400 shadow-[0_0_20px_rgba(212,175,55,0.2)] bg-gradient-to-br from-[#221c10] to-[#12110c]' 
+                      ? 'border-amber-400/80 shadow-[0_0_20px_rgba(212,175,55,0.15)] bg-gradient-to-br from-[#1c160c] to-[#0d0b07]' 
                       : 'border-zinc-800'
                   }`}
                 >
@@ -587,7 +582,7 @@ export const CustomerLineView: FC<Props> = ({ member, myVouchers, onBuyVoucher }
                       <img 
                         src={cardImg} 
                         alt={tier.name} 
-                        className={`w-full h-full object-contain relative z-10 ${dropShadowClass}`} 
+                        className="w-full h-full object-contain relative z-10" 
                       />
                       <div className="absolute inset-[2.5px] rounded-[8px] overflow-hidden pointer-events-none z-20">
                         <div className="card-shimmer" />

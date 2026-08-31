@@ -956,7 +956,7 @@ export const MemberCardPage: FC<Props> = ({ member }) => {
               {/* ========================================= */}
               {/* 2. SILVER TIER */}
               {/* ========================================= */}
-              <div className="rounded-2xl border border-zinc-500/40 bg-gradient-to-b from-[#141820] to-[#08090c] p-2.5 space-y-2 relative shadow-[0_0_16px_rgba(255,255,255,0.08)]">
+              <div className="rounded-2xl border border-zinc-700/60 bg-gradient-to-b from-[#12151b] to-[#08090c] p-2.5 space-y-2 relative overflow-hidden shadow-md">
                 <div className="flex justify-between items-center pl-1">
                   <span className="text-xs font-bold text-zinc-200">สมาชิกระดับ SILVER</span>
                   {currentTierKey === "SILVER" && (
@@ -969,12 +969,12 @@ export const MemberCardPage: FC<Props> = ({ member }) => {
                 <div className="flex items-center gap-2.5">
                   {/* Thumbnail with Aura & Metallic Shimmer Animation */}
                   <div className="relative w-[120px] aspect-[2/1] shrink-0 select-none flex items-center justify-center">
-                    {/* Silver Aura (Subtle sparkling white light) */}
+                    {/* Silver Aura (Smooth subtle white shimmer) */}
                     <div className="aura-silver" />
                     <img 
                       src="/images/card_silver_member.webp" 
                       alt="SILVER" 
-                      className="w-full h-full object-contain relative z-10 drop-shadow-[0_0_8px_rgba(255,255,255,0.7)]" 
+                      className="w-full h-full object-contain relative z-10" 
                     />
                     <div className="absolute inset-[2.5px] rounded-[8px] overflow-hidden pointer-events-none z-20">
                       <div className="card-shimmer" />
@@ -1013,7 +1013,7 @@ export const MemberCardPage: FC<Props> = ({ member }) => {
               {/* ========================================= */}
               {/* 3. GOLD VIP TIER */}
               {/* ========================================= */}
-              <div className="rounded-2xl border border-[#deb34a]/60 bg-gradient-to-b from-[#221a0a] to-[#0c0a05] p-2.5 space-y-2 relative shadow-[0_0_20px_rgba(212,175,55,0.18)]">
+              <div className="rounded-2xl border border-[#deb34a]/40 bg-gradient-to-b from-[#1c160a] to-[#0a0804] p-2.5 space-y-2 relative overflow-hidden shadow-md">
                 {/* Gold Crown Ribbon */}
                 <div className="absolute top-0 right-3 w-5 h-6 bg-[#deb34a] text-black flex items-center justify-center rounded-b-sm shadow-sm z-20">
                   <Crown className="w-3 h-3" />
@@ -1031,12 +1031,12 @@ export const MemberCardPage: FC<Props> = ({ member }) => {
                 <div className="flex items-center gap-2.5">
                   {/* Thumbnail with Aura & Metallic Shimmer Animation */}
                   <div className="relative w-[120px] aspect-[2/1] shrink-0 select-none flex items-center justify-center">
-                    {/* Gold Aura (Medium warm gold pulse) */}
+                    {/* Gold Aura (Smooth medium golden pulse) */}
                     <div className="aura-gold" />
                     <img 
                       src="/images/card_gold_member.webp" 
                       alt="GOLD" 
-                      className="w-full h-full object-contain relative z-10 drop-shadow-[0_0_12px_rgba(255,215,0,0.8)]" 
+                      className="w-full h-full object-contain relative z-10" 
                     />
                     <div className="absolute inset-[2.5px] rounded-[8px] overflow-hidden pointer-events-none z-20">
                       <div className="card-shimmer" />
@@ -1089,7 +1089,7 @@ export const MemberCardPage: FC<Props> = ({ member }) => {
               {/* ========================================= */}
               {/* 4. PLATINUM VIP TIER (12% DISCOUNT) */}
               {/* ========================================= */}
-              <div className="rounded-2xl border border-[#a855f7]/70 bg-gradient-to-b from-[#1e1030] to-[#0a0611] p-2.5 space-y-2 relative shadow-[0_0_25px_rgba(168,85,247,0.25)]">
+              <div className="rounded-2xl border border-[#a855f7]/40 bg-gradient-to-b from-[#180e26] to-[#090510] p-2.5 space-y-2 relative overflow-hidden shadow-md">
                 {/* Purple Crown Ribbon */}
                 <div className="absolute top-0 right-3 w-5 h-6 bg-[#a78bfa] text-black flex items-center justify-center rounded-b-sm shadow-sm z-20">
                   <Crown className="w-3 h-3" />
@@ -1107,12 +1107,12 @@ export const MemberCardPage: FC<Props> = ({ member }) => {
                 <div className="flex items-center gap-2.5">
                   {/* Thumbnail with Aura & Metallic Shimmer Animation */}
                   <div className="relative w-[120px] aspect-[2/1] shrink-0 select-none flex items-center justify-center">
-                    {/* Platinum Aura (Larger expansive royal purple pulse) */}
+                    {/* Platinum Aura (Smooth large royal purple pulse) */}
                     <div className="aura-platinum" />
                     <img 
                       src="/images/card_platinum_member.webp" 
                       alt="PLATINUM" 
-                      className="w-full h-full object-contain relative z-10 drop-shadow-[0_0_16px_rgba(192,132,252,0.9)]" 
+                      className="w-full h-full object-contain relative z-10" 
                     />
                     <div className="absolute inset-[2.5px] rounded-[8px] overflow-hidden pointer-events-none z-20">
                       <div className="card-shimmer" />
