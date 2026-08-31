@@ -39,12 +39,14 @@ def create_and_set_rich_menu(channel_access_token: str, custom_actions: dict = N
             'uri': 'https://liff.line.me/2011345397-1XKydCv0'
         },
         'buy_coupon': custom_actions.get('buy_coupon') if (custom_actions and 'buy_coupon' in custom_actions) else {
-            'type': 'message',
-            'text': 'ซื้อคูปอง'
+            'type': 'uri',
+            'label': 'ซื้อคูปอง',
+            'uri': 'https://liff.line.me/2011345397-1XKydCv0?page=shop'
         },
         'promotion': custom_actions.get('promotion') if (custom_actions and 'promotion' in custom_actions) else {
-            'type': 'message',
-            'text': 'โปรโมชั่น'
+            'type': 'uri',
+            'label': 'โปรโมชั่น',
+            'uri': 'https://liff.line.me/2011345397-1XKydCv0?page=promotion'
         },
         'my_voucher': custom_actions.get('my_voucher') if (custom_actions and 'my_voucher' in custom_actions) else {
             'type': 'message',
