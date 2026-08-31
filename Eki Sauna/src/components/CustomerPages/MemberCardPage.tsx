@@ -895,8 +895,8 @@ export const MemberCardPage: FC<Props> = ({ member }) => {
                 <div className="flex justify-between items-center pl-1">
                   <span className="text-xs font-bold text-[#DEB34A]">สมาชิกระดับ ECO</span>
                   {currentTierKey === "ECO" && (
-                    <span className="text-[8.5px] font-bold text-[#DEB34A] bg-[#1a170e] border border-[#deb34a]/50 px-2 py-0.5 rounded-full font-['Montserrat'] tracking-wider">
-                      YOUR CURRENT TIER ✓
+                    <span className="text-[8.5px] font-bold text-[#DEB34A] bg-[#1a170e] border border-[#deb34a]/50 px-2 py-0.5 rounded-full font-['Prompt',sans-serif]">
+                      ระดับปัจจุบันของคุณ ✓
                     </span>
                   )}
                 </div>
@@ -960,8 +960,8 @@ export const MemberCardPage: FC<Props> = ({ member }) => {
                 <div className="flex justify-between items-center pl-1">
                   <span className="text-xs font-bold text-zinc-200">สมาชิกระดับ SILVER</span>
                   {currentTierKey === "SILVER" && (
-                    <span className="text-[8.5px] font-bold text-zinc-300 bg-zinc-800 border border-zinc-600 px-2 py-0.5 rounded-full font-['Montserrat'] tracking-wider">
-                      YOUR CURRENT TIER ✓
+                    <span className="text-[8.5px] font-bold text-zinc-300 bg-zinc-800 border border-zinc-600 px-2 py-0.5 rounded-full font-['Prompt',sans-serif]">
+                      ระดับปัจจุบันของคุณ ✓
                     </span>
                   )}
                 </div>
@@ -1022,8 +1022,8 @@ export const MemberCardPage: FC<Props> = ({ member }) => {
                 <div className="flex justify-between items-center pl-1">
                   <span className="text-xs font-bold text-[#E5BA55]">สมาชิกระดับ GOLD VIP</span>
                   {currentTierKey === "GOLD" && (
-                    <span className="text-[8.5px] font-bold text-[#DEB34A] bg-[#1a170e] border border-[#deb34a]/50 px-2 py-0.5 rounded-full font-['Montserrat'] tracking-wider mr-6">
-                      YOUR CURRENT TIER ✓
+                    <span className="text-[8.5px] font-bold text-[#DEB34A] bg-[#1a170e] border border-[#deb34a]/50 px-2 py-0.5 rounded-full font-['Prompt',sans-serif] mr-6">
+                      ระดับปัจจุบันของคุณ ✓
                     </span>
                   )}
                 </div>
@@ -1098,8 +1098,8 @@ export const MemberCardPage: FC<Props> = ({ member }) => {
                 <div className="flex justify-between items-center pl-1">
                   <span className="text-xs font-bold text-[#d8b4fe]">สมาชิกระดับ PLATINUM VIP</span>
                   {currentTierKey === "PLATINUM" && (
-                    <span className="text-[8.5px] font-bold text-[#c084fc] bg-[#2e1065] border border-[#a855f7] px-2 py-0.5 rounded-full font-['Montserrat'] tracking-wider mr-6">
-                      YOUR CURRENT TIER ✓
+                    <span className="text-[8.5px] font-bold text-[#c084fc] bg-[#2e1065] border border-[#a855f7] px-2 py-0.5 rounded-full font-['Prompt',sans-serif] mr-6">
+                      ระดับปัจจุบันของคุณ ✓
                     </span>
                   )}
                 </div>
