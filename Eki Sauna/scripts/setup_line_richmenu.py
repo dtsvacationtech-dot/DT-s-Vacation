@@ -31,7 +31,7 @@ def delete_rich_menu(channel_access_token: str, rich_menu_id: str):
         print(f'Note: Could not delete {rich_menu_id}: {e}')
 
 def create_and_set_rich_menu(channel_access_token: str, custom_actions: dict = None):
-    # Action configuration for the 4 tiles
+    # Action configuration for the areas
     actions = {
         'membership': custom_actions.get('membership') if (custom_actions and 'membership' in custom_actions) else {
             'type': 'uri',
@@ -42,41 +42,50 @@ def create_and_set_rich_menu(channel_access_token: str, custom_actions: dict = N
             'type': 'message',
             'text': 'ซื้อคูปอง'
         },
-        'contact_us': custom_actions.get('contact_us') if (custom_actions and 'contact_us' in custom_actions) else {
+        'promotion': custom_actions.get('promotion') if (custom_actions and 'promotion' in custom_actions) else {
             'type': 'message',
-            'text': 'ติดต่อสอบถาม'
+            'text': 'โปรโมชั่น'
         },
         'my_voucher': custom_actions.get('my_voucher') if (custom_actions and 'my_voucher' in custom_actions) else {
             'type': 'message',
             'text': 'คูปองของฉัน'
+        },
+        'contact_us': custom_actions.get('contact_us') if (custom_actions and 'contact_us' in custom_actions) else {
+            'type': 'message',
+            'text': 'ติดต่อ'
         }
     }
 
     rich_menu_data = {
         'size': {'width': 2500, 'height': 1686},
         'selected': True,
-        'name': 'Eki Onsen & Sauna Menu',
+        'name': 'Eki Onsen & Sauna Luxury Menu',
         'chatBarText': 'เมนูหลัก',
         'areas': [
             {
-                # 1. Top-Left: เมนู บัตรสมาชิก (Membership) -> LIFF URL
-                'bounds': {'x': 0, 'y': 380, 'width': 1250, 'height': 590},
+                # 1. Top-Left: เมนู บัตรสมาชิก (Membership) -> Open LIFF Webview
+                'bounds': {'x': 0, 'y': 360, 'width': 1250, 'height': 540},
                 'action': actions['membership']
             },
             {
                 # 2. Top-Right: ซื้อคูปอง (Buy Coupon)
-                'bounds': {'x': 1250, 'y': 380, 'width': 1250, 'height': 590},
+                'bounds': {'x': 1250, 'y': 360, 'width': 1250, 'height': 540},
                 'action': actions['buy_coupon']
             },
             {
-                # 3. Bottom-Left: ติดต่อสอบถาม (Contact Us)
-                'bounds': {'x': 0, 'y': 970, 'width': 1250, 'height': 716},
-                'action': actions['contact_us']
+                # 3. Middle-Left: โปรโมชั่น (Promotion)
+                'bounds': {'x': 0, 'y': 900, 'width': 1250, 'height': 520},
+                'action': actions['promotion']
             },
             {
-                # 4. Bottom-Right: MY VOUCHER ของฉัน (My Voucher)
-                'bounds': {'x': 1250, 'y': 970, 'width': 1250, 'height': 716},
+                # 4. Middle-Right: MY VOUCHER ของฉัน (My Voucher)
+                'bounds': {'x': 1250, 'y': 900, 'width': 1250, 'height': 520},
                 'action': actions['my_voucher']
+            },
+            {
+                # 5. Bottom-Right / Bottom: ติดต่อสอบถาม -> ส่งข้อความ 'ติดต่อ'
+                'bounds': {'x': 1200, 'y': 1420, 'width': 1300, 'height': 266},
+                'action': actions['contact_us']
             }
         ]
     }
