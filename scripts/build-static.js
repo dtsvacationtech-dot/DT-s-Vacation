@@ -22,7 +22,8 @@ try {
       NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || "https://67-205-178-226.sslip.io"
     }
   });
-  console.log("=== 2. Static export successfully generated in /out directory! ===");
+  execSync("cp -r out/* public/", { stdio: "inherit" });
+  console.log("=== 2. Static export successfully generated in /out and /public directories! ===");
 } catch (err) {
   console.error("Build failed:", err);
   process.exit(1);
