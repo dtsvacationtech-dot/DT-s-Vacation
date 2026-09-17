@@ -93,6 +93,7 @@ export async function POST(req: NextRequest) {
 
     const response = NextResponse.json({
       success: true,
+      token: token,
       user: { username: cleanUsername, role: "admin" },
     });
 
@@ -100,8 +101,8 @@ export async function POST(req: NextRequest) {
       name: SESSION_COOKIE_NAME,
       value: token,
       httpOnly: true,
-      secure: isProduction,
-      sameSite: "strict",
+      secure: true,
+      sameSite: "none",
       path: "/",
       maxAge: SESSION_MAX_AGE_SECONDS,
     });

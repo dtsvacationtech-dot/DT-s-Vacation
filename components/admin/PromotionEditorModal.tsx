@@ -1,6 +1,6 @@
 "use client";
 
-import { getApiUrl } from "@/lib/api";
+import { adminFetch } from "@/lib/api";
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
@@ -216,7 +216,7 @@ export default function PromotionEditorModal({
       const data = new FormData();
       data.append("file", file);
 
-      const res = await fetch(getApiUrl("/api/admin/upload"), {
+      const res = await adminFetch("/api/admin/upload", {
         method: "POST",
         body: data,
       });
@@ -267,7 +267,7 @@ export default function PromotionEditorModal({
       };
 
       const method = formData.id ? "PUT" : "POST";
-      const res = await fetch(getApiUrl("/api/admin/promotions"), {
+      const res = await adminFetch("/api/admin/promotions", {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

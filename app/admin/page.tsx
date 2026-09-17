@@ -1,6 +1,6 @@
 "use client";
 
-import { getApiUrl } from "@/lib/api";
+import { getApiUrl, getAuthHeaders, clearAdminToken } from "@/lib/api";
 
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
@@ -37,19 +37,24 @@ export default function AdminDashboardPage() {
   const fetchData = useCallback(async () => {
     try {
       // 1. Verify session
-      const authRes = await fetch(getApiUrl("/api/admin/auth/me"), { credentials: "include" });
+      const authRes = await fetch(getApiUrl("/api/admin/auth/me"), {
+        credentials: "include",
+        headers: getAuthHeaders(),
+      });
       if (!authRes.ok) {
-        router.replace("/admin/login");
+        clearAdminToken();
+        window.location.href = "/admin/login/";
         return;
       }
       setIsAuthenticated(true);
 
       // 2. Fetch promotions, enquiries, subscribers, and audit logs in parallel with no-store
+      const headers = getAuthHeaders();
       const [promoRes, enqRes, subRes, auditRes] = await Promise.all([
-        fetch(getApiUrl(`/api/admin/promotions?_t=${Date.now()}`), { cache: "no-store", credentials: "include" }),
-        fetch(getApiUrl(`/api/admin/enquiries?_t=${Date.now()}`), { cache: "no-store", credentials: "include" }),
-        fetch(getApiUrl(`/api/admin/subscribers?_t=${Date.now()}`), { cache: "no-store", credentials: "include" }),
-        fetch(getApiUrl(`/api/admin/audit?_t=${Date.now()}`), { cache: "no-store", credentials: "include" }),
+        fetch(getApiUrl(`/api/admin/promotions?_t=${Date.now()}`), { cache: "no-store", credentials: "include", headers }),
+        fetch(getApiUrl(`/api/admin/enquiries?_t=${Date.now()}`), { cache: "no-store", credentials: "include", headers }),
+        fetch(getApiUrl(`/api/admin/subscribers?_t=${Date.now()}`), { cache: "no-store", credentials: "include", headers }),
+        fetch(getApiUrl(`/api/admin/audit?_t=${Date.now()}`), { cache: "no-store", credentials: "include", headers }),
       ]);
 
       if (promoRes.ok) {

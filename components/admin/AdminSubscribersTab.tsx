@@ -1,6 +1,6 @@
 "use client";
 
-import { getApiUrl } from "@/lib/api";
+import { adminFetch } from "@/lib/api";
 
 import { useState } from "react";
 import { SubscriberRecord } from "@/lib/types";
@@ -68,7 +68,7 @@ export default function AdminSubscribersTab({
     if (!confirm(`Are you sure you want to remove subscriber "${email}"?`)) return;
 
     try {
-      const res = await fetch(getApiUrl(`/api/admin/subscribers?id=${id}`), {
+      const res = await adminFetch(`/api/admin/subscribers?id=${id}`, {
         method: "DELETE",
       });
 

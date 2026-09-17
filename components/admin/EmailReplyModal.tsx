@@ -1,6 +1,6 @@
 "use client";
 
-import { getApiUrl } from "@/lib/api";
+import { adminFetch } from "@/lib/api";
 
 import { useState, useEffect } from "react";
 import { EnquiryRecord, ExtendedPromotion } from "@/lib/types";
@@ -120,7 +120,7 @@ export default function EmailReplyModal({
 
     setIsSending(true);
     try {
-      const res = await fetch(getApiUrl("/api/admin/reply-enquiry"), {
+      const res = await adminFetch("/api/admin/reply-enquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

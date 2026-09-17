@@ -1,6 +1,6 @@
 "use client";
 
-import { getApiUrl } from "@/lib/api";
+import { adminFetch } from "@/lib/api";
 
 import { useState } from "react";
 import { ExtendedPromotion, BroadcastLogRecord, SubscriberRecord, EnquiryRecord } from "@/lib/types";
@@ -78,7 +78,7 @@ Explore our featured special offer below or reply directly to connect with our c
 
     setIsSendingTest(true);
     try {
-      const res = await fetch(getApiUrl("/api/admin/broadcast"), {
+      const res = await adminFetch("/api/admin/broadcast", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -125,7 +125,7 @@ Explore our featured special offer below or reply directly to connect with our c
 
     setIsSendingBroadcast(true);
     try {
-      const res = await fetch(getApiUrl("/api/admin/broadcast"), {
+      const res = await adminFetch("/api/admin/broadcast", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

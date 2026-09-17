@@ -1,6 +1,6 @@
 "use client";
 
-import { getApiUrl } from "@/lib/api";
+import { getApiUrl, clearAdminToken, getAuthHeaders } from "@/lib/api";
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
@@ -43,12 +43,17 @@ export default function AdminNavbar({ activeTab, onTabChange, unreadLeadsCount =
   const handleLogout = async () => {
     setIsLoggingOut(true);
     try {
-      await fetch(getApiUrl("/api/admin/auth/logout"), { method: "POST" });
+      await fetch(getApiUrl("/api/admin/auth/logout"), {
+        method: "POST",
+        credentials: "include",
+        headers: getAuthHeaders(),
+      });
+      clearAdminToken();
       showToast("Logged out successfully.", "info");
-      router.push("/admin/login");
-      router.refresh();
+      window.location.href = "/admin/login/";
     } catch {
-      router.push("/admin/login");
+      clearAdminToken();
+      window.location.href = "/admin/login/";
     } finally {
       setIsLoggingOut(false);
     }

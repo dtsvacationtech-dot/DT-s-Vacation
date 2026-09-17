@@ -1,6 +1,6 @@
 "use client";
 
-import { getApiUrl } from "@/lib/api";
+import { adminFetch } from "@/lib/api";
 
 import { useState } from "react";
 import { SecurityAuditRecord } from "@/lib/types";
@@ -39,7 +39,7 @@ export default function AdminSettingsTab({ auditLogs = [], onRefresh }: AdminSet
 
     setIsChanging(true);
     try {
-      const res = await fetch(getApiUrl("/api/admin/auth/change-password"), {
+      const res = await adminFetch("/api/admin/auth/change-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ currentPassword, newPassword }),

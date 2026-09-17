@@ -1,6 +1,6 @@
 "use client";
 
-import { getApiUrl } from "@/lib/api";
+import { adminFetch } from "@/lib/api";
 
 import { useState } from "react";
 import Image from "next/image";
@@ -37,7 +37,7 @@ export default function AdminPromotionsTab({ promotions, onRefresh }: AdminPromo
   const handleToggle = async (promo: ExtendedPromotion) => {
     const newStatus = !promo.active;
     try {
-      const res = await fetch(getApiUrl("/api/admin/promotions"), {
+      const res = await adminFetch("/api/admin/promotions", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id: promo.id, action: "toggle", active: newStatus }),
@@ -63,7 +63,7 @@ export default function AdminPromotionsTab({ promotions, onRefresh }: AdminPromo
 
     setDeletingId(id);
     try {
-      const res = await fetch(getApiUrl(`/api/admin/promotions?id=${id}`), {
+      const res = await adminFetch(`/api/admin/promotions?id=${id}`, {
         method: "DELETE",
       });
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { getApiUrl } from "@/lib/api";
+import { adminFetch } from "@/lib/api";
 
 import { useState } from "react";
 import { EnquiryRecord, ExtendedPromotion } from "@/lib/types";
@@ -45,7 +45,7 @@ export default function AdminEnquiriesTab({ enquiries, promotions, onRefresh }: 
   // Change Status
   const handleStatusChange = async (id: string, newStatus: EnquiryRecord["status"]) => {
     try {
-      const res = await fetch(getApiUrl("/api/admin/enquiries"), {
+      const res = await adminFetch("/api/admin/enquiries", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, status: newStatus }),
@@ -67,7 +67,7 @@ export default function AdminEnquiriesTab({ enquiries, promotions, onRefresh }: 
     if (!selectedEnquiry) return;
     setIsSavingNotes(true);
     try {
-      const res = await fetch(getApiUrl("/api/admin/enquiries"), {
+      const res = await adminFetch("/api/admin/enquiries", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id: selectedEnquiry.id, notes: internalNotes }),
@@ -92,7 +92,7 @@ export default function AdminEnquiriesTab({ enquiries, promotions, onRefresh }: 
     if (!confirm(`Are you sure you want to delete inquiry from ${name}?`)) return;
 
     try {
-      const res = await fetch(getApiUrl(`/api/admin/enquiries?id=${id}`), {
+      const res = await adminFetch(`/api/admin/enquiries?id=${id}`, {
         method: "DELETE",
       });
 

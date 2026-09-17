@@ -1,6 +1,6 @@
 "use client";
 
-import { getApiUrl } from "@/lib/api";
+import { getApiUrl, setAdminToken, getAuthHeaders } from "@/lib/api";
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
@@ -23,14 +23,17 @@ export default function AdminLoginPage() {
 
   // Check if already authenticated on mount
   useEffect(() => {
-    fetch(getApiUrl("/api/admin/auth/me"), { credentials: "include" })
+    fetch(getApiUrl("/api/admin/auth/me"), {
+      credentials: "include",
+      headers: getAuthHeaders(),
+    })
       .then((res) => {
         if (res.ok) {
-          router.replace("/admin");
+          window.location.href = "/admin/";
         }
       })
       .catch(() => {});
-  }, [router]);
+  }, []);
 
   // Lockout Countdown Timer
   useEffect(() => {
@@ -75,9 +78,13 @@ export default function AdminLoginPage() {
       const json = await res.json();
 
       if (res.ok && json.success) {
+        if (json.token) {
+          setAdminToken(json.token);
+        }
         showToast("Authentication successful! Welcome to Agency Suite.", "success");
-        router.push("/admin");
-        router.refresh();
+        setTimeout(() => {
+          window.location.href = "/admin/";
+        }, 150);
       } else {
         // Trigger shake effect
         setIsShaking(true);
