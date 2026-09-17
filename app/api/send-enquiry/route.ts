@@ -96,7 +96,7 @@ export async function POST(req: NextRequest) {
         ? `We've Received Your Promo Enquiry: ${promoTitle} — DT's Vacation & Travel`
         : "We've Received Your Enquiry — DT's Vacation & Travel";
 
-      const [customerResult, agencyResult] = await Promise.allSettled([
+      const emailPromise = Promise.allSettled([
         // Customer confirmation
         sendEmail({
           to: data.email,
@@ -112,11 +112,20 @@ export async function POST(req: NextRequest) {
         }),
       ]);
 
-      if (customerResult.status === "rejected") {
-        console.error("Customer email error:", customerResult.reason);
-      }
-      if (agencyResult.status === "rejected") {
-        console.error("Agency email error:", agencyResult.reason);
+      const timeoutPromise = new Promise((resolve) => setTimeout(resolve, 4000));
+      const [settledResult] = await Promise.race([
+        emailPromise.then((res) => [res]),
+        timeoutPromise.then(() => [null]),
+      ]);
+
+      if (settledResult) {
+        const [customerResult, agencyResult] = settledResult;
+        if (customerResult.status === "rejected") {
+          console.error("Customer email error:", customerResult.reason);
+        }
+        if (agencyResult.status === "rejected") {
+          console.error("Agency email error:", agencyResult.reason);
+        }
       }
     } catch (emailErr) {
       console.error("Enquiry email dispatch error (non-fatal):", emailErr);

@@ -20,6 +20,9 @@ export async function sendEmail({ to, replyTo, subject, html }: SendMailParams):
       try {
         const transporter = nodemailer.createTransport({
           service: "gmail",
+          connectionTimeout: 4000,
+          greetingTimeout: 4000,
+          socketTimeout: 4000,
           auth: {
             user: gmailUser,
             pass: gmailPassword.replace(/\s+/g, ""), // handle copy-pasted 4x4 spaces
