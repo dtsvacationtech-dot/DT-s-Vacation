@@ -2,7 +2,19 @@ import { NextRequest, NextResponse } from "next/server";
 import { getAdminSessionFromRequest } from "@/lib/auth";
 import { sendEmail, AGENCY_EMAIL } from "@/lib/emailSender";
 import { generateBroadcastCampaignHtml } from "@/lib/emailTemplates";
-import { getPromotions, getSubscribers, getEnquiries, saveBroadcastLog } from "@/lib/db";
+import { getPromotions, getSubscribers, getEnquiries, saveBroadcastLog, getBroadcastLogs } from "@/lib/db";
+
+export async function GET(req: NextRequest) {
+  if (!getAdminSessionFromRequest(req)) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  try {
+    const logs = await getBroadcastLogs();
+    return NextResponse.json({ success: true, logs });
+  } catch (err: any) {
+    return NextResponse.json({ error: "Failed to retrieve broadcast logs: " + (err?.message || "") }, { status: 500 });
+  }
+}
 
 export async function POST(req: NextRequest) {
   if (!getAdminSessionFromRequest(req)) {

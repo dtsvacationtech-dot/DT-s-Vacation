@@ -48,13 +48,14 @@ export default function AdminDashboardPage() {
       }
       setIsAuthenticated(true);
 
-      // 2. Fetch promotions, enquiries, subscribers, and audit logs in parallel with no-store
+      // 2. Fetch promotions, enquiries, subscribers, audit logs, and broadcast logs in parallel with no-store
       const headers = getAuthHeaders();
-      const [promoRes, enqRes, subRes, auditRes] = await Promise.all([
+      const [promoRes, enqRes, subRes, auditRes, broadcastRes] = await Promise.all([
         fetch(getApiUrl(`/api/admin/promotions?_t=${Date.now()}`), { cache: "no-store", credentials: "include", headers }),
         fetch(getApiUrl(`/api/admin/enquiries?_t=${Date.now()}`), { cache: "no-store", credentials: "include", headers }),
         fetch(getApiUrl(`/api/admin/subscribers?_t=${Date.now()}`), { cache: "no-store", credentials: "include", headers }),
         fetch(getApiUrl(`/api/admin/audit?_t=${Date.now()}`), { cache: "no-store", credentials: "include", headers }),
+        fetch(getApiUrl(`/api/admin/broadcast?_t=${Date.now()}`), { cache: "no-store", credentials: "include", headers }),
       ]);
 
       if (promoRes.ok) {
@@ -75,6 +76,11 @@ export default function AdminDashboardPage() {
       if (auditRes.ok) {
         const aJson = await auditRes.json();
         setAuditLogs(aJson.auditLogs || []);
+      }
+
+      if (broadcastRes && broadcastRes.ok) {
+        const bJson = await broadcastRes.json();
+        setBroadcastLogs(bJson.logs || []);
       }
     } catch (err) {
       console.error("Dashboard fetch error:", err);
