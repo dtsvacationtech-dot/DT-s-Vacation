@@ -47,3 +47,5 @@ next-env.d.ts
 *.db
 
 out/
+public/_next/
+public/_not-found/

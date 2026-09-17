@@ -3,6 +3,14 @@ const fs = require("fs");
 
 console.log("=== 1. Starting Static Site Export for App Platform ===");
 
+// Ensure public directory does not contain conflicting Next.js build artifacts
+const forbidden = ["public/_next", "public/_not-found"];
+for (const dir of forbidden) {
+  if (fs.existsSync(dir)) {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+}
+
 const hasApi = fs.existsSync("app/api");
 if (hasApi) {
   console.log("Stashing app/api outside build tree...");
@@ -19,11 +27,11 @@ try {
     env: {
       ...process.env,
       OUTPUT_EXPORT: "true",
-      NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || "https://67-205-178-226.sslip.io"
-    }
+      NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+    },
   });
-  execSync("cp -r out/* public/", { stdio: "inherit" });
-  console.log("=== 2. Static export successfully generated in /out and /public directories! ===");
+
+  console.log("=== 2. Static export successfully generated in /out directory! ===");
 } catch (err) {
   console.error("Build failed:", err);
   process.exit(1);
