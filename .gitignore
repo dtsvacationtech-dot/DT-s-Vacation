@@ -47,5 +47,21 @@ next-env.d.ts
 *.db
 
 out/
+dist/
+_static/
 public/_next/
 public/_not-found/
+public/404/
+public/about/
+public/admin/
+public/contact/
+public/corporate/
+public/cruises/
+public/hotels/
+public/privacy/
+public/terms/
+public/tours/
+public/weddings/
+public/*.html
+public/*.txt
+public/__next*

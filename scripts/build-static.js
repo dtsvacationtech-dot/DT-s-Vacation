@@ -3,13 +3,38 @@ const fs = require("fs");
 
 console.log("=== 1. Starting Static Site Export for App Platform ===");
 
-// Ensure public directory does not contain conflicting Next.js build artifacts
-const forbidden = ["public/_next", "public/_not-found"];
-for (const dir of forbidden) {
-  if (fs.existsSync(dir)) {
-    fs.rmSync(dir, { recursive: true, force: true });
+function cleanGeneratedFromPublic() {
+  const generatedDirs = [
+    "public/_next",
+    "public/_not-found",
+    "public/404",
+    "public/about",
+    "public/admin",
+    "public/contact",
+    "public/corporate",
+    "public/cruises",
+    "public/hotels",
+    "public/privacy",
+    "public/terms",
+    "public/tours",
+    "public/weddings",
+  ];
+  for (const dir of generatedDirs) {
+    if (fs.existsSync(dir)) {
+      fs.rmSync(dir, { recursive: true, force: true });
+    }
+  }
+  if (fs.existsSync("public")) {
+    const files = fs.readdirSync("public");
+    for (const file of files) {
+      if (file.endsWith(".html") || file.endsWith(".txt")) {
+        fs.rmSync(`public/${file}`, { force: true });
+      }
+    }
   }
 }
+
+cleanGeneratedFromPublic();
 
 const hasApi = fs.existsSync("app/api");
 if (hasApi) {
@@ -32,6 +57,12 @@ try {
   });
 
   console.log("=== 2. Static export successfully generated in /out directory! ===");
+
+  // Copy build to public and dist so App Platform works regardless of Output Directory setting (out, public, or dist)
+  console.log("Populating public and dist directories for App Platform compatibility...");
+  fs.cpSync("out", "public", { recursive: true });
+  fs.cpSync("out", "dist", { recursive: true });
+  console.log("=== 3. Static deployment package ready for all output directory configurations! ===");
 } catch (err) {
   console.error("Build failed:", err);
   process.exit(1);
