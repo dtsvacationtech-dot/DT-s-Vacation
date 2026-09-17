@@ -12,7 +12,33 @@ interface SendMailParams {
 
 export async function sendEmail({ to, replyTo, subject, html }: SendMailParams): Promise<{ success: boolean; provider: string; error?: string }> {
   try {
-    // 1. Check for Direct Gmail / SMTP (Nodemailer)
+    // 1. Check for Resend API Key (Priority 1: HTTPS Port 443, unaffected by cloud SMTP blocks)
+    const resendKey = process.env.RESEND_API_KEY;
+    if (resendKey && resendKey.trim() !== "") {
+      try {
+        const resend = new Resend(resendKey.trim());
+        const fromEmail = process.env.EMAIL_FROM ?? "DT's Vacation <onboarding@resend.dev>";
+
+        const { data, error } = await resend.emails.send({
+          from: fromEmail,
+          to,
+          replyTo: replyTo ?? AGENCY_EMAIL,
+          subject,
+          html,
+        });
+
+        if (error) {
+          console.error("Resend API error:", error.message || error);
+        } else {
+          console.log(`✓ Email sent via Resend to ${to} (ID: ${data?.id})`);
+          return { success: true, provider: "resend" };
+        }
+      } catch (resendErr: any) {
+        console.error("Resend dispatch exception:", resendErr?.message || resendErr);
+      }
+    }
+
+    // 2. Fallback: Check for Direct Gmail / SMTP (Nodemailer)
     const gmailPassword = process.env.GMAIL_APP_PASSWORD || process.env.SMTP_PASSWORD;
     const gmailUser = process.env.GMAIL_USER || process.env.SMTP_USER || AGENCY_EMAIL;
 
@@ -40,27 +66,6 @@ export async function sendEmail({ to, replyTo, subject, html }: SendMailParams):
         return { success: true, provider: "gmail-smtp" };
       } catch (smtpErr: any) {
         console.error("Gmail SMTP dispatch failed:", smtpErr?.message || smtpErr);
-      }
-    }
-
-    // 2. Check for Resend API Key
-    const resendKey = process.env.RESEND_API_KEY;
-    if (resendKey && resendKey.trim() !== "") {
-      try {
-        const resend = new Resend(resendKey);
-        const fromEmail = process.env.EMAIL_FROM ?? "DT's Vacation <onboarding@resend.dev>";
-
-        await resend.emails.send({
-          from: fromEmail,
-          to,
-          replyTo: replyTo ?? AGENCY_EMAIL,
-          subject,
-          html,
-        });
-
-        return { success: true, provider: "resend" };
-      } catch (resendErr: any) {
-        console.error("Resend dispatch failed:", resendErr?.message || resendErr);
       }
     }
 
