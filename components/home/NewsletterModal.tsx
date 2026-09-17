@@ -1,16 +1,20 @@
 "use client";
 
+import { getApiUrl } from "@/lib/api";
+
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
 
 export default function NewsletterModal() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [hasTriggered, setHasTriggered] = useState(false);
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    if (typeof window === "undefined" || pathname.startsWith("/admin")) return;
     const dismissed = sessionStorage.getItem("dt_newsletter_dismissed");
     if (dismissed || hasTriggered) return;
 
@@ -52,7 +56,7 @@ export default function NewsletterModal() {
     e.preventDefault();
     if (!email || !email.includes("@")) return;
     try {
-      await fetch("/api/subscribe", {
+      await fetch(getApiUrl("/api/subscribe"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -66,7 +70,7 @@ export default function NewsletterModal() {
     }
   };
 
-  if (!isOpen) return null;
+  if (pathname.startsWith("/admin") || !isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">

@@ -1,13 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  serverExternalPackages: ["nodemailer"],
-  // NOTE: 'output: export' has been REMOVED intentionally.
-  // This project deploys to Vercel and uses API Routes for:
-  //   - Newsletter subscriptions (Supabase)
-  //   - Customer enquiry emails (Resend)
-  //   - Direct Gmail SMTP
-  // Static export mode disables API routes entirely. Do NOT add it back.
+  ...(process.env.OUTPUT_EXPORT === "true" ? { output: "export", trailingSlash: true } : { output: "standalone" }),
+  serverExternalPackages: ["nodemailer", "better-sqlite3"],
+  // Standalone mode is configured for self-hosted deployment on Digital Gateway / VPS / Docker
   images: {
     unoptimized: true,
     qualities: [85],

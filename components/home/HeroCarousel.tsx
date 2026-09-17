@@ -4,11 +4,10 @@ import { useState } from "react";
 import { heroSlides } from "@/lib/mockData";
 import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
 import Link from "next/link";
-import { useEnquiry } from "@/context/EnquiryContext";
+import SpecialOffersButton from "@/components/ui/SpecialOffersButton";
 
 export default function HeroCarousel() {
   const [activeIdx, setActiveIdx] = useState(0);
-  const { openPromotions } = useEnquiry();
 
   const currentSlide = heroSlides[activeIdx] || heroSlides[0];
 
@@ -51,25 +50,6 @@ export default function HeroCarousel() {
       <div className="relative z-10 max-w-[1700px] mx-auto w-full px-4 md:px-8 lg:px-12 flex-1 flex flex-col justify-center pt-2 md:pt-4">
         <div className="max-w-3xl text-white">
           <div key={`hero-info-${currentSlide.id}`} className="animate-fade-in-up">
-            
-            {/* Special Offers Pill Banner */}
-            <div className="mb-3.5 inline-block">
-              <button
-                type="button"
-                onClick={openPromotions}
-                className="cursor-pointer inline-flex items-center gap-2.5 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 px-3.5 py-1.5 rounded-full text-xs text-white transition-all shadow-lg group hover:scale-[1.02] active:scale-[0.98]"
-              >
-                <span className="flex h-2 w-2 relative">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-tropical-gold opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-tropical-gold"></span>
-                </span>
-                <span className="font-bold text-tropical-gold uppercase tracking-wider text-[10px] md:text-[11px]">Special Offers Available</span>
-                <span className="text-white/50 hidden sm:inline">•</span>
-                <span className="text-white/90 hidden sm:inline text-xs">Easter &amp; Island Hopper Specials</span>
-                <span className="text-tropical-gold group-hover:translate-x-1 transition-transform ml-1 font-bold">→</span>
-              </button>
-            </div>
-
             {/* Location Tag */}
             <div className="flex items-center gap-3 mb-3">
               <div className="w-8 h-[2px] bg-tropical-gold" />
@@ -92,7 +72,7 @@ export default function HeroCarousel() {
             <div className="flex flex-wrap items-center gap-3.5 md:gap-4">
               <Link
                 href={currentSlide.ctaLink}
-                className="bg-tropical-gold hover:bg-yellow-300 text-deep-navy font-bold py-3.5 md:py-4 px-7 md:px-8 rounded-full transition-all duration-300 text-xs md:text-sm uppercase tracking-wider shadow-[0_8px_25px_rgba(212,160,23,0.3)] hover:scale-105 active:scale-95 flex items-center gap-2.5"
+                className="border border-white/40 bg-white/10 hover:bg-white/20 text-white font-extrabold py-3.5 md:py-4 px-7 md:px-8 rounded-full transition-all duration-300 text-xs md:text-sm uppercase tracking-wider backdrop-blur-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white flex items-center gap-2.5"
               >
                 <span>{currentSlide.ctaText}</span>
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -100,14 +80,7 @@ export default function HeroCarousel() {
                 </svg>
               </Link>
 
-              <button
-                type="button"
-                onClick={openPromotions}
-                className="bg-white/10 hover:bg-white/20 text-white font-bold py-3.5 md:py-4 px-5 md:px-6 rounded-full transition-all duration-300 text-xs md:text-sm uppercase tracking-wider backdrop-blur-md border border-white/20 flex items-center gap-2 cursor-pointer hover:scale-105 active:scale-95"
-              >
-                <span>🔥</span>
-                <span>View Promotions</span>
-              </button>
+              <SpecialOffersButton />
             </div>
 
           </div>

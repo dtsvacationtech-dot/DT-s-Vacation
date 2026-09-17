@@ -1,12 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sendEmail, AGENCY_EMAIL } from "@/lib/emailSender";
+import { saveSubscriber } from "@/lib/db";
 
 export async function POST(req: NextRequest) {
   try {
     let email = "";
+    let source = "Footer Newsletter";
     try {
       const body = await req.json();
       email = body?.email ?? "";
+      source = body?.source ?? "Newsletter Subscription";
     } catch {
       return NextResponse.json({ error: "Invalid request payload." }, { status: 400 });
     }
@@ -15,30 +18,11 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Invalid email address." }, { status: 400 });
     }
 
-    // ── 1. Save to Supabase (if configured) ────────────────────────────────
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-    if (supabaseUrl && supabaseKey && supabaseUrl.startsWith("http")) {
-      try {
-        const res = await fetch(`${supabaseUrl}/rest/v1/subscribers`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            apikey: supabaseKey,
-            Authorization: `Bearer ${supabaseKey}`,
-            Prefer: "return=minimal",
-          },
-          body: JSON.stringify({ email }),
-        });
-
-        // Ignore 409 (already subscribed) — treat as success
-        if (!res.ok && res.status !== 409) {
-          console.error("Supabase insert error:", res.status, await res.text().catch(() => ""));
-        }
-      } catch (sbErr) {
-        console.error("Supabase fetch error (non-fatal):", sbErr);
-      }
+    // ── 1. Save to SQLite Database ────────────────
+    try {
+      await saveSubscriber(email, source);
+    } catch (saveErr) {
+      console.error("Subscriber storage save error (non-fatal):", saveErr);
     }
 
     // ── 2. Dispatch Emails (Direct Gmail SMTP or Resend) ──────────────────

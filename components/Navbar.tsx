@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEnquiry } from "@/context/EnquiryContext";
+import SpecialOffersButton from "@/components/ui/SpecialOffersButton";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -90,6 +91,10 @@ export default function Navbar() {
     return () => window.removeEventListener("resize", updateIndicator);
   }, [updateIndicator]);
 
+  if (pathname.startsWith("/admin")) {
+    return null;
+  }
+
   return (
     <>
       <nav
@@ -165,7 +170,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Nav Links */}
-          <div ref={navContainerRef} className="hidden lg:flex items-center space-x-8 xl:space-x-10 relative">
+          <div ref={navContainerRef} className="hidden lg:flex items-center gap-4 xl:gap-8 relative">
             {/* Animated gold underline */}
             <span
               aria-hidden
@@ -185,7 +190,7 @@ export default function Navbar() {
                   key={item.label}
                   href={item.href}
                   ref={(el) => { linkRefs.current.set(item.href, el); }}
-                  className={`relative text-[15px] tracking-wide transition-all duration-300 pb-1.5 font-medium ${
+                  className={`relative text-sm xl:text-[15px] tracking-wide transition-all duration-300 pb-1.5 font-medium ${
                     isActive
                       ? isScrolled
                         ? "text-deep-navy font-bold"
@@ -204,14 +209,7 @@ export default function Navbar() {
           {/* Right Action: Special Promotions Button & Mobile Toggle */}
           <div className="flex items-center gap-3 md:gap-4">
             
-            {/* Special Promotions Button */}
-            <button
-              onClick={openPromotions}
-              className="cursor-pointer flex items-center gap-2 bg-gradient-to-r from-tropical-gold to-yellow-400 text-deep-navy font-extrabold px-4 md:px-5 py-2 md:py-2.5 rounded-full text-xs md:text-sm uppercase tracking-wider shadow-lg shadow-tropical-gold/25 hover:scale-105 active:scale-95 transition-all duration-300"
-            >
-              <span>🔥</span>
-              <span className="hidden sm:inline">Special</span> Offers
-            </button>
+            <SpecialOffersButton compact />
 
             {/* Hamburger (Mobile) */}
             <button
@@ -244,16 +242,13 @@ export default function Navbar() {
       >
         <div className="flex flex-col items-center justify-center h-full gap-2 pt-20 px-8">
           
-          <button
+          <SpecialOffersButton
+            className="w-full max-w-sm mb-4"
             onClick={() => {
               setIsMobileMenuOpen(false);
               openPromotions();
             }}
-            className="w-full max-w-sm mb-4 py-3.5 rounded-2xl bg-gradient-to-r from-tropical-gold to-yellow-400 text-deep-navy font-bold text-base uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg cursor-pointer"
-          >
-            <span>🔥</span>
-            <span>View Special Promotions</span>
-          </button>
+          />
 
           {navLinks.map((item, index) => {
             const isActive = item.href === activeHref;

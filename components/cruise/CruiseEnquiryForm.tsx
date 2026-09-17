@@ -1,5 +1,7 @@
 "use client";
 
+import { getApiUrl } from "@/lib/api";
+
 import { useState, useRef, useEffect } from "react";
 import ImageWithSkeleton from "@/components/ui/ImageWithSkeleton";
 
@@ -104,7 +106,7 @@ export default function CruiseEnquiryForm() {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const res = await fetch("/api/send-enquiry", {
+      const res = await fetch(getApiUrl("/api/send-enquiry"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

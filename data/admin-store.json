@@ -1,0 +1,220 @@
+{
+  "promotions": [
+    {
+      "id": "easter-getaway",
+      "title": "Easter & Spring Caribbean Getaway",
+      "subtitle": "All-Inclusive 5-Star Luxury Beachfront Special",
+      "badge": "Limited Time Flash Deal",
+      "discountTag": "UP TO 35% OFF",
+      "promoCode": "SPRING-CARIB-35",
+      "urgencyTag": "⚡ Only 3 Beachfront Suites Left at this Promo Rate",
+      "savingsEstimate": "Save up to $650 per stay + Airport VIP Concierge",
+      "validFrom": "2026-01-01",
+      "validUntil": "April 30, 2026",
+      "image": "/images/hero_hotels.webp",
+      "description": "Escape to paradise this Spring with exclusive discounted rates at premier Jamaican 5-star all-inclusive resorts in Montego Bay, Ocho Rios, and Negril. Enjoy complimentary VIP airport transfers and gourmet dining.",
+      "highlights": [
+        "Up to 35% Off Selected 5-Star Luxury Resorts",
+        "Complimentary VIP Airport Fast-Track & Roundtrip Transfers",
+        "Kids Stay & Dine Free at Selected Luxury Family Properties",
+        "100% Flexible Date Rebooking Guarantee with Zero Penalty"
+      ],
+      "vipPerks": [
+        {
+          "title": "VIP Airport Fast-Track",
+          "desc": "Skip immigration lines with dedicated concierge arrival",
+          "icon": "car"
+        },
+        {
+          "title": "Resort Credit Perk",
+          "desc": "Complimentary spa & candlelight dinner vouchers",
+          "icon": "gift"
+        },
+        {
+          "title": "Flexible Rebooking",
+          "desc": "Change dates up to 14 days before departure for free",
+          "icon": "shield"
+        }
+      ],
+      "ctaText": "Claim 35% Off on WhatsApp",
+      "actionType": "whatsapp",
+      "actionTarget": "Hi DT's Vacation, I would like to claim the 'Easter & Spring Caribbean Getaway' promotion (Promo Code: SPRING-CARIB-35). Please check availability for my dates!",
+      "serviceType": "hotels",
+      "active": true,
+      "createdAt": "2026-08-28T03:49:24.687Z",
+      "updatedAt": "2026-08-28T03:49:24.687Z"
+    },
+    {
+      "id": "caribbean-cruise-voyage",
+      "title": "Caribbean Island Hopper Cruise Special",
+      "subtitle": "7-Night Luxury Ocean Voyage with Shipboard Credits",
+      "badge": "Exclusive Partner Rate",
+      "discountTag": "$200 ONBOARD CREDIT",
+      "promoCode": "CRUISE-VIP-200",
+      "urgencyTag": "⏳ 4 Oceanview & Balcony Cabins Available at this Rate",
+      "savingsEstimate": "$200 Free Spending Credit + Specialty Dining Pass",
+      "validFrom": "2026-01-01",
+      "validUntil": "2026-09-24",
+      "image": "/images/hero_cruises.webp",
+      "description": "Set sail across turquoise Caribbean waters visiting Barbados, Trinidad, Antigua, and St. Lucia. DT's Vacation guests receive $200 complimentary onboard credit plus complimentary specialty dining upgrades.",
+      "highlights": [
+        "$200 Complimentary Onboard Spend Credit per Stateroom",
+        "Free Specialty Dining Experience Upgrade for 2 Guests",
+        "Flexible Departure Dates & Priority Port Boarding",
+        "Full Concierge Support & Shore Excursion Coordination"
+      ],
+      "vipPerks": [
+        {
+          "title": "$200 Shipboard Credit",
+          "desc": "Use for spa, cocktails, or private shore excursions",
+          "icon": "gift"
+        },
+        {
+          "title": "Specialty Dining Pass",
+          "desc": "Fine dining multi-course experience included",
+          "icon": "champagne"
+        },
+        {
+          "title": "Priority Port Check-in",
+          "desc": "Direct VIP embarkation without queuing",
+          "icon": "clock"
+        }
+      ],
+      "ctaText": "Claim Cruise Promo on WhatsApp",
+      "actionType": "whatsapp",
+      "actionTarget": "Hi DT's Vacation, I would like to reserve the 'Caribbean Island Hopper Cruise Special' with the $200 credit (Promo Code: CRUISE-VIP-200). Please share available sailing dates!",
+      "serviceType": "cruises",
+      "active": true,
+      "createdAt": "2026-08-28T03:49:24.687Z",
+      "updatedAt": "2026-09-17T02:44:15.809Z"
+    },
+    {
+      "id": "group-retreat-reunion",
+      "title": "Group Travel & Family Reunion Package",
+      "subtitle": "Custom VIP Group Coordination for 10+ Guests",
+      "badge": "Group Savings Special",
+      "discountTag": "SPECIAL GROUP RATES",
+      "promoCode": "GROUP-VIP-2026",
+      "urgencyTag": "🔥 Free Private Charters & Custom Group Logistics Included",
+      "savingsEstimate": "Save up to 25% on combined villa, coach & flight bookings",
+      "validFrom": "2026-01-01",
+      "validUntil": "Ongoing Season 2026",
+      "image": "/images/hero_corporate.webp",
+      "description": "Planning a memorable family reunion, milestone birthday, church fellowship, or executive company retreat? We handle complete flight blocks, luxury villa buyouts, private air-conditioned charter buses, and curated group dinners.",
+      "highlights": [
+        "Dedicated 24/7 Group Travel Concierge Coordinator",
+        "Exclusive Private Villa & 5-Star Resort Group Tier Rates",
+        "Private Air-Conditioned Luxury Coach Transportation",
+        "Flexible Split Payment Options for Individual Group Members"
+      ],
+      "vipPerks": [
+        {
+          "title": "Dedicated Coordinator",
+          "desc": "One expert manager handling all logistics and RSVPs",
+          "icon": "users"
+        },
+        {
+          "title": "Private Group Charter",
+          "desc": "Executive transportation for all airport & tour transfers",
+          "icon": "car"
+        },
+        {
+          "title": "Bespoke Banqueting",
+          "desc": "Custom beach BBQs, private catamaran or ballroom dinners",
+          "icon": "compass"
+        }
+      ],
+      "ctaText": "Inquire Group Package on WhatsApp",
+      "actionType": "whatsapp",
+      "actionTarget": "Hi DT's Vacation, I'm organizing a group trip/family reunion for 10+ people (Promo Code: GROUP-VIP-2026). Let's discuss dates and custom pricing!",
+      "serviceType": "corporate",
+      "active": true,
+      "createdAt": "2026-08-28T03:49:24.687Z",
+      "updatedAt": "2026-09-17T01:25:46.271Z"
+    }
+  ],
+  "enquiries": [
+    {
+      "id": "enq-sample-1",
+      "firstName": "Sarah",
+      "lastName": "Jenkins",
+      "name": "Sarah Jenkins",
+      "email": "sarah.j.travels@example.com",
+      "phone": "+1 (876) 555-0192",
+      "serviceType": "Hotels",
+      "destination": "Montego Bay, Jamaica",
+      "travelDateStart": "2026-05-10",
+      "travelDateEnd": "2026-05-17",
+      "adults": 2,
+      "children": 0,
+      "message": "Looking for an all-inclusive 5-star beachfront suite with ocean view for our 5th anniversary.",
+      "status": "new",
+      "createdAt": "2026-08-27T23:49:24.687Z"
+    },
+    {
+      "id": "enq-sample-2",
+      "firstName": "Marcus",
+      "lastName": "Sterling",
+      "name": "Marcus Sterling",
+      "email": "marcus.sterling@corporate.org",
+      "phone": "+1 (876) 888-2941",
+      "serviceType": "Corporate",
+      "destination": "Ocho Rios & Kingston",
+      "travelDateStart": "2026-06-01",
+      "travelDateEnd": "2026-06-06",
+      "adults": 18,
+      "children": 0,
+      "message": "Annual executive strategy retreat for 18 board directors. Need luxury villa buyouts & private coaches.",
+      "status": "contacted",
+      "notes": "Spoke via WhatsApp on 28 Aug. Sending proposal package by Friday.",
+      "createdAt": "2026-08-27T01:49:24.687Z"
+    }
+  ],
+  "subscribers": [
+    {
+      "id": "sub-sample-1",
+      "email": "vip.traveler@luxuryworld.com",
+      "source": "Footer Newsletter",
+      "status": "active",
+      "createdAt": "2026-08-25T03:49:24.688Z"
+    },
+    {
+      "id": "sub-sample-2",
+      "email": "elena.rostova@caribbeandream.net",
+      "source": "Newsletter Modal",
+      "status": "active",
+      "createdAt": "2026-08-21T03:49:24.688Z"
+    }
+  ],
+  "broadcastLogs": [
+    {
+      "id": "bc-1787888992329-ly2f2",
+      "subject": "Spring Caribbean Getaway Exclusive",
+      "targetAudience": "subscribers",
+      "recipientCount": 50,
+      "successCount": 50,
+      "failedCount": 0,
+      "promotionTitle": "Easter Spring Getaway",
+      "sentAt": "2026-08-28T03:49:52.329Z"
+    }
+  ],
+  "auditLogs": [
+    {
+      "id": "sec-1789535387927-08wf",
+      "event": "login_success",
+      "ip": "::1",
+      "username": "admin",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+      "timestamp": "2026-09-16T05:09:47.927Z"
+    },
+    {
+      "id": "sec-1787889103045-ng4d",
+      "event": "login_success",
+      "ip": "::1",
+      "username": "admin",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+      "timestamp": "2026-08-28T03:51:43.045Z"
+    }
+  ],
+  "adminPasswordHash": "ac8817fe65cf1e625ac522ef7e0aa858:fa9324cdf09856e7a58abac03132c2ff0945b256f61108e0cc0e812db6c1f70ba733b039fecaa2639c75a8f3433dec78af6e003b34cbf91751387338f1986b1b"
+}

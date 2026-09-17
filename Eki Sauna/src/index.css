@@ -3,11 +3,13 @@
 @layer base {
   :root {
     --font-heading: 'Montserrat', sans-serif;
+    --font-serif-luxury: 'Cinzel', 'Cormorant Garamond', Georgia, serif;
+    --font-jp: 'Noto Serif JP', serif;
     --font-thai: 'Prompt', 'Montserrat', sans-serif;
     --gold-primary: #D4AF37;
     --gold-light: #F3E5AB;
     --gold-dark: #997A15;
-    --bg-black: #0B0B0C;
+    --bg-black: #08080A;
     --bg-card: #141417;
   }
 
@@ -21,11 +23,66 @@
   }
 }
 
+.font-serif-luxury {
+  font-family: var(--font-serif-luxury);
+}
+
+.font-jp {
+  font-family: var(--font-jp);
+}
+
+.font-thai {
+  font-family: var(--font-thai);
+}
+
 /* Custom Luxury Gradients & Effects */
 .gold-gradient-text {
-  background: linear-gradient(135deg, #FFF0B3 0%, #D4AF37 50%, #AA820A 100%);
+  background: linear-gradient(135deg, #FFF6D1 0%, #D4AF37 40%, #F5D77F 70%, #AA820A 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.gold-gradient-text-subtle {
+  background: linear-gradient(135deg, #E6CA65 0%, #C5A059 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-metallic-border {
+  border-color: rgba(212, 175, 55, 0.35);
+  box-shadow: inset 0 0 12px rgba(212, 175, 55, 0.08), 0 4px 20px rgba(0, 0, 0, 0.6);
+}
+
+.gold-metallic-border-hover:hover {
+  border-color: rgba(212, 175, 55, 0.7);
+  box-shadow: inset 0 0 15px rgba(212, 175, 55, 0.15), 0 8px 25px rgba(212, 175, 55, 0.2);
+}
+
+@keyframes steam-rise {
+  0% {
+    transform: translateY(0) scale(1) translateX(0);
+    opacity: 0.15;
+  }
+  50% {
+    transform: translateY(-25px) scale(1.1) translateX(10px);
+    opacity: 0.35;
+  }
+  100% {
+    transform: translateY(-50px) scale(1.2) translateX(-5px);
+    opacity: 0;
+  }
+}
+
+.animate-steam-1 {
+  animation: steam-rise 6s ease-in-out infinite;
+}
+
+.animate-steam-2 {
+  animation: steam-rise 8s ease-in-out 2s infinite;
+}
+
+.animate-steam-3 {
+  animation: steam-rise 7s ease-in-out 4s infinite;
 }
 
 .gold-gradient-bg {

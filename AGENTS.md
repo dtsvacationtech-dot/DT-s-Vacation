@@ -12,18 +12,19 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 ---
 
-## 🚀 Deployment Stack
+## 🚀 Deployment Stack (Digital Gateway / VPS / Self-Hosted)
 
 | Service | Role | Details |
 |---|---|---|
-| **Vercel** | Hosting & CI/CD | Connected to GitHub repo. Every `git push origin main` triggers an automatic deploy. **Do NOT use DigitalOcean or Docker.** |
+| **Digital Gateway / VPS** | Hosting & Runtime | Full-stack Next.js Standalone server running on port 3000 via Docker or PM2 behind Nginx. **Supabase and Vercel are NOT used** to minimize costs. |
 | **GitHub** | Source Control | Repo: `tanapatsriau-lang/DT-s-Travel` |
-| **Supabase** | Database | For storing newsletter subscribers & enquiry data. Project to be linked — see below. |
+| **SQLite (WAL Mode)** | Database | Local persistent database at `data/dtvacation.sqlite`. Zero cloud fees, ACID transactions, auto-migrates from JSON. |
+| **Nginx** | Reverse Proxy & SSL | Manages HTTPS, Let's Encrypt certificates, gzip, and client body size. |
 
 ### ⚠️ CRITICAL: Next.js Runtime Mode
-- This project runs as a **standard Next.js SSR/SSG app on Vercel** — NOT as a static export.
-- `output: 'export'` has been **removed** from `next.config.ts`. Do NOT add it back.
-- This enables **API Routes** (`app/api/...`) which are required for email sending and Supabase integration.
+- This project runs as a **Next.js Standalone application** (`output: "standalone"` in `next.config.ts`).
+- Bundles both Frontend SSR and Backend API Routes into `.next/standalone/server.js`.
+- Native packages like `better-sqlite3` and `nodemailer` are listed in `serverExternalPackages`.
 - Images use `unoptimized: true` because we serve local `/public/images/*.webp` assets.
 
 ---
@@ -34,69 +35,32 @@ This version has breaking changes — APIs, conventions, and file structure may 
 When a customer fills out the Global Enquiry Modal or any page enquiry form, the system automatically:
 1. Sends an **internal email notification** with full lead details to the agency: `dtvacationandtravel@gmail.com`
 2. Sends an **instant luxury confirmation email** to the customer
-3. Stores the enquiry data in Supabase `enquiries` table (if Supabase is configured)
+3. Stores the enquiry data in SQLite `enquiries` table immediately
 
 ### Email Credentials (100% Free via Nodemailer)
 - **Email Dispatcher:** `lib/emailSender.ts` (supports Gmail SMTP & fallback)
 - **Agency & Sender:** `dtvacationandtravel@gmail.com`
-- **Environment Variables Required on Vercel:**
+- **Environment Variables Required:**
   ```env
   GMAIL_USER=dtvacationandtravel@gmail.com
   GMAIL_APP_PASSWORD=xrlhjcqspqkonhmv
+  ADMIN_SESSION_SECRET=dts-vacation-luxury-travel-admin-secret-2026
   ```
-
-### Data Collected in Enquiry Forms
-The forms collect: `firstName`, `lastName`, `email`, `phone (WhatsApp)`, `destination`, `travelDateStart`, `travelDateEnd`, `adults`, `children`, `message`, `serviceType` (Hotels/Cruises/Tours/Wedding/Corporate).
 
 ---
 
-## 🗄️ Supabase Integration (In Progress)
+## 🗄️ Database Architecture (SQLite with WAL Mode)
 
-### Purpose
-- Store **newsletter subscribers** from the Footer and NewsletterModal forms
-- Store **enquiry submissions** from customers
-- Future: Store booking requests
+### Database Path
+`data/dtvacation.sqlite` (mounted via `./data:/app/data` in Docker)
 
-### Tables to Create
-```sql
--- Subscribers table
-CREATE TABLE subscribers (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  email TEXT UNIQUE NOT NULL,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
-
--- Enquiries table
-CREATE TABLE enquiries (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  first_name TEXT,
-  last_name TEXT,
-  email TEXT NOT NULL,
-  phone TEXT,
-  destination TEXT,
-  travel_date_start DATE,
-  travel_date_end DATE,
-  adults INT,
-  children INT,
-  message TEXT,
-  service_type TEXT,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
-```
-
-### Environment Variables Required
-Add these to Vercel Project Settings → Environment Variables:
-```
-NEXT_PUBLIC_SUPABASE_URL=       # From Supabase project → Settings → API
-NEXT_PUBLIC_SUPABASE_ANON_KEY=  # From Supabase project → Settings → API
-RESEND_API_KEY=                 # From resend.com (sender email service) — PENDING
-```
-
-### API Routes to Build
-| Route | Purpose |
-|---|---|
-| `app/api/subscribe/route.ts` | Save email to Supabase `subscribers` table |
-| `app/api/send-enquiry/route.ts` | Save to `enquiries` table + send email via Resend |
+### Tables
+- `admin_settings`: Key-value configuration including PBKDF2 hashed admin password
+- `promotions`: Seasonal flash deals, perks, badges, valid dates, discounts
+- `enquiries`: Customer leads, contact details, travel preferences, lead status (new, contacted, booked)
+- `subscribers`: Newsletter subscribers with active status
+- `broadcast_logs`: History of email broadcasts sent to leads or subscribers
+- `security_audit_logs`: Timestamped administrative authentication and security events (login success, failures, lockout, password changes)
 
 ---
 
@@ -104,38 +68,43 @@ RESEND_API_KEY=                 # From resend.com (sender email service) — PEN
 
 ```
 app/
-├── page.tsx              # Home
+├── page.tsx              # Home (Special Offers, Hero, Services)
 ├── hotels/page.tsx       # Hotels page
 ├── cruises/page.tsx      # Cruises page
 ├── tours/page.tsx        # Tours page
 ├── weddings/page.tsx     # Weddings page
 ├── corporate/page.tsx    # Corporate page
 ├── about/page.tsx        # About page
-├── privacy/page.tsx      # Privacy Policy (Jamaica JDPA + South America LGPD)
-├── terms/page.tsx        # Terms of Service (Governed by Jamaica law)
-├── api/                  # 🚧 To be built — Email & Supabase API routes
+├── contact/page.tsx      # Contact page
+├── privacy/page.tsx      # Privacy Policy
+├── terms/page.tsx        # Terms of Service
+├── admin/                # VIP Agency Suite (Overview, Promotions, Leads, Subs, Broadcast, Security)
+├── api/                  # Full-stack backend API routes
+│   ├── admin/auth/       # Login, Logout, Session check, Change password
+│   ├── admin/audit/      # Security audit logs retrieval
+│   ├── admin/promotions/ # Admin promotions CRUD
+│   ├── admin/enquiries/  # Admin leads management
+│   ├── admin/subscribers/# Admin subscribers management
+│   ├── admin/broadcast/  # Mass email broadcast dispatch
+│   ├── send-enquiry/     # Customer enquiry submission + email dispatch + DB save
+│   ├── subscribe/        # Newsletter subscription + DB save
+│   └── promotions/       # Public active promotions endpoint
 ├── layout.tsx            # Root layout with Navbar, Footer, GlobalEnquiryModal
 └── globals.css           # Tailwind v4 + custom design tokens
 
-components/
-├── Navbar.tsx            # Fixed top bar (mobile-responsive) + sliding gold indicator
-├── Footer.tsx            # Newsletter form + links to /privacy & /terms
-├── home/                 # HeroCarousel, ServiceCards, ToursShowcase, etc.
-├── hotels/               # HotelsFeaturedGrid, HotelsHandpicked, HotelsSearch
-├── cruise/               # CruiseHero, CruiseEnquiryForm, etc.
-├── tours/                # ToursHero, ToursCTA, etc.
-├── wedding/              # Wedding-specific components
-├── corporate/            # Corporate-specific components
-├── ui/
-│   ├── GlobalEnquiryModal.tsx   # 3-step slide modal (Contact → Travel Details → Message)
-│   └── DateRangePicker.tsx      # Custom inline date picker (use inline prop inside modals)
+deploy/
+├── nginx.conf            # Reverse Proxy configuration for Digital Gateway / VPS
+└── README.md             # Complete step-by-step deployment instructions
 
 lib/
-├── mockData.ts           # heroSlides data (5 slides), tour cards — ALL images must be local /public/images/*.webp
-└── expedia.ts            # Expedia affiliate URL builder
+├── db.ts                 # SQLite database engine (better-sqlite3, WAL mode, migrations)
+├── auth.ts               # PBKDF2 password hashing, anti-brute force, HMAC-SHA256 sessions
+├── emailSender.ts        # Direct Gmail SMTP / Nodemailer dispatcher
+├── emailTemplates.ts     # Customer reply and broadcast email templates
+└── promotionsData.ts     # Default promotion templates
 
-context/
-└── EnquiryContext.tsx    # Global state for opening/closing GlobalEnquiryModal
+data/
+└── dtvacation.sqlite     # Real SQLite Database file
 ```
 
 ---
@@ -155,19 +124,6 @@ context/
 ## 🖼️ Image Rules
 
 - **ALL images MUST be local files** in `/public/images/*.webp`
-- **No external image URLs** (Unsplash, etc.) — static export / Vercel CDN caches break them
+- **No external image URLs** (Unsplash, etc.)
 - Preferred format: **WebP** at `quality=88`, width `≥ 3000px` for hero images
 - Key images: `hero_tours.webp`, `hero_cruises.webp`, `hotel_iberostar.webp`, `logo.webp`
-
----
-
-## 📋 Pending Tasks
-
-- [ ] Owner signing up for sender email service (Resend.com recommended)
-- [ ] Link Supabase project → get `SUPABASE_URL` and `SUPABASE_ANON_KEY`
-- [ ] Build `app/api/subscribe/route.ts` (newsletter signup)
-- [ ] Build `app/api/send-enquiry/route.ts` (enquiry email + DB save)
-- [ ] Wire Footer newsletter form to `/api/subscribe`
-- [ ] Wire `GlobalEnquiryModal` step 3 submit to `/api/send-enquiry`
-- [ ] Enable RLS policies on Supabase `subscribers` and `enquiries` tables
-- [ ] Add Vercel environment variables once Supabase & Resend are ready

@@ -1,20 +1,28 @@
 "use client";
 
+import { getApiUrl } from "@/lib/api";
+
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { CONTACT } from "@/lib/siteContent";
 
 export default function Footer() {
+  const pathname = usePathname();
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  if (pathname.startsWith("/admin")) {
+    return null;
+  }
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.includes("@")) return;
     setStatus("loading");
     try {
-      const res = await fetch("/api/subscribe", {
+      const res = await fetch(getApiUrl("/api/subscribe"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -165,9 +173,6 @@ export default function Footer() {
           </div>
           <div className="flex items-center gap-1.5 font-bold text-deep-navy">
             <span className="text-sm">🏨</span> Expedia TAAP Global Partner Network
-          </div>
-          <div className="flex items-center gap-1.5 font-bold text-deep-navy">
-            <span className="text-sm">🛡️</span> Verified Consumer Protection
           </div>
         </div>
         <div className="text-[11px] text-tropical-gold font-bold uppercase tracking-wider">

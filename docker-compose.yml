@@ -1,0 +1,26 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dts_vacation_web
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - HOSTNAME=0.0.0.0
+      - GMAIL_USER=${GMAIL_USER:-dtvacationandtravel@gmail.com}
+      - GMAIL_APP_PASSWORD=${GMAIL_APP_PASSWORD:-xrlhjcqspqkonhmv}
+      - ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
+      - ADMIN_SESSION_SECRET=${ADMIN_SESSION_SECRET:-dts-vacation-luxury-travel-admin-secret-2026}
+    volumes:
+      # Persistent volume for SQLite database across container restarts & rebuilds
+      - ./data:/app/data
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:3000 || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

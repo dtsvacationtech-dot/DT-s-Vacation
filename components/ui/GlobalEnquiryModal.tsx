@@ -1,6 +1,9 @@
 "use client";
 
+import { getApiUrl } from "@/lib/api";
+
 import { useState, useRef, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { useEnquiry, ServiceType } from "@/context/EnquiryContext";
 import DateRangePicker from "@/components/ui/DateRangePicker";
 
@@ -82,7 +85,7 @@ const INITIAL_FORM: FormData = {
 };
 
 export default function GlobalEnquiryModal() {
-  const { isOpen, serviceType, closeModal } = useEnquiry();
+  const { isOpen, serviceType, initialMessage, selectedPromotion, closeModal } = useEnquiry();
   const [step, setStep] = useState(1);
   const [form, setForm] = useState<FormData>(INITIAL_FORM);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -95,11 +98,11 @@ export default function GlobalEnquiryModal() {
   useEffect(() => {
     if (isOpen) {
       setStep(1);
-      setForm(INITIAL_FORM);
+      setForm({ ...INITIAL_FORM, message: initialMessage || "" });
       setErrors({});
       setIsSubmitting(false);
     }
-  }, [isOpen]);
+  }, [isOpen, initialMessage]);
 
   // Close on Escape key
   useEffect(() => {
@@ -130,7 +133,7 @@ export default function GlobalEnquiryModal() {
   const handleSubmit = async () => {
     setIsSubmitting(true);
     try {
-      const res = await fetch("/api/send-enquiry", {
+      const res = await fetch(getApiUrl("/api/send-enquiry"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -144,14 +147,27 @@ export default function GlobalEnquiryModal() {
           travelDateEnd: form.travelDateEnd,
           guests: form.guests,
           message: form.message,
+          promotionId: selectedPromotion?.id,
+          promotionTitle: selectedPromotion?.title,
+          promoCode: selectedPromotion?.promoCode,
+          discountTag: selectedPromotion?.discountTag,
+          savingsEstimate: selectedPromotion?.savingsEstimate,
+          badge: selectedPromotion?.badge,
         }),
       });
 
       if (!res.ok) {
         // Graceful fallback — open mailto if API fails
-        const subject = encodeURIComponent(`[${meta.label}] Enquiry from ${form.name}`);
+        const subject = encodeURIComponent(
+          selectedPromotion
+            ? `[Promo: ${selectedPromotion.title}] Enquiry from ${form.name}`
+            : `[${meta.label}] Enquiry from ${form.name}`
+        );
+        const promoLine = selectedPromotion
+          ? `Promotion: ${selectedPromotion.title}\nPromo Code: ${selectedPromotion.promoCode || "N/A"}\nOffer: ${selectedPromotion.discountTag || "N/A"}\n\n`
+          : "";
         const body = encodeURIComponent(
-          `Name: ${form.name}\nPhone: ${form.phone}\nEmail: ${form.email || "N/A"}\nService: ${meta.label}\nGuests: ${form.guests}\n\nMessage:\n${form.message || "None"}`
+          `Name: ${form.name}\nPhone: ${form.phone}\nEmail: ${form.email || "N/A"}\nService: ${meta.label}\n${promoLine}Guests: ${form.guests}\n\nMessage:\n${form.message || "None"}`
         );
         window.open(`mailto:dtvacationandtravel@gmail.com?subject=${subject}&body=${body}`, "_blank");
       }
@@ -165,7 +181,8 @@ export default function GlobalEnquiryModal() {
   };
 
 
-  if (!isOpen) return null;
+  const pathname = usePathname();
+  if (pathname.startsWith("/admin") || !isOpen) return null;
 
   const calculateDuration = (start: string, end: string) => {
     if (!start || !end) return null;
@@ -259,6 +276,32 @@ export default function GlobalEnquiryModal() {
             {/* ── Step 1: Contact ── */}
             <div className="w-1/3 shrink-0 px-6 pb-8 space-y-5 transition-opacity duration-300" 
                  style={{ opacity: step === 1 ? 1 : 0.4, pointerEvents: step === 1 ? "auto" : "none" }}>
+              
+              {selectedPromotion && (
+                <div className="p-3 rounded-2xl bg-amber-400/15 border border-amber-400/40 text-amber-200 flex items-center justify-between gap-3 shadow-inner">
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <span className="text-xl shrink-0">🔥</span>
+                    <div className="min-w-0">
+                      <p className="text-[10px] uppercase tracking-wider font-extrabold text-amber-300">
+                        Inquiring for Special Offer
+                      </p>
+                      <p className="font-bold text-white text-xs truncate">
+                        {selectedPromotion.title}
+                      </p>
+                      {selectedPromotion.promoCode && (
+                        <p className="text-[10px] text-white/80 font-mono mt-0.5">
+                          Code: <span className="bg-black/30 px-1.5 py-0.2 rounded text-amber-300 font-bold">{selectedPromotion.promoCode}</span>
+                          {selectedPromotion.discountTag ? ` • ${selectedPromotion.discountTag}` : ""}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  <span className="shrink-0 text-[9px] font-extrabold uppercase tracking-wider bg-amber-400 text-deep-navy px-2 py-0.5 rounded-full shadow-xs">
+                    Promo Locked
+                  </span>
+                </div>
+              )}
+
               <div>
               <h2 className="text-white text-2xl font-heading font-bold leading-tight mb-1">
                 Let&apos;s get started

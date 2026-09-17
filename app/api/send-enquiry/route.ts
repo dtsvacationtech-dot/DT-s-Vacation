@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sendEmail, AGENCY_EMAIL } from "@/lib/emailSender";
+import { saveEnquiry } from "@/lib/db";
 
 // ─── Type for all enquiry forms ───────────────────────────────────────────────
 interface EnquiryPayload {
@@ -15,6 +16,14 @@ interface EnquiryPayload {
   travelDateEnd?: string;
   guests?: number | string;
   message?: string;
+
+  // Promotion-specific fields
+  promotionId?: string;
+  promotionTitle?: string;
+  promoCode?: string;
+  discountTag?: string;
+  savingsEstimate?: string;
+  badge?: string;
 
   // Cruise-specific
   adults?: number | string;
@@ -38,60 +47,68 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Valid email is required." }, { status: 400 });
     }
 
-    // ── 1. Save to Supabase enquiries table (if configured) ────────────────
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    // Extract promotion title if provided directly or parsed from message
+    const promoTitle =
+      data.promotionTitle ||
+      (data.message?.match(/\[Promo:\s*([^\]]+)\]/i)?.[1]?.trim()) ||
+      undefined;
 
-    if (supabaseUrl && supabaseKey && supabaseUrl.startsWith("http")) {
-      try {
-        const res = await fetch(`${supabaseUrl}/rest/v1/enquiries`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            apikey: supabaseKey,
-            Authorization: `Bearer ${supabaseKey}`,
-            Prefer: "return=minimal",
-          },
-          body: JSON.stringify({
-            first_name: data.firstName ?? data.name ?? "",
-            last_name: data.lastName ?? "",
-            email: data.email,
-            phone: data.phone,
-            destination: data.destination ?? data.destinations?.join(", ") ?? "",
-            travel_date_start: data.travelDateStart ?? data.date ?? null,
-            travel_date_end: data.travelDateEnd ?? null,
-            adults: Number(data.adults ?? data.guests ?? 1),
-            children: Number(data.children ?? 0),
-            message: data.message ?? "",
-            service_type: data.serviceType ?? "General",
-          }),
-        });
+    const enrichedData: EnquiryPayload = {
+      ...data,
+      promotionTitle: promoTitle,
+    };
 
-        if (!res.ok) {
-          console.error("Supabase enquiry insert error:", res.status, await res.text().catch(() => ""));
-        }
-      } catch (sbErr) {
-        console.error("Supabase enquiry connection error (non-fatal):", sbErr);
-      }
+    // ── 1. Save to SQLite Database ────────────────
+    try {
+      await saveEnquiry({
+        firstName: data.firstName ?? (data.name ? data.name.split(" ")[0] : ""),
+        lastName: data.lastName ?? (data.name ? data.name.split(" ").slice(1).join(" ") : ""),
+        name: data.name ?? `${data.firstName || ""} ${data.lastName || ""}`.trim(),
+        email: data.email,
+        phone: data.phone,
+        serviceType: data.serviceType ?? "General",
+        destination: data.destination ?? data.destinations?.join(", ") ?? "",
+        travelDateStart: data.travelDateStart ?? data.date ?? null,
+        travelDateEnd: data.travelDateEnd ?? null,
+        adults: Number(data.adults ?? data.guests ?? 1),
+        children: Number(data.children ?? 0),
+        guests: Number(data.guests ?? data.adults ?? 1),
+        duration: data.duration,
+        departurePort: data.departurePort,
+        message: data.message ?? "",
+        promotionId: data.promotionId,
+        promotionTitle: promoTitle,
+        status: "new",
+      });
+    } catch (saveErr) {
+      console.error("Enquiry storage save error (non-fatal):", saveErr);
     }
 
     // ── 2 & 3. Dispatch Emails (Direct Gmail SMTP or Resend) ───────────────
     const customerName = data.firstName ?? data.name ?? "Traveler";
 
     try {
+      const agencySubject = promoTitle
+        ? `🔥 [SPECIAL PROMO: ${promoTitle}] New Enquiry [${data.serviceType ?? "General"}] from ${customerName}`
+        : `New Enquiry [${data.serviceType ?? "General"}] from ${customerName}`;
+
+      const customerSubject = promoTitle
+        ? `We've Received Your Promo Enquiry: ${promoTitle} — DT's Vacation & Travel`
+        : "We've Received Your Enquiry — DT's Vacation & Travel";
+
       const [customerResult, agencyResult] = await Promise.allSettled([
         // Customer confirmation
         sendEmail({
           to: data.email,
-          subject: "We've Received Your Enquiry — DT's Vacation & Travel",
-          html: customerConfirmationHtml(customerName, data),
+          subject: customerSubject,
+          html: customerConfirmationHtml(customerName, enrichedData),
         }),
         // Agency notification
         sendEmail({
           to: AGENCY_EMAIL,
           replyTo: data.email,
-          subject: `New Enquiry [${data.serviceType ?? "General"}] from ${customerName}`,
-          html: agencyEnquiryHtml(customerName, data),
+          subject: agencySubject,
+          html: agencyEnquiryHtml(customerName, enrichedData),
         }),
       ]);
 
@@ -166,6 +183,16 @@ function customerConfirmationHtml(name: string, data: EnquiryPayload): string {
             <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:16px;padding:24px 28px;">
               <p style="margin:0 0 16px;color:#000C1C;font-size:12px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;">Your Enquiry Summary</p>
               <table width="100%" cellpadding="0" cellspacing="0">
+                ${data.promotionTitle ? `
+                <tr>
+                  <td colspan="2" style="padding:0 0 14px 0;border-bottom:1px solid #f1f5f9;">
+                    <div style="background:#FFFBEB;border:1px solid #FCD34D;border-radius:12px;padding:12px 16px;">
+                      <p style="margin:0 0 3px;color:#92400E;font-size:11px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;">🔥 Selected Special Promotion</p>
+                      <p style="margin:0;color:#000C1C;font-size:15px;font-weight:800;">${data.promotionTitle}</p>
+                      ${data.promoCode ? `<p style="margin:4px 0 0;color:#B45309;font-size:12px;font-family:monospace;font-weight:700;">Promo Code: <strong>${data.promoCode}</strong>${data.discountTag ? ` &bull; ${data.discountTag}` : ""}</p>` : ""}
+                    </div>
+                  </td>
+                </tr>` : ""}
                 ${buildSummaryRow("Service Type", service)}
                 ${buildSummaryRow("Travel Dates", dateRange)}
                 ${data.destination || data.destinations?.length ? buildSummaryRow("Destination", data.destination ?? data.destinations?.join(", ") ?? "") : ""}
@@ -256,15 +283,61 @@ function agencyEnquiryHtml(name: string, data: EnquiryPayload): string {
         <!-- HEADER -->
         <tr>
           <td style="background:linear-gradient(135deg,#000C1C 0%,#002D62 100%);padding:36px 40px;text-align:center;">
-            <p style="margin:0 0 6px;color:#D4A017;font-size:11px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;">New Customer Enquiry</p>
-            <h1 style="margin:0;color:#fff;font-size:24px;font-weight:800;">🗺️ ${service} Request</h1>
+            <p style="margin:0 0 6px;color:#D4A017;font-size:11px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;">
+              ${data.promotionTitle ? "🔥 Special Promotion Lead" : "New Customer Enquiry"}
+            </p>
+            <h1 style="margin:0;color:#fff;font-size:24px;font-weight:800;">
+              ${data.promotionTitle ? `🏷️ ${data.promotionTitle}` : `🗺️ ${service} Request`}
+            </h1>
             <p style="margin:8px 0 0;color:rgba(255,255,255,0.6);font-size:13px;">${new Date().toLocaleDateString("en-US",{weekday:"long",year:"numeric",month:"long",day:"numeric",hour:"2-digit",minute:"2-digit"})}</p>
           </td>
         </tr>
 
+        <!-- SPECIAL PROMOTION CARD (IF APPLICABLE) -->
+        ${data.promotionTitle ? `
+        <tr>
+          <td style="background:#fff;padding:32px 40px 0;">
+            <div style="background:linear-gradient(135deg,#FFFBEB 0%,#FEF3C7 100%);border:2px solid #D4A017;border-radius:16px;padding:22px 24px;box-shadow:0 4px 16px rgba(212,160,23,0.15);">
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td>
+                    <div style="display:inline-block;background:#D4A017;color:#000C1C;font-size:10px;font-weight:900;letter-spacing:0.2em;text-transform:uppercase;padding:4px 10px;border-radius:20px;margin-bottom:8px;">
+                      🔥 Customer Interested in Special Promotion
+                    </div>
+                    <h2 style="margin:0 0 6px;color:#000C1C;font-size:20px;font-weight:800;line-height:1.3;">
+                      ${data.promotionTitle}
+                    </h2>
+                    ${data.discountTag ? `<p style="margin:0 0 8px;color:#B45309;font-size:14px;font-weight:700;">🏷️ Offer: ${data.discountTag}</p>` : ""}
+                  </td>
+                </tr>
+              </table>
+              <table width="100%" cellpadding="0" cellspacing="0" style="margin-top:10px;border-top:1px dashed #F59E0B;padding-top:10px;">
+                ${data.promoCode ? `
+                <tr>
+                  <td style="padding:4px 0;width:38%;color:#78350F;font-size:12px;font-weight:700;text-transform:uppercase;">Promo Code:</td>
+                  <td style="padding:4px 0;color:#000C1C;font-size:13px;font-weight:800;font-family:monospace;">
+                    <span style="background:#000C1C;color:#FDE68A;padding:3px 8px;border-radius:6px;">${data.promoCode}</span>
+                  </td>
+                </tr>` : ""}
+                ${data.savingsEstimate ? `
+                <tr>
+                  <td style="padding:4px 0;width:38%;color:#78350F;font-size:12px;font-weight:700;text-transform:uppercase;">Savings / Estimate:</td>
+                  <td style="padding:4px 0;color:#92400E;font-size:13px;font-weight:700;">${data.savingsEstimate}</td>
+                </tr>` : ""}
+                ${data.badge ? `
+                <tr>
+                  <td style="padding:4px 0;width:38%;color:#78350F;font-size:12px;font-weight:700;text-transform:uppercase;">Tier / Badge:</td>
+                  <td style="padding:4px 0;color:#1E293B;font-size:13px;">${data.badge}</td>
+                </tr>` : ""}
+              </table>
+            </div>
+          </td>
+        </tr>
+        ` : ""}
+
         <!-- CUSTOMER INFO -->
         <tr>
-          <td style="background:#fff;padding:36px 40px 24px;">
+          <td style="background:#fff;padding:32px 40px 24px;">
             <p style="margin:0 0 16px;color:#000C1C;font-size:12px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;border-bottom:2px solid #D4A017;padding-bottom:8px;">👤 Customer Information</p>
             <table width="100%" cellpadding="0" cellspacing="0">
               ${buildSummaryRow("Name", name)}
@@ -279,6 +352,7 @@ function agencyEnquiryHtml(name: string, data: EnquiryPayload): string {
           <td style="background:#fff;padding:0 40px 24px;">
             <p style="margin:0 0 16px;color:#000C1C;font-size:12px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;border-bottom:2px solid #D4A017;padding-bottom:8px;">✈️ Travel Details</p>
             <table width="100%" cellpadding="0" cellspacing="0">
+              ${data.promotionTitle ? buildSummaryRow("Target Promotion", `<strong style="color:#D4A017;">${data.promotionTitle}</strong>`) : ""}
               ${buildSummaryRow("Service Type", `<strong style="color:#002D62;">${service}</strong>`)}
               ${buildSummaryRow("Travel Dates", dateRange)}
               ${data.destination || data.destinations?.length ? buildSummaryRow("Destination", data.destination ?? data.destinations?.join(", ") ?? "") : ""}
@@ -306,10 +380,14 @@ function agencyEnquiryHtml(name: string, data: EnquiryPayload): string {
             <p style="margin:0 0 12px;color:#000C1C;font-size:13px;font-weight:700;">Reply to customer:</p>
             <table cellpadding="0" cellspacing="0"><tr>
               <td style="padding-right:12px;">
-                <a href="mailto:${data.email}?subject=Re: Your ${service} Enquiry — DT's Vacation %26 Travel" style="display:inline-block;background:#000C1C;color:#fff;text-decoration:none;font-size:13px;font-weight:700;padding:10px 20px;border-radius:50px;">✉️ Reply by Email</a>
+                <a href="mailto:${data.email}?subject=${encodeURIComponent(`Re: Your enquiry for ${data.promotionTitle || service} — DT's Vacation & Travel`)}" style="display:inline-block;background:#000C1C;color:#fff;text-decoration:none;font-size:13px;font-weight:700;padding:10px 20px;border-radius:50px;">✉️ Reply by Email</a>
               </td>
               <td>
-                <a href="https://wa.me/${data.phone?.replace(/\D/g,"")}" style="display:inline-block;background:#25D366;color:#fff;text-decoration:none;font-size:13px;font-weight:700;padding:10px 20px;border-radius:50px;">💬 Reply on WhatsApp</a>
+                <a href="https://wa.me/${data.phone?.replace(/\D/g,"")}?text=${encodeURIComponent(
+                  data.promotionTitle
+                    ? `Hi ${name}, thank you for contacting DT's Vacation & Travel regarding the ${data.promotionTitle} promotion! Denis here, how can we assist you with your booking?`
+                    : `Hi ${name}, thank you for contacting DT's Vacation & Travel! Denis here, how can we assist you?`
+                )}" style="display:inline-block;background:#25D366;color:#fff;text-decoration:none;font-size:13px;font-weight:700;padding:10px 20px;border-radius:50px;">💬 Reply on WhatsApp</a>
               </td>
             </tr></table>
           </td>

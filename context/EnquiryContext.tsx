@@ -7,7 +7,8 @@ export type ServiceType = "wedding" | "corporate" | "tours" | "hotels" | "cruise
 interface EnquiryContextValue {
   isOpen: boolean;
   serviceType: ServiceType | null;
-  openModal: (service: ServiceType) => void;
+  initialMessage: string;
+  openModal: (service: ServiceType, initialNotes?: string) => void;
   closeModal: () => void;
   isPromotionsOpen: boolean;
   openPromotions: () => void;
@@ -19,16 +20,19 @@ const EnquiryContext = createContext<EnquiryContextValue | null>(null);
 export function EnquiryProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
   const [serviceType, setServiceType] = useState<ServiceType | null>(null);
+  const [initialMessage, setInitialMessage] = useState("");
   const [isPromotionsOpen, setIsPromotionsOpen] = useState(false);
 
-  const openModal = (service: ServiceType) => {
+  const openModal = (service: ServiceType, initialNotes?: string) => {
     setServiceType(service);
+    setInitialMessage(initialNotes || "");
     setIsOpen(true);
     document.body.style.overflow = "hidden";
   };
 
   const closeModal = () => {
     setIsOpen(false);
+    setInitialMessage("");
     if (!isPromotionsOpen) {
       document.body.style.overflow = "";
     }
@@ -51,6 +55,7 @@ export function EnquiryProvider({ children }: { children: ReactNode }) {
       value={{
         isOpen,
         serviceType,
+        initialMessage,
         openModal,
         closeModal,
         isPromotionsOpen,

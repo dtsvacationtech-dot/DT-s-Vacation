@@ -3,6 +3,8 @@
 import { useState, useRef, useEffect } from "react";
 import DateRangePicker from "@/components/ui/DateRangePicker";
 import { buildExpediaHotelUrl } from "@/lib/expedia";
+import SpecialOffersButton from "@/components/ui/SpecialOffersButton";
+import styles from "./HotelsSearch.module.css";
 
 export default function HotelsSearch() {
   const [destination, setDestination] = useState("");
@@ -51,7 +53,26 @@ export default function HotelsSearch() {
   };
 
   return (
-    <div className="bg-white/30 backdrop-blur-3xl border border-white/40 p-5 md:p-8 rounded-[2rem] shadow-[0_15px_50px_rgba(0,0,0,0.3)] w-full max-w-6xl mx-auto transform translate-y-6 md:translate-y-12 relative">
+    <div className="bg-white/30 backdrop-blur-3xl border border-white/40 p-5 md:p-7 rounded-[2rem] shadow-[0_15px_50px_rgba(0,0,0,0.3)] w-full max-w-6xl mx-auto transform translate-y-6 md:translate-y-10 relative font-body">
+      
+      <aside className={styles.offers} aria-label="Special travel offers">
+        <div>
+          <p className={styles.eyebrow}>
+            <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round">
+              <path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3Z" />
+            </svg>
+            A little extra, just for you
+          </p>
+          <h2 className={styles.heading}>Your next escape, with more.</h2>
+          <p className={styles.description}>
+            Discover our latest travel offers, handpicked by DT&apos;s.
+          </p>
+        </div>
+        <div className={styles.action}>
+          <SpecialOffersButton />
+        </div>
+      </aside>
+
       <form onSubmit={handleSearch} className="flex flex-col md:flex-row items-center gap-4">
 
         {/* Destination */}
@@ -149,7 +170,7 @@ export default function HotelsSearch() {
         <div className="w-full md:w-auto self-end mt-4 md:mt-0">
           <button
             type="submit"
-            className="w-full md:w-auto h-[50px] px-8 bg-tropical-gold text-deep-navy font-bold rounded-xl hover:bg-white transition-colors duration-300 shadow-lg shadow-tropical-gold/20 flex items-center justify-center gap-2"
+            className="w-full md:w-auto h-[50px] px-8 bg-deep-navy text-white font-bold rounded-xl border border-white/20 hover:bg-[#001d40] transition-colors duration-300 shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-deep-navy flex items-center justify-center gap-2"
           >
             Search Expedia
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
