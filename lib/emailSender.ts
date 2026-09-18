@@ -17,7 +17,7 @@ export async function sendEmail({ to, replyTo, subject, html }: SendMailParams):
     if (resendKey && resendKey.trim() !== "") {
       try {
         const resend = new Resend(resendKey.trim());
-        const fromEmail = process.env.EMAIL_FROM ?? "DT's Vacation <onboarding@resend.dev>";
+        const fromEmail = process.env.EMAIL_FROM ?? "DT's Vacation & Travel <reservations@dtvacationandtravel.com>";
 
         const { data, error } = await resend.emails.send({
           from: fromEmail,
