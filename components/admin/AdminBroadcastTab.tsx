@@ -2,7 +2,7 @@
 
 import { adminFetch } from "@/lib/api";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { ExtendedPromotion, BroadcastLogRecord, SubscriberRecord, EnquiryRecord } from "@/lib/types";
 import { formatDateDisplay } from "@/lib/dateUtils";
 import { useToast } from "./Toast";
@@ -29,6 +29,10 @@ export default function AdminBroadcastTab({
   const [targetAudience, setTargetAudience] = useState<"subscribers" | "leads" | "all" | "category">("subscribers");
   const [serviceCategory, setServiceCategory] = useState<string>("hotels");
   const [selectedPromoId, setSelectedPromoId] = useState<string>(promotions.find((p) => p.active)?.id || "");
+  const [customImageUrl, setCustomImageUrl] = useState<string>("");
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   const [editorialMessage, setEditorialMessage] = useState(
     `Dear Traveler,
 
@@ -68,6 +72,39 @@ Explore our featured special offer below or reply directly to connect with our c
   };
 
   const selectedPromo = promotions.find((p) => p.id === selectedPromoId);
+  const activeImageUrl = customImageUrl || selectedPromo?.image || "";
+
+  // Image Upload Handler
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploadingImage(true);
+    try {
+      const data = new FormData();
+      data.append("file", file);
+
+      const res = await adminFetch("/api/admin/upload", {
+        method: "POST",
+        body: data,
+      });
+
+      const json = await res.json();
+      if (res.ok && json.success) {
+        setCustomImageUrl(json.url);
+        showToast("Campaign flyer image uploaded successfully!", "success");
+      } else {
+        showToast(json.error || "Failed to upload image.", "error");
+      }
+    } catch {
+      showToast("Network error uploading image.", "error");
+    } finally {
+      setIsUploadingImage(false);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    }
+  };
 
   // Send Test Email
   const handleSendTest = async () => {
@@ -85,6 +122,7 @@ Explore our featured special offer below or reply directly to connect with our c
           headline,
           previewText,
           editorialMessage,
+          imageUrl: activeImageUrl || undefined,
           promotionId: selectedPromoId || undefined,
           targetAudience,
           ctaText,
@@ -132,6 +170,7 @@ Explore our featured special offer below or reply directly to connect with our c
           headline,
           previewText,
           editorialMessage,
+          imageUrl: activeImageUrl || undefined,
           promotionId: selectedPromoId || undefined,
           targetAudience,
           serviceCategory,
@@ -307,6 +346,86 @@ Explore our featured special offer below or reply directly to connect with our c
               </p>
             </div>
 
+            {/* Campaign Flyer / Image Upload Section */}
+            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3">
+              <div className="flex items-center justify-between">
+                <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider">
+                  📸 Campaign Flyer / Featured Image
+                </label>
+                {activeImageUrl && (
+                  <button
+                    type="button"
+                    onClick={() => setCustomImageUrl("")}
+                    className="text-[11px] text-rose-600 hover:text-rose-800 font-bold cursor-pointer"
+                  >
+                    ✕ Clear Image
+                  </button>
+                )}
+              </div>
+
+              {/* Upload Controls */}
+              <div className="flex flex-wrap items-center gap-2">
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleImageUpload}
+                  accept="image/jpeg,image/png,image/webp,image/gif"
+                  className="hidden"
+                />
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={isUploadingImage}
+                  className="px-4 py-2 rounded-xl text-xs font-bold bg-white hover:bg-slate-100 text-slate-800 border border-slate-300 shadow-xs flex items-center gap-2 cursor-pointer transition-all disabled:opacity-50"
+                >
+                  <span>{isUploadingImage ? "⏳ Uploading..." : "📤 Upload Image File"}</span>
+                </button>
+
+                {selectedPromo?.image && customImageUrl !== selectedPromo.image && (
+                  <button
+                    type="button"
+                    onClick={() => setCustomImageUrl(selectedPromo.image)}
+                    className="px-3.5 py-2 rounded-xl text-xs font-bold bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 shadow-2xs flex items-center gap-1.5 cursor-pointer transition-all"
+                  >
+                    <span>✨ Use Promo Flyer</span>
+                  </button>
+                )}
+              </div>
+
+              {/* Direct URL input */}
+              <div>
+                <input
+                  type="text"
+                  value={customImageUrl}
+                  onChange={(e) => setCustomImageUrl(e.target.value)}
+                  placeholder="Or paste direct image URL (e.g. https://... or /images/...)"
+                  className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 focus:border-tropical-gold focus:outline-none transition-all"
+                />
+              </div>
+
+              {/* Image Preview thumbnail if active */}
+              {activeImageUrl && (
+                <div className="flex items-center gap-3 p-2.5 rounded-xl bg-white border border-slate-200">
+                  <div className="relative w-16 h-12 rounded-lg overflow-hidden border border-slate-200 bg-slate-900 shrink-0">
+                    <img
+                      src={activeImageUrl}
+                      alt="Campaign flyer preview"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs font-bold text-slate-800 truncate">
+                      {customImageUrl ? "Custom Campaign Flyer Attached" : `Promotion Flyer: ${selectedPromo?.title}`}
+                    </p>
+                    <p className="text-[10px] text-slate-500 truncate font-mono">{activeImageUrl}</p>
+                  </div>
+                  <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 shrink-0">
+                    ✓ Attached
+                  </span>
+                </div>
+              )}
+            </div>
+
             {/* Editorial Message */}
             <div>
               <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
@@ -403,6 +522,20 @@ Explore our featured special offer below or reply directly to connect with our c
                 <h4 className="text-base font-bold mt-1 text-white">{headline}</h4>
                 <p className="text-[11px] text-white/70 mt-1">Exclusive Member Flash Offer</p>
               </div>
+
+              {/* Flyer Image Preview if present */}
+              {activeImageUrl && (
+                <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-sm bg-[#000C1C] relative">
+                  <img
+                    src={activeImageUrl}
+                    alt="Campaign flyer preview"
+                    className="w-full h-48 object-cover"
+                  />
+                  <div className="absolute bottom-2 right-2 bg-deep-navy/80 backdrop-blur-md px-2 py-0.5 rounded text-[10px] text-amber-300 font-bold">
+                    📸 Email Flyer Banner
+                  </div>
+                </div>
+              )}
 
               {/* Promo Card Preview */}
               {selectedPromo && (

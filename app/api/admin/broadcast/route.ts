@@ -27,6 +27,7 @@ export async function POST(req: NextRequest) {
       headline,
       previewText,
       editorialMessage = "",
+      imageUrl,
       promotionId,
       targetAudience = "subscribers", // 'subscribers' | 'leads' | 'all' | 'category'
       serviceCategory,
@@ -52,6 +53,7 @@ export async function POST(req: NextRequest) {
       headline,
       previewText,
       editorialMessage,
+      imageUrl,
       promotion,
       ctaText,
       ctaUrl,

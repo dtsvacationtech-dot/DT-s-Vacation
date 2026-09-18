@@ -161,15 +161,29 @@ export interface BroadcastEmailParams {
   headline: string;
   previewText?: string;
   editorialMessage: string;
+  imageUrl?: string | null;
   promotion?: ExtendedPromotion | null;
   ctaText?: string;
   ctaUrl?: string;
+}
+
+function resolveAbsoluteImageUrl(url?: string | null): string | null {
+  if (!url || typeof url !== "string") return null;
+  const trimmed = url.trim();
+  if (trimmed === "") return null;
+  if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) return trimmed;
+  if (trimmed.startsWith("/uploads/")) {
+    return `https://api.dtvacationandtravel.com${trimmed}`;
+  }
+  const clean = trimmed.startsWith("/") ? trimmed : `/${trimmed}`;
+  return `https://www.dtvacationandtravel.com${clean}`;
 }
 
 export function generateBroadcastCampaignHtml({
   headline,
   previewText,
   editorialMessage,
+  imageUrl,
   promotion,
   ctaText = "Claim Special Offer Now",
   ctaUrl,
@@ -180,6 +194,7 @@ export function generateBroadcastCampaignHtml({
     .join("");
 
   const finalCtaUrl = ctaUrl || (promotion?.actionTarget && promotion.actionType === "link" ? promotion.actionTarget : AGENCY_WHATSAPP_LINK);
+  const featuredImg = resolveAbsoluteImageUrl(imageUrl) || resolveAbsoluteImageUrl(promotion?.image);
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -214,12 +229,26 @@ export function generateBroadcastCampaignHtml({
             </td>
           </tr>
 
+          <!-- FEATURED / FLYER IMAGE BANNER (IF PROVIDED) -->
+          ${
+            featuredImg
+              ? `
+          <tr>
+            <td align="center" style="background:#ffffff;padding:28px 36px 0;">
+              <div style="border-radius:18px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,0.15);border:1px solid #e2e8f0;background:#000c1c;">
+                <img src="${featuredImg}" alt="${headline}" width="528" style="display:block;width:100%;max-width:528px;height:auto;border-radius:18px;object-fit:cover;" />
+              </div>
+            </td>
+          </tr>`
+              : ""
+          }
+
           <!-- PROMOTION FLYER CARD (IF PROMO SELECTED) -->
           ${
             promotion
               ? `
           <tr>
-            <td style="background:#ffffff;padding:36px 40px 12px;">
+            <td style="background:#ffffff;padding:28px 40px 12px;">
               <div style="background:linear-gradient(135deg, #000c1c 0%, #0a1b33 100%);border-radius:20px;padding:28px 24px;border:1px solid rgba(212,160,23,0.3);box-shadow:0 10px 30px rgba(0,0,0,0.15);color:#ffffff;">
                 <table width="100%" cellpadding="0" cellspacing="0">
                   <tr>
