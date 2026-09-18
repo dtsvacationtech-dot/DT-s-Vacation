@@ -1,14 +1,45 @@
-// API Target Resolver for Static Frontend <-> Droplet Backend
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://api.dtvacationandtravel.com";
+// Dual-Redundancy Backend Resolver (Primary Domain + Direct Droplet SSL Fallback)
+export const PRIMARY_API_URL = process.env.NEXT_PUBLIC_API_URL || "https://api.dtvacationandtravel.com";
+export const FALLBACK_API_URL = "https://67-205-178-226.sslip.io";
+
+export const API_BASE_URL = PRIMARY_API_URL;
+
+const ACTIVE_BACKEND_STORAGE_KEY = "dts_active_backend";
+let memoryActiveBaseUrl: string | null = null;
+
+export function getActiveBackendUrl(): string {
+  if (typeof window === "undefined") return PRIMARY_API_URL;
+  if (memoryActiveBaseUrl) return memoryActiveBaseUrl;
+
+  try {
+    const saved = sessionStorage.getItem(ACTIVE_BACKEND_STORAGE_KEY);
+    if (saved && (saved === PRIMARY_API_URL || saved === FALLBACK_API_URL)) {
+      memoryActiveBaseUrl = saved;
+      return saved;
+    }
+  } catch {}
+
+  memoryActiveBaseUrl = PRIMARY_API_URL;
+  return PRIMARY_API_URL;
+}
+
+export function setActiveBackendUrl(url: string): void {
+  memoryActiveBaseUrl = url;
+  if (typeof window !== "undefined") {
+    try {
+      sessionStorage.setItem(ACTIVE_BACKEND_STORAGE_KEY, url);
+    } catch {}
+  }
+}
 
 export function getApiUrl(path: string): string {
   if (!path) return "";
   if (path.startsWith("http://") || path.startsWith("https://")) return path;
   const cleanPath = path.startsWith("/") ? path : "/" + path;
-  
-  // When running in client browser, point to Droplet backend
-  if (typeof window !== "undefined" && API_BASE_URL) {
-    return `${API_BASE_URL}${cleanPath}`;
+
+  if (typeof window !== "undefined") {
+    const base = getActiveBackendUrl();
+    return `${base}${cleanPath}`;
   }
   return cleanPath;
 }
@@ -49,10 +80,47 @@ export function getAuthHeaders(extraHeaders: Record<string, string> = {}): Recor
   return headers;
 }
 
+/**
+ * Resilient fetch with automatic failover between primary domain and direct droplet SSL.
+ * Automatically handles DNS propagation lag (NXDOMAIN) or network timeouts.
+ */
+export async function apiFetch(path: string, options: RequestInit = {}): Promise<Response> {
+  const isAbsolute = path.startsWith("http://") || path.startsWith("https://");
+  const cleanPath = isAbsolute ? "" : path.startsWith("/") ? path : "/" + path;
+
+  const currentBase = getActiveBackendUrl();
+  const primaryUrl = isAbsolute ? path : `${currentBase}${cleanPath}`;
+
+  try {
+    const res = await fetch(primaryUrl, options);
+    return res;
+  } catch (primaryErr) {
+    // If running in browser and URL is relative to backend, try failover
+    if (typeof window !== "undefined" && !isAbsolute) {
+      const alternateBase = currentBase === PRIMARY_API_URL ? FALLBACK_API_URL : PRIMARY_API_URL;
+      const fallbackUrl = `${alternateBase}${cleanPath}`;
+      console.warn(`[API] Connection to ${primaryUrl} failed. Trying failover to ${fallbackUrl}...`);
+
+      try {
+        const fallbackRes = await fetch(fallbackUrl, options);
+        // Fallback succeeded! Remember this backend for subsequent calls
+        setActiveBackendUrl(alternateBase);
+        console.info(`[API] Failover successful! Active backend set to: ${alternateBase}`);
+        return fallbackRes;
+      } catch (fallbackErr) {
+        console.error(`[API] Both primary and fallback endpoints failed.`, fallbackErr);
+        throw primaryErr;
+      }
+    }
+    throw primaryErr;
+  }
+}
+
+/**
+ * Authenticated fetch that automatically attaches Bearer token & includes credentials
+ */
 export async function adminFetch(path: string, options: RequestInit = {}): Promise<Response> {
-  const url = getApiUrl(path);
   const authHeaders = getAuthHeaders();
-  
   let mergedHeaders: Record<string, string> = { ...authHeaders };
 
   if (options.headers) {
@@ -69,7 +137,7 @@ export async function adminFetch(path: string, options: RequestInit = {}): Promi
     }
   }
 
-  return fetch(url, {
+  return apiFetch(path, {
     ...options,
     credentials: "include",
     headers: mergedHeaders,

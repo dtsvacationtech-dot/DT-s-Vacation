@@ -1,6 +1,6 @@
 "use client";
 
-import { getApiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api";
 
 import { useState, useEffect, useCallback } from "react";
 import { usePathname } from "next/navigation";
@@ -53,7 +53,7 @@ export default function PromotionsModal({
   // Dynamic Fetch Promotions strictly from API / Database with cache busting
   const fetchPromotions = useCallback(() => {
     setIsLoading(true);
-    fetch(getApiUrl(`/api/promotions?_t=${Date.now()}`), {
+    apiFetch(`/api/promotions?_t=${Date.now()}`, {
       cache: "no-store",
       headers: {
         "Cache-Control": "no-cache",

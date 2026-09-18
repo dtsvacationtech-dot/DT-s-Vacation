@@ -1,6 +1,6 @@
 "use client";
 
-import { getApiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api";
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
@@ -56,7 +56,7 @@ export default function NewsletterModal() {
     e.preventDefault();
     if (!email || !email.includes("@")) return;
     try {
-      await fetch(getApiUrl("/api/subscribe"), {
+      await apiFetch("/api/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),

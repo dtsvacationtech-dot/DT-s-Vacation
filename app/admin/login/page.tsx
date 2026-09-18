@@ -1,6 +1,6 @@
 "use client";
 
-import { getApiUrl, setAdminToken, getAuthHeaders } from "@/lib/api";
+import { apiFetch, adminFetch, setAdminToken } from "@/lib/api";
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
@@ -23,10 +23,7 @@ export default function AdminLoginPage() {
 
   // Check if already authenticated on mount
   useEffect(() => {
-    fetch(getApiUrl("/api/admin/auth/me"), {
-      credentials: "include",
-      headers: getAuthHeaders(),
-    })
+    adminFetch("/api/admin/auth/me")
       .then((res) => {
         if (res.ok) {
           window.location.href = "/admin/";
@@ -68,7 +65,7 @@ export default function AdminLoginPage() {
 
     setIsLoading(true);
     try {
-      const res = await fetch(getApiUrl("/api/admin/auth/login"), {
+      const res = await apiFetch("/api/admin/auth/login", {
         credentials: "include",
         method: "POST",
         headers: { "Content-Type": "application/json" },

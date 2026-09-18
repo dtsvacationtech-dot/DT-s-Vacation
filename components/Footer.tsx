@@ -1,6 +1,6 @@
 "use client";
 
-import { getApiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -22,7 +22,7 @@ export default function Footer() {
     if (!email.includes("@")) return;
     setStatus("loading");
     try {
-      const res = await fetch(getApiUrl("/api/subscribe"), {
+      const res = await apiFetch("/api/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),

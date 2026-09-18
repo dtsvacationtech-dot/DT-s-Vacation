@@ -1,6 +1,6 @@
 "use client";
 
-import { getApiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api";
 
 import { useState, useRef, useEffect } from "react";
 import { usePathname } from "next/navigation";
@@ -133,7 +133,7 @@ export default function GlobalEnquiryModal() {
   const handleSubmit = async () => {
     setIsSubmitting(true);
     try {
-      const res = await fetch(getApiUrl("/api/send-enquiry"), {
+      const res = await apiFetch("/api/send-enquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

@@ -1,6 +1,6 @@
 "use client";
 
-import { getApiUrl, clearAdminToken, getAuthHeaders } from "@/lib/api";
+import { adminFetch, clearAdminToken } from "@/lib/api";
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
@@ -43,10 +43,8 @@ export default function AdminNavbar({ activeTab, onTabChange, unreadLeadsCount =
   const handleLogout = async () => {
     setIsLoggingOut(true);
     try {
-      await fetch(getApiUrl("/api/admin/auth/logout"), {
+      await adminFetch("/api/admin/auth/logout", {
         method: "POST",
-        credentials: "include",
-        headers: getAuthHeaders(),
       });
       clearAdminToken();
       showToast("Logged out successfully.", "info");

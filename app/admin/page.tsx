@@ -1,9 +1,9 @@
 "use client";
 
-import { getApiUrl, getAuthHeaders, clearAdminToken } from "@/lib/api";
+import { adminFetch, clearAdminToken, getAdminToken } from "@/lib/api";
 
 import { useState, useEffect, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import Image from "next/image";
 import AdminNavbar from "@/components/admin/AdminNavbar";
 import AdminOverviewTab from "@/components/admin/AdminOverviewTab";
 import AdminPromotionsTab from "@/components/admin/AdminPromotionsTab";
@@ -16,7 +16,6 @@ import { ExtendedPromotion, EnquiryRecord, SubscriberRecord, BroadcastLogRecord,
 import { useToast } from "@/components/admin/Toast";
 
 export default function AdminDashboardPage() {
-  const router = useRouter();
   const { showToast } = useToast();
 
   const [activeTab, setActiveTab] = useState<string>("overview");
@@ -35,12 +34,16 @@ export default function AdminDashboardPage() {
 
   // Fetch all admin data
   const fetchData = useCallback(async () => {
+    // 0. Immediate check: If no token exists in browser, redirect to login immediately
+    const token = getAdminToken();
+    if (!token && typeof window !== "undefined") {
+      window.location.href = "/admin/login/";
+      return;
+    }
+
     try {
-      // 1. Verify session
-      const authRes = await fetch(getApiUrl("/api/admin/auth/me"), {
-        credentials: "include",
-        headers: getAuthHeaders(),
-      });
+      // 1. Verify session with backend (automatic failover if DNS issue occurs)
+      const authRes = await adminFetch("/api/admin/auth/me");
       if (!authRes.ok) {
         clearAdminToken();
         window.location.href = "/admin/login/";
@@ -48,32 +51,31 @@ export default function AdminDashboardPage() {
       }
       setIsAuthenticated(true);
 
-      // 2. Fetch promotions, enquiries, subscribers, audit logs, and broadcast logs in parallel with no-store
-      const headers = getAuthHeaders();
+      // 2. Fetch promotions, enquiries, subscribers, audit logs, and broadcast logs in parallel
       const [promoRes, enqRes, subRes, auditRes, broadcastRes] = await Promise.all([
-        fetch(getApiUrl(`/api/admin/promotions?_t=${Date.now()}`), { cache: "no-store", credentials: "include", headers }),
-        fetch(getApiUrl(`/api/admin/enquiries?_t=${Date.now()}`), { cache: "no-store", credentials: "include", headers }),
-        fetch(getApiUrl(`/api/admin/subscribers?_t=${Date.now()}`), { cache: "no-store", credentials: "include", headers }),
-        fetch(getApiUrl(`/api/admin/audit?_t=${Date.now()}`), { cache: "no-store", credentials: "include", headers }),
-        fetch(getApiUrl(`/api/admin/broadcast?_t=${Date.now()}`), { cache: "no-store", credentials: "include", headers }),
+        adminFetch(`/api/admin/promotions?_t=${Date.now()}`, { cache: "no-store" }),
+        adminFetch(`/api/admin/enquiries?_t=${Date.now()}`, { cache: "no-store" }),
+        adminFetch(`/api/admin/subscribers?_t=${Date.now()}`, { cache: "no-store" }),
+        adminFetch(`/api/admin/audit?_t=${Date.now()}`, { cache: "no-store" }),
+        adminFetch(`/api/admin/broadcast?_t=${Date.now()}`, { cache: "no-store" }),
       ]);
 
-      if (promoRes.ok) {
+      if (promoRes && promoRes.ok) {
         const pJson = await promoRes.json();
         setPromotions(pJson.promotions || []);
       }
 
-      if (enqRes.ok) {
+      if (enqRes && enqRes.ok) {
         const eJson = await enqRes.json();
         setEnquiries(eJson.enquiries || []);
       }
 
-      if (subRes.ok) {
+      if (subRes && subRes.ok) {
         const sJson = await subRes.json();
         setSubscribers(sJson.subscribers || []);
       }
 
-      if (auditRes.ok) {
+      if (auditRes && auditRes.ok) {
         const aJson = await auditRes.json();
         setAuditLogs(aJson.auditLogs || []);
       }
@@ -84,11 +86,16 @@ export default function AdminDashboardPage() {
       }
     } catch (err) {
       console.error("Dashboard fetch error:", err);
-      showToast("Error loading dashboard data.", "error");
+      const token = getAdminToken();
+      if (!token) {
+        window.location.href = "/admin/login/";
+        return;
+      }
+      showToast("Error connecting to Agency Suite. Retrying or check connection.", "error");
     } finally {
       setIsLoading(false);
     }
-  }, [router, showToast]);
+  }, [showToast]);
 
   useEffect(() => {
     fetchData();
@@ -109,7 +116,33 @@ export default function AdminDashboardPage() {
     );
   }
 
-  if (!isAuthenticated) return null;
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#F8FAFC] text-slate-800 p-6 text-center">
+        <div className="w-16 h-16 mb-4 rounded-2xl bg-[#000C1C] border border-amber-300/40 flex items-center justify-center shadow-lg p-2.5">
+          <Image
+            src="/images/logo.webp"
+            alt="DT's Vacation"
+            width={48}
+            height={48}
+            className="object-contain"
+          />
+        </div>
+        <h2 className="text-xl font-heading font-black text-slate-900 mb-2">
+          Administrator Authentication Required
+        </h2>
+        <p className="text-xs text-slate-500 max-w-sm mb-6">
+          You must be signed in to access DT&apos;s Vacation Agency Suite.
+        </p>
+        <a
+          href="/admin/login/"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-amber-400 to-tropical-gold text-deep-navy font-bold text-xs uppercase tracking-wider shadow-md hover:scale-105 transition-all"
+        >
+          <span>Go to Administrator Login →</span>
+        </a>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-transparent text-slate-900">
