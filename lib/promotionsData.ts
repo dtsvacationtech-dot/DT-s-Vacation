@@ -43,7 +43,7 @@ export const SPECIAL_PROMOTIONS: PromotionOffer[] = [
     promoCode: "SPRING-CARIB-35",
     urgencyTag: "⚡ Only 3 Beachfront Suites Left at this Promo Rate",
     savingsEstimate: "Save up to $650 per stay + Airport VIP Concierge",
-    validUntil: "April 30, 2026",
+    validUntil: "2026-10-31",
     image: "/images/hero_hotels.webp",
     description:
       "Escape to paradise this Spring with exclusive discounted rates at premier Jamaican 5-star all-inclusive resorts in Montego Bay, Ocho Rios, and Negril. Enjoy complimentary VIP airport transfers and gourmet dining.",
@@ -73,7 +73,7 @@ export const SPECIAL_PROMOTIONS: PromotionOffer[] = [
     promoCode: "CRUISE-VIP-200",
     urgencyTag: "⏳ 4 Oceanview & Balcony Cabins Available at this Rate",
     savingsEstimate: "$200 Free Spending Credit + Specialty Dining Pass",
-    validUntil: "May 15, 2026",
+    validUntil: "2026-09-24",
     image: "/images/hero_cruises.webp",
     description:
       "Set sail across turquoise Caribbean waters visiting Barbados, Trinidad, Antigua, and St. Lucia. DT's Vacation guests receive $200 complimentary onboard credit plus complimentary specialty dining upgrades.",

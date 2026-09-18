@@ -10,15 +10,23 @@ const NO_CACHE_HEADERS = {
   Expires: "0",
 };
 
-export async function GET() {
+const FAST_CACHE_HEADERS = {
+  "Cache-Control": "public, max-age=15, stale-while-revalidate=60",
+};
+
+export async function GET(req: Request) {
   try {
+    const { searchParams } = new URL(req.url);
+    const isForceBust = searchParams.has("_t");
+    const headers = isForceBust ? NO_CACHE_HEADERS : FAST_CACHE_HEADERS;
+
     const promotions = await getActivePromotions();
     return NextResponse.json(
       {
         success: true,
         promotions: Array.isArray(promotions) ? promotions : [],
       },
-      { headers: NO_CACHE_HEADERS }
+      { headers }
     );
   } catch (err: any) {
     console.error("Public promotions fetch error:", err);

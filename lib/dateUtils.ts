@@ -67,3 +67,51 @@ export function isDateExpired(dateStr?: string | null): boolean {
   if (isNaN(expiryDate.getTime())) return false;
   return expiryDate.getTime() < Date.now();
 }
+
+/**
+ * Parses an expiry date string into a Date object at 23:59:59.999 of that day.
+ * Returns null if invalid or ongoing.
+ */
+export function parsePromotionExpiry(dateStr?: string | null): Date | null {
+  if (!dateStr) return null;
+  const trimmed = dateStr.trim();
+  if (!trimmed || /ongoing/i.test(trimmed)) return null;
+
+  let expiryDate: Date;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
+    const [y, m, d] = trimmed.split("-").map(Number);
+    expiryDate = new Date(y, m - 1, d, 23, 59, 59, 999);
+  } else {
+    expiryDate = new Date(trimmed);
+    expiryDate.setHours(23, 59, 59, 999);
+  }
+
+  if (isNaN(expiryDate.getTime())) return null;
+  return expiryDate;
+}
+
+/**
+ * Finds the promotion that has the earliest expiration date in the future
+ * (i.e. the campaign with the least remaining time left).
+ */
+export function getEarliestExpiringPromotion<T extends { validUntil?: string | null; active?: boolean }>(
+  promotions: T[]
+): { promotion: T; expiryDate: Date; remainingMs: number } | null {
+  const now = Date.now();
+  let earliest: { promotion: T; expiryDate: Date; remainingMs: number } | null = null;
+
+  for (const promo of promotions) {
+    if (promo.active === false) continue;
+    const expiry = parsePromotionExpiry(promo.validUntil);
+    if (!expiry) continue;
+
+    const remainingMs = expiry.getTime() - now;
+    if (remainingMs > 0) {
+      if (!earliest || remainingMs < earliest.remainingMs) {
+        earliest = { promotion: promo, expiryDate: expiry, remainingMs };
+      }
+    }
+  }
+
+  return earliest;
+}

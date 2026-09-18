@@ -1,6 +1,7 @@
 "use client";
 
-import { getApiUrl } from "@/lib/api";
+import { apiFetch } from "@/lib/api";
+import { SPECIAL_PROMOTIONS, PromotionOffer } from "@/lib/promotionsData";
 
 import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from "react";
 
@@ -26,9 +27,13 @@ interface EnquiryContextValue {
   isPromotionsOpen: boolean;
   openPromotions: () => void;
   closePromotions: () => void;
+  promotions: PromotionOffer[];
   promotionsCount: number;
+  refreshPromotions: () => void;
   refreshPromotionsCount: () => void;
 }
+
+let inMemoryPromotionsCache: PromotionOffer[] | null = null;
 
 const EnquiryContext = createContext<EnquiryContextValue | null>(null);
 
@@ -38,25 +43,53 @@ export function EnquiryProvider({ children }: { children: ReactNode }) {
   const [initialMessage, setInitialMessage] = useState("");
   const [selectedPromotion, setSelectedPromotion] = useState<EnquiryPromotionInfo | null>(null);
   const [isPromotionsOpen, setIsPromotionsOpen] = useState(false);
-  const [promotionsCount, setPromotionsCount] = useState(0);
+  
+  // Instant Initial State: Memory cache -> SessionStorage -> Default Special Promotions
+  const [promotions, setPromotions] = useState<PromotionOffer[]>(() => {
+    if (inMemoryPromotionsCache && inMemoryPromotionsCache.length > 0) {
+      return inMemoryPromotionsCache;
+    }
+    if (typeof window !== "undefined") {
+      try {
+        const stored = sessionStorage.getItem("dts_cached_promos");
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            inMemoryPromotionsCache = parsed;
+            return parsed;
+          }
+        }
+      } catch {}
+    }
+    return SPECIAL_PROMOTIONS.filter((p) => p.active !== false);
+  });
 
-  const refreshPromotionsCount = useCallback(() => {
-    fetch(getApiUrl(`/api/promotions?_t=${Date.now()}`), {
+  const [promotionsCount, setPromotionsCount] = useState<number>(() => {
+    return promotions.length || SPECIAL_PROMOTIONS.filter((p) => p.active !== false).length;
+  });
+
+  const refreshPromotions = useCallback(() => {
+    apiFetch(`/api/promotions?_t=${Date.now()}`, {
       cache: "no-store",
       headers: { "Cache-Control": "no-cache", Pragma: "no-cache" },
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.success && Array.isArray(data.promotions)) {
+        if (data.success && Array.isArray(data.promotions) && data.promotions.length > 0) {
+          setPromotions(data.promotions);
           setPromotionsCount(data.promotions.length);
+          inMemoryPromotionsCache = data.promotions;
+          try {
+            sessionStorage.setItem("dts_cached_promos", JSON.stringify(data.promotions));
+          } catch {}
         }
       })
       .catch(() => {});
   }, []);
 
   useEffect(() => {
-    refreshPromotionsCount();
-  }, [refreshPromotionsCount, isPromotionsOpen]);
+    refreshPromotions();
+  }, [refreshPromotions, isPromotionsOpen]);
 
   const openModal = (service: ServiceType, initialNotes?: string, promoInfo?: EnquiryPromotionInfo | null) => {
     setServiceType(service);
@@ -99,8 +132,10 @@ export function EnquiryProvider({ children }: { children: ReactNode }) {
         isPromotionsOpen,
         openPromotions,
         closePromotions,
+        promotions,
         promotionsCount,
-        refreshPromotionsCount,
+        refreshPromotions,
+        refreshPromotionsCount: refreshPromotions,
       }}
     >
       {children}

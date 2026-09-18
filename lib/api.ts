@@ -91,19 +91,26 @@ export async function apiFetch(path: string, options: RequestInit = {}): Promise
   const currentBase = getActiveBackendUrl();
   const primaryUrl = isAbsolute ? path : `${currentBase}${cleanPath}`;
 
-  try {
-    const res = await fetch(primaryUrl, options);
-    return res;
-  } catch (primaryErr) {
-    // If running in browser and URL is relative to backend, try failover
-    if (typeof window !== "undefined" && !isAbsolute) {
+  // If in browser and calling our backend, enforce a 1800ms fast timeout to avoid long DNS hangs
+  if (typeof window !== "undefined" && !isAbsolute) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 1800);
+
+    try {
+      const res = await fetch(primaryUrl, {
+        ...options,
+        signal: options.signal || controller.signal,
+      });
+      clearTimeout(timeoutId);
+      return res;
+    } catch (primaryErr) {
+      clearTimeout(timeoutId);
       const alternateBase = currentBase === PRIMARY_API_URL ? FALLBACK_API_URL : PRIMARY_API_URL;
       const fallbackUrl = `${alternateBase}${cleanPath}`;
-      console.warn(`[API] Connection to ${primaryUrl} failed. Trying failover to ${fallbackUrl}...`);
+      console.warn(`[API] Fast failover from ${primaryUrl} to ${fallbackUrl}...`);
 
       try {
         const fallbackRes = await fetch(fallbackUrl, options);
-        // Fallback succeeded! Remember this backend for subsequent calls
         setActiveBackendUrl(alternateBase);
         console.info(`[API] Failover successful! Active backend set to: ${alternateBase}`);
         return fallbackRes;
@@ -112,6 +119,11 @@ export async function apiFetch(path: string, options: RequestInit = {}): Promise
         throw primaryErr;
       }
     }
+  }
+
+  try {
+    return await fetch(primaryUrl, options);
+  } catch (primaryErr) {
     throw primaryErr;
   }
 }
