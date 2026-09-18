@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
     const filePath = path.join(uploadDir, uniqueFileName);
     fs.writeFileSync(filePath, buffer);
 
-    const backendUrl = process.env.PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://67-205-178-226.sslip.io";
+    const backendUrl = process.env.PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://api.dtvacationandtravel.com";
     const publicUrl = `${backendUrl}/uploads/${uniqueFileName}`;
 
     return NextResponse.json({

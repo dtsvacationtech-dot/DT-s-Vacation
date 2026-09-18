@@ -44,7 +44,7 @@ if (hasApi) {
 
 try {
   process.env.OUTPUT_EXPORT = "true";
-  process.env.NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL || "https://67-205-178-226.sslip.io";
+  process.env.NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL || "https://api.dtvacationandtravel.com";
   console.log("API Target:", process.env.NEXT_PUBLIC_API_URL);
 
   execSync("npx next build", {

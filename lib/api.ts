@@ -1,5 +1,5 @@
 // API Target Resolver for Static Frontend <-> Droplet Backend
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://67-205-178-226.sslip.io";
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://api.dtvacationandtravel.com";
 
 export function getApiUrl(path: string): string {
   if (!path) return "";
