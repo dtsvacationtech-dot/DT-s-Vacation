@@ -59,7 +59,11 @@ Explore our featured special offer below or reply directly to connect with our c
     if (targetAudience === "category") {
       return new Set(
         enquiries
-          .filter((e) => e.serviceType?.toLowerCase() === serviceCategory.toLowerCase())
+          .filter(
+            (e) =>
+              e.serviceType?.toLowerCase() === serviceCategory.toLowerCase() ||
+              (serviceCategory === "group" && Boolean(e.serviceType?.toLowerCase().includes("group")))
+          )
           .map((e) => e.email.toLowerCase())
       ).size;
     }
@@ -254,10 +258,37 @@ Explore our featured special offer below or reply directly to connect with our c
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {[
-                  { id: "subscribers", label: "Subscribers", count: subscribers.length },
-                  { id: "leads", label: "All Leads", count: enquiries.length },
-                  { id: "all", label: "Combined All", count: getAudienceCount() },
-                  { id: "category", label: "By Service", count: "" },
+                  {
+                    id: "subscribers",
+                    label: "Subscribers",
+                    count: subscribers.filter((s) => s.status === "active").length,
+                  },
+                  {
+                    id: "leads",
+                    label: "All Leads",
+                    count: new Set(enquiries.map((e) => e.email.toLowerCase())).size,
+                  },
+                  {
+                    id: "all",
+                    label: "Combined All",
+                    count: new Set([
+                      ...subscribers.filter((s) => s.status === "active").map((s) => s.email.toLowerCase()),
+                      ...enquiries.map((e) => e.email.toLowerCase()),
+                    ]).size,
+                  },
+                  {
+                    id: "category",
+                    label: "By Service",
+                    count: new Set(
+                      enquiries
+                        .filter(
+                          (e) =>
+                            e.serviceType?.toLowerCase() === serviceCategory.toLowerCase() ||
+                            (serviceCategory === "group" && Boolean(e.serviceType?.toLowerCase().includes("group")))
+                        )
+                        .map((e) => e.email.toLowerCase())
+                    ).size,
+                  },
                 ].map((aud) => (
                   <button
                     key={aud.id}
@@ -270,7 +301,7 @@ Explore our featured special offer below or reply directly to connect with our c
                     }`}
                   >
                     <p className="text-xs">{aud.label}</p>
-                    {aud.count !== "" && <p className="text-[10px] text-amber-700 font-mono font-bold">{aud.count} contacts</p>}
+                    <p className="text-[10px] text-amber-700 font-mono font-bold">{aud.count} contacts</p>
                   </button>
                 ))}
               </div>
@@ -284,6 +315,7 @@ Explore our featured special offer below or reply directly to connect with our c
                     className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:border-tropical-gold focus:outline-none cursor-pointer"
                   >
                     <option value="hotels">🏨 Hotel &amp; Resort Leads</option>
+                    <option value="group">👥 Group Travel Leads</option>
                     <option value="cruises">🚢 Cruise Leads</option>
                     <option value="tours">🌴 Tour Leads</option>
                     <option value="wedding">💍 Destination Wedding Leads</option>

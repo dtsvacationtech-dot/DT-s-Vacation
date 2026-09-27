@@ -12,9 +12,15 @@ interface AdminNavbarProps {
   activeTab: string;
   onTabChange: (tab: string) => void;
   unreadLeadsCount?: number;
+  currentUser?: { username: string; role: string } | null;
 }
 
-export default function AdminNavbar({ activeTab, onTabChange, unreadLeadsCount = 0 }: AdminNavbarProps) {
+export default function AdminNavbar({
+  activeTab,
+  onTabChange,
+  unreadLeadsCount = 0,
+  currentUser = null,
+}: AdminNavbarProps) {
   const router = useRouter();
   const { showToast } = useToast();
   const [jamaicaTime, setJamaicaTime] = useState("");
@@ -123,7 +129,9 @@ export default function AdminNavbar({ activeTab, onTabChange, unreadLeadsCount =
 
             <div className="flex items-center gap-3">
               <div className="hidden sm:block text-right">
-                <p className="text-xs font-bold text-slate-900">Agency Manager</p>
+                <p className="text-xs font-bold text-slate-900">
+                  {currentUser?.username ? `@${currentUser.username}` : "Agency Manager"}
+                </p>
                 <p className="text-[11px] text-emerald-600 font-mono font-semibold">● Online &amp; Secure</p>
               </div>
 

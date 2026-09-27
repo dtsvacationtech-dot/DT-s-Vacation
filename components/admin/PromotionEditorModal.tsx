@@ -17,6 +17,7 @@ interface PromotionEditorModalProps {
 
 const PRESET_IMAGES = [
   { label: "Luxury Hotels", url: "/images/hero_hotels.webp" },
+  { label: "Group Travel", url: "/images/hero_group_travel.webp" },
   { label: "Ocean Cruise", url: "/images/hero_cruises.webp" },
   { label: "Island Tours", url: "/images/hero_tours.webp" },
   { label: "Weddings", url: "/images/hero_weddings.webp" },
@@ -371,10 +372,11 @@ export default function PromotionEditorModal({
                     className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 focus:bg-white focus:border-tropical-gold focus:outline-none transition-all cursor-pointer"
                   >
                     <option value="hotels">🏨 Luxury Hotels &amp; Resorts</option>
+                    <option value="group">👥 Group Travel Experiences</option>
                     <option value="cruises">🚢 Ocean Cruises</option>
                     <option value="tours">🌴 Island &amp; Global Tours</option>
                     <option value="wedding">💍 Destination Weddings</option>
-                    <option value="corporate">👔 Corporate &amp; Group Travel</option>
+                    <option value="corporate">👔 Corporate Logistics &amp; Retreats</option>
                   </select>
                 </div>
 

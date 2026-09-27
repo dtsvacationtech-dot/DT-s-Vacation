@@ -43,6 +43,7 @@ export default function Navbar() {
   const navLinks = [
     { label: "Home", href: "/" },
     { label: "Hotels", href: "/hotels" },
+    { label: "Group Travel", href: "/group-travel" },
     { label: "Corporate", href: "/corporate" },
     { label: "Weddings", href: "/weddings" },
     { label: "Cruises", href: "/cruises" },
@@ -53,6 +54,7 @@ export default function Navbar() {
   // Determine active link key
   const getActiveHref = () => {
     if (pathname.startsWith("/hotels")) return "/hotels";
+    if (pathname.startsWith("/group-travel")) return "/group-travel";
     if (pathname.startsWith("/corporate")) return "/corporate";
     if (pathname.startsWith("/weddings")) return "/weddings";
     if (pathname.startsWith("/cruises")) return "/cruises";

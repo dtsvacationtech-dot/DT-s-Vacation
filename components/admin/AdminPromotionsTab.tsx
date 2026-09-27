@@ -94,7 +94,7 @@ export default function AdminPromotionsTab({ promotions, onRefresh }: AdminPromo
       {/* Top Controls Bar */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 rounded-3xl bg-white border border-slate-200/80 shadow-xs">
         <div className="flex flex-wrap items-center gap-2">
-          {["all", "hotels", "cruises", "tours", "wedding", "corporate"].map((cat) => (
+          {["all", "hotels", "group", "cruises", "tours", "wedding", "corporate"].map((cat) => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}

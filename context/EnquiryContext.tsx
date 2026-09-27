@@ -5,7 +5,7 @@ import { SPECIAL_PROMOTIONS, PromotionOffer } from "@/lib/promotionsData";
 
 import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from "react";
 
-export type ServiceType = "wedding" | "corporate" | "tours" | "hotels" | "cruises";
+export type ServiceType = "wedding" | "corporate" | "tours" | "hotels" | "cruises" | "group";
 
 export interface EnquiryPromotionInfo {
   id?: string;

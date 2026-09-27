@@ -13,6 +13,7 @@ function cleanGeneratedFromPublic() {
     "public/contact",
     "public/corporate",
     "public/cruises",
+    "public/group-travel",
     "public/hotels",
     "public/privacy",
     "public/terms",

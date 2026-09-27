@@ -97,7 +97,12 @@ export async function POST(req: NextRequest) {
     if (targetAudience === "category" && serviceCategory) {
       const leads = await getEnquiries();
       leads
-        .filter((l) => l.serviceType?.toLowerCase() === serviceCategory.toLowerCase() && l.email.includes("@"))
+        .filter(
+          (l) =>
+            (l.serviceType?.toLowerCase() === serviceCategory.toLowerCase() ||
+              (serviceCategory === "group" && Boolean(l.serviceType?.toLowerCase().includes("group")))) &&
+            l.email.includes("@")
+        )
         .forEach((l) => recipientEmails.add(l.email.toLowerCase().trim()));
     }
 

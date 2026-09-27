@@ -29,7 +29,9 @@ export default function AdminEnquiriesTab({ enquiries, promotions, onRefresh }: 
   const filteredEnquiries = enquiries.filter((e) => {
     const matchesStatus = statusFilter === "all" || e.status === statusFilter;
     const matchesService =
-      serviceFilter === "all" || e.serviceType?.toLowerCase() === serviceFilter.toLowerCase();
+      serviceFilter === "all" ||
+      e.serviceType?.toLowerCase() === serviceFilter.toLowerCase() ||
+      (serviceFilter === "group" && Boolean(e.serviceType?.toLowerCase().includes("group")));
     const query = searchQuery.toLowerCase();
     const matchesSearch =
       (e.name || "").toLowerCase().includes(query) ||
@@ -197,6 +199,7 @@ export default function AdminEnquiriesTab({ enquiries, promotions, onRefresh }: 
           >
             <option value="all">All Services</option>
             <option value="hotels">Hotels</option>
+            <option value="group">Group Travel</option>
             <option value="cruises">Cruises</option>
             <option value="tours">Tours</option>
             <option value="wedding">Weddings</option>
@@ -256,7 +259,10 @@ export default function AdminEnquiriesTab({ enquiries, promotions, onRefresh }: 
               </thead>
               <tbody className="divide-y divide-slate-100 text-xs text-slate-700">
                 {filteredEnquiries.map((enquiry) => {
-                  const customerName = enquiry.firstName || enquiry.name || "Traveler";
+                  const customerName =
+                    enquiry.firstName ||
+                    enquiry.name ||
+                    (enquiry.email ? enquiry.email.split("@")[0] : "Traveler");
                   const cleanPhone = (enquiry.phone || "").replace(/\D/g, "");
                   const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(
                     enquiry.promotionTitle
@@ -301,7 +307,7 @@ export default function AdminEnquiriesTab({ enquiries, promotions, onRefresh }: 
                             </div>
                           )}
                           <p className="text-slate-800 font-medium line-clamp-1">
-                            {enquiry.destination || "Jamaica / Flexible"}
+                            {enquiry.destination || "Flexible / Not specified"}
                           </p>
                         </div>
                       </td>

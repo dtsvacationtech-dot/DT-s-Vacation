@@ -8,6 +8,7 @@ interface AdminOverviewTabProps {
   subscribers: SubscriberRecord[];
   onNavigateTab: (tabId: string) => void;
   onOpenNewPromo: () => void;
+  currentUser?: { username: string; role: string } | null;
 }
 
 export default function AdminOverviewTab({
@@ -16,12 +17,20 @@ export default function AdminOverviewTab({
   subscribers,
   onNavigateTab,
   onOpenNewPromo,
+  currentUser = null,
 }: AdminOverviewTabProps) {
   const activePromosCount = promotions.filter((p) => p.active).length;
   const newEnquiriesCount = enquiries.filter((e) => e.status === "new").length;
   const bookedCount = enquiries.filter((e) => e.status === "booked").length;
+  const activeSubsCount = subscribers.filter((s) => s.status === "active").length;
 
   const recentEnquiries = enquiries.slice(0, 5);
+
+  const adminGreetingName = currentUser?.username
+    ? currentUser.username === "admin"
+      ? "Denis & DT's Travel Team"
+      : currentUser.username
+    : "Denis & DT's Travel Team";
 
   return (
     <div className="space-y-8">
@@ -34,7 +43,7 @@ export default function AdminOverviewTab({
               <span>👑 VIP Agency Suite</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-heading font-black text-white">
-              Welcome back, Denis &amp; DT&apos;s Travel Team
+              Welcome back, {adminGreetingName}
             </h2>
             <p className="text-slate-300 text-xs sm:text-sm font-light max-w-xl leading-relaxed">
               Manage client inquiries, update seasonal specials, send direct customer replies, and launch targeted promotional broadcasts.
@@ -120,7 +129,9 @@ export default function AdminOverviewTab({
             </div>
           </div>
           <h3 className="text-3xl font-heading font-black text-emerald-700 mt-3">{subscribers.length}</h3>
-          <p className="text-xs text-slate-500 mt-1">Ready for broadcast</p>
+          <p className="text-xs text-slate-500 mt-1">
+            {activeSubsCount} active {activeSubsCount === 1 ? "member" : "members"}
+          </p>
         </div>
 
       </div>
@@ -149,46 +160,60 @@ export default function AdminOverviewTab({
             </div>
           ) : (
             <div className="space-y-3">
-              {recentEnquiries.map((enquiry) => (
-                <div
-                  key={enquiry.id}
-                  className="p-4 rounded-2xl bg-slate-50/80 border border-slate-200/60 hover:border-amber-300 hover:bg-amber-50/20 transition-all flex items-center justify-between gap-3"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-amber-100/70 flex items-center justify-center text-amber-800 font-bold border border-amber-200">
-                      {(enquiry.firstName || enquiry.name || "T").charAt(0).toUpperCase()}
-                    </div>
-                    <div>
-                      <p className="text-xs font-bold text-slate-900">
-                        {enquiry.firstName || enquiry.name} {enquiry.lastName || ""}
-                      </p>
-                      <p className="text-[11px] text-slate-500">
-                        {enquiry.serviceType} &bull; {enquiry.destination || "Jamaica"}
-                      </p>
-                    </div>
-                  </div>
+              {recentEnquiries.map((enquiry) => {
+                const customerName =
+                  enquiry.firstName || enquiry.name || enquiry.email?.split("@")[0] || "Traveler";
+                const initialChar = (
+                  enquiry.firstName ||
+                  enquiry.name ||
+                  enquiry.email ||
+                  "T"
+                )
+                  .charAt(0)
+                  .toUpperCase();
 
-                  <div className="flex items-center gap-2">
-                    <span
-                      className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border ${
-                        enquiry.status === "new"
-                          ? "bg-rose-50 text-rose-700 border-rose-200"
-                          : enquiry.status === "contacted"
-                          ? "bg-amber-50 text-amber-800 border-amber-200"
-                          : "bg-emerald-50 text-emerald-700 border-emerald-200"
-                      }`}
-                    >
-                      {enquiry.status}
-                    </span>
-                    <button
-                      onClick={() => onNavigateTab("enquiries")}
-                      className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-white border border-slate-200/80 hover:bg-slate-100 text-slate-700 transition-all cursor-pointer shadow-2xs"
-                    >
-                      Manage
-                    </button>
+                return (
+                  <div
+                    key={enquiry.id}
+                    className="p-4 rounded-2xl bg-slate-50/80 border border-slate-200/60 hover:border-amber-300 hover:bg-amber-50/20 transition-all flex items-center justify-between gap-3"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-amber-100/70 flex items-center justify-center text-amber-800 font-bold border border-amber-200">
+                        {initialChar}
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold text-slate-900">
+                          {customerName} {enquiry.lastName || ""}
+                        </p>
+                        <p className="text-[11px] text-slate-500">
+                          {enquiry.serviceType || "General"}
+                          {enquiry.destination ? ` • ${enquiry.destination}` : " • Flexible destination"}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <span
+                        className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border ${
+                          enquiry.status === "new"
+                            ? "bg-rose-50 text-rose-700 border-rose-200"
+                            : enquiry.status === "contacted"
+                            ? "bg-amber-50 text-amber-800 border-amber-200"
+                            : "bg-emerald-50 text-emerald-700 border-emerald-200"
+                        }`}
+                      >
+                        {enquiry.status}
+                      </span>
+                      <button
+                        onClick={() => onNavigateTab("enquiries")}
+                        className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-white border border-slate-200/80 hover:bg-slate-100 text-slate-700 transition-all cursor-pointer shadow-2xs"
+                      >
+                        Manage
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>

@@ -29,7 +29,7 @@ export interface PromotionOffer {
   ctaText: string;
   actionType: "whatsapp" | "enquiry" | "link";
   actionTarget: string; // WhatsApp message, serviceType, or URL
-  serviceType: "hotels" | "cruises" | "corporate" | "wedding" | "tours";
+  serviceType: "hotels" | "cruises" | "corporate" | "wedding" | "tours" | "group";
   active: boolean;
 }
 

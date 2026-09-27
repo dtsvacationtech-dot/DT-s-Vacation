@@ -24,6 +24,11 @@ export default function AdminSubscribersTab({
     s.email.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const totalSubscribers = subscribers.length;
+  const activeCount = subscribers.filter((s) => s.status === "active").length;
+  const unsubscribedCount = subscribers.filter((s) => s.status === "unsubscribed").length;
+  const activeRate = totalSubscribers > 0 ? Math.round((activeCount / totalSubscribers) * 100) : 100;
+
   // Copy All Emails
   const handleCopyAll = () => {
     if (subscribers.length === 0) {
@@ -90,7 +95,7 @@ export default function AdminSubscribersTab({
         <div className="p-5 rounded-3xl bg-white border border-slate-200/80 shadow-xs flex items-center justify-between">
           <div>
             <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Total Subscribers</p>
-            <h3 className="text-2xl font-heading font-black text-slate-900 mt-1">{subscribers.length}</h3>
+            <h3 className="text-2xl font-heading font-black text-slate-900 mt-1">{totalSubscribers}</h3>
           </div>
           <div className="w-12 h-12 rounded-2xl bg-amber-50 flex items-center justify-center text-xl border border-amber-200">
             📬
@@ -100,7 +105,12 @@ export default function AdminSubscribersTab({
         <div className="p-5 rounded-3xl bg-white border border-slate-200/80 shadow-xs flex items-center justify-between">
           <div>
             <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Active Status</p>
-            <h3 className="text-2xl font-heading font-black text-emerald-700 mt-1">100% Verified</h3>
+            <h3 className="text-2xl font-heading font-black text-emerald-700 mt-1">
+              {activeCount} Active {totalSubscribers > 0 ? `(${activeRate}%)` : ""}
+            </h3>
+            <p className="text-[11px] text-slate-500 mt-0.5">
+              {unsubscribedCount > 0 ? `${unsubscribedCount} unsubscribed` : "0 unsubscribed"}
+            </p>
           </div>
           <div className="w-12 h-12 rounded-2xl bg-emerald-50 flex items-center justify-center text-xl border border-emerald-200">
             ✨

@@ -57,6 +57,7 @@ public/admin/
 public/contact/
 public/corporate/
 public/cruises/
+public/group-travel/
 public/hotels/
 public/privacy/
 public/terms/
@@ -65,3 +66,5 @@ public/weddings/
 public/*.html
 public/*.txt
 public/__next*
+*.docx
+docs/screenshots/

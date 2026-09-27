@@ -23,6 +23,7 @@ export default function AdminDashboardPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   // Data Store States
+  const [currentUser, setCurrentUser] = useState<{ username: string; role: string } | null>(null);
   const [promotions, setPromotions] = useState<ExtendedPromotion[]>([]);
   const [enquiries, setEnquiries] = useState<EnquiryRecord[]>([]);
   const [subscribers, setSubscribers] = useState<SubscriberRecord[]>([]);
@@ -48,6 +49,10 @@ export default function AdminDashboardPage() {
         clearAdminToken();
         window.location.href = "/admin/login/";
         return;
+      }
+      const authJson = await authRes.json();
+      if (authJson.user) {
+        setCurrentUser(authJson.user);
       }
       setIsAuthenticated(true);
 
@@ -151,6 +156,7 @@ export default function AdminDashboardPage() {
         activeTab={activeTab}
         onTabChange={(tab) => setActiveTab(tab)}
         unreadLeadsCount={unreadLeadsCount}
+        currentUser={currentUser}
       />
 
       {/* Main Content Area */}
@@ -162,6 +168,7 @@ export default function AdminDashboardPage() {
             subscribers={subscribers}
             onNavigateTab={(tab) => setActiveTab(tab)}
             onOpenNewPromo={() => setIsQuickPromoOpen(true)}
+            currentUser={currentUser}
           />
         )}
 
