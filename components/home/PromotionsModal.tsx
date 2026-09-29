@@ -97,7 +97,7 @@ export default function PromotionsModal({
         }
       })
       .catch((err) => {
-        console.error("Promotions revalidation notice:", err);
+        console.warn("Promotions revalidation notice:", err);
       })
       .finally(() => setIsLoading(false));
   }, [promotionsList.length]);

@@ -612,6 +612,28 @@ Explore our featured special offer below or reply directly to connect with our c
                 </div>
               </div>
 
+              {/* Signature Preview */}
+              <div className="pt-2">
+                <div className="flex items-start gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-left text-xs">
+                  <img
+                    src="/images/Logo.png"
+                    alt="DT's Vacation & Travel"
+                    className="w-14 h-14 rounded-lg object-contain bg-white p-1 border border-slate-200 shrink-0"
+                  />
+                  <div className="border-l-2 border-sky-600 pl-3 space-y-0.5">
+                    <p className="font-bold text-sky-700 text-xs">Denise Thomas</p>
+                    <p className="text-slate-500 font-medium text-[11px]">Founder &amp; Luxury Travel Specialist</p>
+                    <p className="font-bold text-slate-800 text-[11px]">DT&apos;s Vacation &amp; Travel Limited</p>
+                    <p className="text-slate-600 text-[10px]">
+                      <strong className="text-sky-600">T</strong> (876) 856-9812 | <strong className="text-sky-600">E</strong> dtvacationandtravel@gmail.com
+                    </p>
+                    <p className="text-sky-600 font-semibold text-[10px]">
+                      <strong className="text-sky-600">W</strong> www.dtvacationandtravel.com
+                    </p>
+                  </div>
+                </div>
+              </div>
+
               {/* Footer */}
               <div className="text-center text-[10px] text-slate-500 pt-3 border-t border-slate-200">
                 <p className="text-slate-800 font-bold">DT&apos;s Vacation &amp; Travel Ltd.</p>

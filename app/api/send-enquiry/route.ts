@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sendEmail, AGENCY_EMAIL } from "@/lib/emailSender";
 import { saveEnquiry } from "@/lib/db";
+import { generateEmailSignatureHtml } from "@/lib/emailTemplates";
 
 // ─── Type for all enquiry forms ───────────────────────────────────────────────
 interface EnquiryPayload {
@@ -241,18 +242,10 @@ function customerConfirmationHtml(name: string, data: EnquiryPayload): string {
           </td>
         </tr>
 
-        <!-- CONTACT -->
+        <!-- OFFICIAL BRAND SIGNATURE -->
         <tr>
-          <td style="background:#f8fafc;padding:28px 40px;border-top:1px solid #e2e8f0;">
-            <p style="margin:0 0 12px;color:#64748b;font-size:14px;">Need immediate assistance?</p>
-            <table cellpadding="0" cellspacing="0"><tr>
-              <td style="padding-right:16px;">
-                <a href="https://wa.me/18768569812" style="display:inline-block;background:#25D366;color:#fff;text-decoration:none;font-size:13px;font-weight:700;padding:10px 20px;border-radius:50px;">💬 WhatsApp Us</a>
-              </td>
-              <td>
-                <a href="mailto:dtvacationandtravel@gmail.com" style="display:inline-block;background:#000C1C;color:#fff;text-decoration:none;font-size:13px;font-weight:700;padding:10px 20px;border-radius:50px;">✉️ Email Us</a>
-              </td>
-            </tr></table>
+          <td style="background:#ffffff;padding:0 40px 36px;">
+            ${generateEmailSignatureHtml()}
           </td>
         </tr>
 

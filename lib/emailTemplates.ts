@@ -9,7 +9,142 @@ const AGENCY_NAME = "DT's Vacation & Travel Ltd.";
 const AGENCY_PHONE = "+1 (876) 856-9812";
 const AGENCY_WHATSAPP_LINK = "https://wa.me/18768569812";
 const AGENCY_EMAIL = "dtvacationandtravel@gmail.com";
-const WEBSITE_URL = "https://dt-s-vacation.vercel.app";
+const WEBSITE_URL = "https://www.dtvacationandtravel.com";
+
+// --- Official Branded Email Signature ---
+export interface EmailSignatureOptions {
+  fullName?: string;
+  jobTitle?: string;
+  companyName?: string;
+  phone?: string;
+  phoneLink?: string;
+  email?: string;
+  websiteUrl?: string;
+  websiteDisplay?: string;
+  consultationText?: string;
+  consultationUrl?: string;
+  showPromoBanner?: boolean;
+  promoHeadline?: string;
+  promoText?: string;
+  showDisclaimer?: boolean;
+}
+
+export function generateEmailSignatureHtml(options: EmailSignatureOptions = {}): string {
+  const fullName = options.fullName || "Denise Thomas";
+  const jobTitle = options.jobTitle || "Founder & Luxury Travel Specialist";
+  const companyName = options.companyName || "DT's Vacation & Travel Limited";
+  const phone = options.phone || "(876) 856-9812";
+  const phoneLink = options.phoneLink || "tel:+18768569812";
+  const email = options.email || AGENCY_EMAIL;
+  const websiteUrl = options.websiteUrl || WEBSITE_URL;
+  const websiteDisplay = options.websiteDisplay || "www.dtvacationandtravel.com";
+  const consultationText = options.consultationText || "Book a consultation";
+  const consultationUrl = options.consultationUrl || "https://wa.me/18768569812?text=Hello%20Denise,%20I'd%20like%20to%20book%20a%20travel%20consultation";
+  const showPromoBanner = options.showPromoBanner !== false;
+  const promoHeadline = options.promoHeadline || "Your next escape starts here.";
+  const promoText = options.promoText || "Ask us about our current getaway deals.";
+  const showDisclaimer = options.showDisclaimer !== false;
+
+  return `
+    <table cellpadding="0" cellspacing="0" border="0" style="max-width: 580px; width: 100%; font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.4; color: #1e293b; background: #ffffff; margin-top: 24px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
+      <tr>
+        <td valign="top" style="padding-right: 18px; width: 125px; text-align: center;">
+          <a href="${websiteUrl}" target="_blank" style="text-decoration: none; display: inline-block;">
+            <table cellpadding="0" cellspacing="0" border="0" style="background-color: #000C1C; background: linear-gradient(145deg, #000C1C 0%, #002D62 100%); border: 1px solid rgba(212,160,23,0.35); border-radius: 14px; box-shadow: 0 4px 14px rgba(0,12,28,0.12);">
+              <tr>
+                <td style="padding: 10px; text-align: center;">
+                  <img 
+                    src="https://www.dtvacationandtravel.com/images/Logo.png" 
+                    alt="${companyName}" 
+                    width="100" 
+                    height="100" 
+                    style="display: block; width: 100px; height: 100px; max-width: 100px; object-fit: contain; border: 0;"
+                  />
+                </td>
+              </tr>
+            </table>
+          </a>
+        </td>
+        <td valign="top" style="border-left: 2px solid #0284c7; padding-left: 18px;">
+          <div style="font-family: Arial, Helvetica, sans-serif; font-size: 18px; font-weight: bold; color: #0284c7; line-height: 1.2; margin-bottom: 2px;">
+            ${fullName}
+          </div>
+          <div style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #64748b; margin-bottom: 4px; font-weight: 500;">
+            ${jobTitle}
+          </div>
+          <div style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: bold; color: #0f172a; margin-bottom: 8px;">
+            ${companyName}
+          </div>
+
+          <table cellpadding="0" cellspacing="0" border="0" style="font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 1.5; color: #334155; margin-bottom: 10px;">
+            <tr>
+              <td style="padding: 1px 0;">
+                <strong style="color: #0284c7;">T</strong>&nbsp; 
+                <a href="${phoneLink}" style="color: #334155; text-decoration: none;">${phone}</a>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 1px 0;">
+                <strong style="color: #0284c7;">E</strong>&nbsp; 
+                <a href="mailto:${email}" style="color: #334155; text-decoration: none;">${email}</a>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 1px 0;">
+                <strong style="color: #0284c7;">W</strong>&nbsp; 
+                <a href="${websiteUrl}" target="_blank" style="color: #0284c7; text-decoration: none; font-weight: 600;">${websiteDisplay}</a>
+              </td>
+            </tr>
+          </table>
+
+          <div style="margin-bottom: 10px;">
+            <a 
+              href="${consultationUrl}" 
+              target="_blank" 
+              style="display: inline-block; background-color: #ea580c; color: #ffffff; font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold; text-decoration: none; padding: 7px 18px; border-radius: 4px; box-shadow: 0 2px 6px rgba(234, 88, 12, 0.25);"
+            >
+              ${consultationText}
+            </a>
+          </div>
+
+          <div style="font-family: Arial, Helvetica, sans-serif; font-size: 12px;">
+            <a href="https://www.instagram.com/dtvacationandtravel" target="_blank" style="text-decoration: none; color: #0284c7; font-weight: 600; margin-right: 14px; display: inline-block;">
+              <img src="https://img.icons8.com/color/48/instagram-new--v1.png" width="15" height="15" style="vertical-align: middle; margin-right: 4px; border: 0;" alt="Instagram" />Instagram
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61560585715323" target="_blank" style="text-decoration: none; color: #0284c7; font-weight: 600; display: inline-block;">
+              <img src="https://img.icons8.com/color/48/facebook-new.png" width="15" height="15" style="vertical-align: middle; margin-right: 4px; border: 0;" alt="Facebook" />Facebook
+            </a>
+          </div>
+        </td>
+      </tr>
+
+      ${showPromoBanner ? `
+      <tr>
+        <td colspan="2" style="padding-top: 14px;">
+          <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #f0f9ff; border-left: 3px solid #0284c7; border-radius: 0 4px 4px 0;">
+            <tr>
+              <td style="padding: 9px 14px; font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 1.4;">
+                <a href="${websiteUrl}" target="_blank" style="text-decoration: none; color: inherit;">
+                  <strong style="color: #0369a1;">${promoHeadline}</strong> 
+                  <span style="color: #475569;">${promoText}</span>
+                </a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>` : ""}
+
+      ${showDisclaimer ? `
+      <tr>
+        <td colspan="2" style="padding-top: 10px;">
+          <p style="margin: 0; font-family: Arial, Helvetica, sans-serif; font-size: 10px; color: #94a3b8; line-height: 1.45;">
+            This email and any attachments are confidential and intended only for the addressee. If you have received it in error, please notify the sender and delete it. Any unauthorized use or disclosure is prohibited.
+          </p>
+        </td>
+      </tr>` : ""}
+    </table>
+  `;
+}
 
 // --- 1. Customer Direct Reply Email Template ---
 export interface ReplyEmailParams {
@@ -27,7 +162,7 @@ export function generateCustomerReplyHtml({
   messageBody,
   serviceType = "Travel",
   attachedPromotion,
-  agentName = "Denis & DT's Vacation Travel Concierge",
+  agentName = "Denise Thomas",
 }: ReplyEmailParams): string {
   // Convert newlines in messageBody to html paragraphs/breaks
   const formattedBody = messageBody
@@ -125,16 +260,11 @@ export function generateCustomerReplyHtml({
                 </tr>
               </table>
 
-              <!-- AGENT SIGNATURE -->
-              <table width="100%" cellpadding="0" cellspacing="0" style="margin-top:30px;padding-top:24px;border-top:1px solid #e2e8f0;">
-                <tr>
-                  <td>
-                    <p style="margin:0 0 4px;color:${BRAND_PRIMARY};font-size:15px;font-weight:800;">${agentName}</p>
-                    <p style="margin:0 0 2px;color:${BRAND_ACCENT};font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;">Luxury Travel Concierge Specialist</p>
-                    <p style="margin:0;color:#64748b;font-size:13px;">${AGENCY_NAME} &bull; Jamaica & Global Destinations</p>
-                  </td>
-                </tr>
-              </table>
+              <!-- OFFICIAL BRAND SIGNATURE -->
+              ${generateEmailSignatureHtml({
+                fullName: (!agentName || agentName.includes("Denis &")) ? "Denise Thomas" : agentName,
+                jobTitle: "Founder & Luxury Travel Specialist",
+              })}
 
             </td>
           </tr>
@@ -337,6 +467,9 @@ export function generateBroadcastCampaignHtml({
                   </td>
                 </tr>
               </table>
+
+              <!-- OFFICIAL SIGNATURE -->
+              ${generateEmailSignatureHtml({ showPromoBanner: false })}
             </td>
           </tr>
 

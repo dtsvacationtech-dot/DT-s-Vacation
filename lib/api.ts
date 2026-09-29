@@ -8,16 +8,44 @@ const ACTIVE_BACKEND_STORAGE_KEY = "dts_active_backend";
 let memoryActiveBaseUrl: string | null = null;
 
 export function getActiveBackendUrl(): string {
-  if (typeof window === "undefined") return PRIMARY_API_URL;
-  if (memoryActiveBaseUrl) return memoryActiveBaseUrl;
+  if (typeof window === "undefined") {
+    return process.env.NEXT_PUBLIC_API_URL || "";
+  }
+  if (memoryActiveBaseUrl !== null) return memoryActiveBaseUrl;
+
+  const hostname = window.location.hostname;
+  const isLocalhost =
+    hostname === "localhost" ||
+    hostname === "127.0.0.1" ||
+    hostname === "0.0.0.0" ||
+    hostname.endsWith(".local");
+
+  // In local development or standalone same-origin deployment, default to relative path ""
+  if (isLocalhost) {
+    memoryActiveBaseUrl = "";
+    return "";
+  }
+
+  // If explicit NEXT_PUBLIC_API_URL is provided, prioritize it
+  if (process.env.NEXT_PUBLIC_API_URL) {
+    memoryActiveBaseUrl = process.env.NEXT_PUBLIC_API_URL;
+    return process.env.NEXT_PUBLIC_API_URL;
+  }
 
   try {
     const saved = sessionStorage.getItem(ACTIVE_BACKEND_STORAGE_KEY);
-    if (saved && (saved === PRIMARY_API_URL || saved === FALLBACK_API_URL)) {
+    if (saved !== null && (saved === PRIMARY_API_URL || saved === FALLBACK_API_URL || saved === "")) {
       memoryActiveBaseUrl = saved;
       return saved;
     }
   } catch {}
+
+  // If running on the production domain or VPS (co-located Next.js fullstack standalone server),
+  // same-origin relative calls avoid CORS and DNS failures.
+  if (hostname && !hostname.startsWith("api.")) {
+    memoryActiveBaseUrl = "";
+    return "";
+  }
 
   memoryActiveBaseUrl = PRIMARY_API_URL;
   return PRIMARY_API_URL;
@@ -39,7 +67,7 @@ export function getApiUrl(path: string): string {
 
   if (typeof window !== "undefined") {
     const base = getActiveBackendUrl();
-    return `${base}${cleanPath}`;
+    return base ? `${base}${cleanPath}` : cleanPath;
   }
   return cleanPath;
 }
@@ -89,12 +117,17 @@ export async function apiFetch(path: string, options: RequestInit = {}): Promise
   const cleanPath = isAbsolute ? "" : path.startsWith("/") ? path : "/" + path;
 
   const currentBase = getActiveBackendUrl();
-  const primaryUrl = isAbsolute ? path : `${currentBase}${cleanPath}`;
+  const primaryUrl = isAbsolute ? path : (currentBase ? `${currentBase}${cleanPath}` : cleanPath);
 
-  // If in browser and calling our backend, enforce a 1800ms fast timeout to avoid long DNS hangs
-  if (typeof window !== "undefined" && !isAbsolute) {
+  // If in browser and calling relative same-origin endpoint (currentBase === "")
+  if (typeof window !== "undefined" && !isAbsolute && !currentBase) {
+    return await fetch(cleanPath, options);
+  }
+
+  // If in browser and calling remote backend with potential failover
+  if (typeof window !== "undefined" && !isAbsolute && currentBase) {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 1800);
+    const timeoutId = setTimeout(() => controller.abort(), 2000);
 
     try {
       const res = await fetch(primaryUrl, {
@@ -114,18 +147,22 @@ export async function apiFetch(path: string, options: RequestInit = {}): Promise
         setActiveBackendUrl(alternateBase);
         console.info(`[API] Failover successful! Active backend set to: ${alternateBase}`);
         return fallbackRes;
-      } catch (fallbackErr) {
-        console.error(`[API] Both primary and fallback endpoints failed.`, fallbackErr);
-        throw primaryErr;
+      } catch {
+        // Fallback to local same-origin as final safeguard
+        console.warn(`[API] Remote endpoints failed, falling back to same-origin: ${cleanPath}`);
+        try {
+          const sameOriginRes = await fetch(cleanPath, options);
+          setActiveBackendUrl("");
+          return sameOriginRes;
+        } catch {
+          console.warn(`[API] All endpoints failed for ${path}`);
+          throw primaryErr;
+        }
       }
     }
   }
 
-  try {
-    return await fetch(primaryUrl, options);
-  } catch (primaryErr) {
-    throw primaryErr;
-  }
+  return await fetch(primaryUrl, options);
 }
 
 /**

@@ -351,9 +351,29 @@ export default function EmailReplyModal({
                 </div>
               )}
 
-              <div className="pt-4 border-t border-slate-100 text-xs text-slate-500">
-                <p className="font-bold text-deep-navy">Denis &amp; DT&apos;s Vacation Travel Concierge</p>
-                <p>📞 +1 (876) 856-9812 | ✉️ dtvacationandtravel@gmail.com</p>
+              <div className="pt-4 border-t border-slate-100">
+                <div className="flex items-start gap-3.5 p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs">
+                  <img
+                    src="/images/Logo.png"
+                    alt="DT's Vacation & Travel"
+                    className="w-16 h-16 rounded-lg object-contain bg-white p-1 border border-slate-200 shrink-0"
+                  />
+                  <div className="border-l-2 border-sky-600 pl-3.5 space-y-1">
+                    <p className="font-bold text-sky-700 text-sm">Denise Thomas</p>
+                    <p className="text-slate-500 font-medium">Founder &amp; Luxury Travel Specialist</p>
+                    <p className="font-bold text-slate-800">DT&apos;s Vacation &amp; Travel Limited</p>
+                    <p className="text-slate-600">
+                      <strong className="text-sky-600">T</strong> (876) 856-9812 &nbsp;|&nbsp; <strong className="text-sky-600">E</strong> dtvacationandtravel@gmail.com
+                    </p>
+                    <p className="text-sky-600 font-semibold">
+                      <strong className="text-sky-600">W</strong> www.dtvacationandtravel.com
+                    </p>
+                    <div className="pt-1 flex items-center gap-2">
+                      <span className="bg-orange-600 text-white font-bold text-[10px] px-2.5 py-0.5 rounded shadow-xs">Book a consultation</span>
+                      <span className="text-sky-600 font-medium text-[11px]">Instagram • Facebook</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           )}

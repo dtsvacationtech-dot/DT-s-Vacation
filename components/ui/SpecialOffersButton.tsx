@@ -33,7 +33,7 @@ export default function SpecialOffersButton({
       </span>
       <span className={styles.copy}>
         <span className={styles.title}>{compact ? "Special Offers" : "Explore Special Offers"}</span>
-        <span className={styles.caption}>{caption}</span>
+        <span className={styles.caption} suppressHydrationWarning>{caption}</span>
       </span>
       <span className={styles.arrow} aria-hidden="true">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">

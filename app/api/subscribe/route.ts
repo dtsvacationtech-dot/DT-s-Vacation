@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sendEmail, AGENCY_EMAIL } from "@/lib/emailSender";
 import { saveSubscriber } from "@/lib/db";
+import { generateEmailSignatureHtml } from "@/lib/emailTemplates";
 
 export async function POST(req: NextRequest) {
   try {
@@ -106,16 +107,14 @@ function subscriberWelcomeHtml(email: string): string {
             <!-- CTA -->
             <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:32px;">
               <tr><td align="center">
-                <a href="https://dt-s-vacation.vercel.app" style="display:inline-block;background:linear-gradient(135deg,#D4A017,#f0b922);color:#000C1C;text-decoration:none;font-size:14px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;padding:16px 40px;border-radius:50px;">
+                <a href="https://www.dtvacationandtravel.com" style="display:inline-block;background:linear-gradient(135deg,#D4A017,#f0b922);color:#000C1C;text-decoration:none;font-size:14px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;padding:16px 40px;border-radius:50px;">
                   Explore Our Packages ✈️
                 </a>
               </td></tr>
             </table>
 
-            <p style="margin:0;color:#94a3b8;font-size:12px;line-height:1.7;text-align:center;">
-              You're receiving this because you subscribed at dts-vacation.vercel.app.<br/>
-              <a href="mailto:dtvacationandtravel@gmail.com" style="color:#D4A017;">Contact us</a> anytime with questions.
-            </p>
+            <!-- OFFICIAL BRAND SIGNATURE -->
+            ${generateEmailSignatureHtml()}
           </td>
         </tr>
 

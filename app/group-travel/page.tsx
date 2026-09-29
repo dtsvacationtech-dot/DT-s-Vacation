@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
 import GroupTravelHero from "@/components/group-travel/GroupTravelHero";
 import GroupTravelIntro from "@/components/group-travel/GroupTravelIntro";
-import GroupTravelExperiences from "@/components/group-travel/GroupTravelExperiences";
 import GroupTravelExpertise from "@/components/group-travel/GroupTravelExpertise";
 import GroupTravelCTA from "@/components/group-travel/GroupTravelCTA";
 
 export const metadata: Metadata = {
   title: "Group Travel Experiences | DT's Vacation & Travel Limited",
   description:
-    "Travel Together. Create Memories. Experience More. DT's Vacation & Travel Limited makes group travel personal, seamless, and stress-free — retreats, family reunions, celebrations, and wellness getaways.",
+    "Travel Together. Create Memories. Experience More. DT's Vacation & Travel Limited makes group travel personal, seamless, and stress-free.",
   openGraph: {
     title: "Group Travel Experiences | DT's Vacation & Travel Limited",
     description:
@@ -33,13 +32,10 @@ export default function GroupTravelPage() {
       {/* 2. Short Introduction */}
       <GroupTravelIntro />
 
-      {/* 3. Four Visual Service Cards (Retreats, Reunions, Social & Leisure, Health & Wellness) */}
-      <GroupTravelExperiences />
-
-      {/* 4 & 5. Your Group. Your Vision. Our Expertise. & Why DT's? */}
+      {/* 3. Your Group. Your Vision. Our Expertise. & Why DT's? */}
       <GroupTravelExpertise />
 
-      {/* 6. Strong CTA Section */}
+      {/* 4. Strong CTA Section */}
       <GroupTravelCTA />
     </main>
   );
