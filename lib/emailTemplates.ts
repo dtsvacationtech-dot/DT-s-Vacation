@@ -269,12 +269,20 @@ export function generateCustomerReplyHtml({
             </td>
           </tr>
 
-          <!-- LUXURY FOOTER -->
+          <!-- LUXURY FOOTER (Clean Light Premium Aesthetic) -->
           <tr>
-            <td style="background:${BRAND_PRIMARY};padding:24px 36px;text-align:center;">
-              <p style="margin:0 0 6px;color:${BRAND_ACCENT};font-size:12px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;">${AGENCY_NAME}</p>
-              <p style="margin:0 0 4px;color:rgba(255,255,255,0.6);font-size:12px;">📞 ${AGENCY_PHONE} &nbsp;|&nbsp; ✉️ ${AGENCY_EMAIL}</p>
-              <p style="margin:0;color:rgba(255,255,255,0.3);font-size:11px;">&copy; ${new Date().getFullYear()} All rights reserved. Registered Jamaica Travel Agency.</p>
+            <td style="background:#f8fafc;border-top:2px solid rgba(212,160,23,0.35);padding:26px 36px;text-align:center;">
+              <p style="margin:0 0 6px;color:#000C1C;font-family:'Montserrat',Arial,sans-serif;font-size:12px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;">
+                DT's Vacation &amp; Travel Limited
+              </p>
+              <p style="margin:0 0 6px;color:#64748b;font-size:12px;line-height:1.6;">
+                📞 <a href="tel:+18768569812" style="color:#000C1C;text-decoration:none;font-weight:600;">+1 (876) 856-9812</a> &nbsp;&bull;&nbsp; 
+                ✉️ <a href="mailto:dtvacationandtravel@gmail.com" style="color:#000C1C;text-decoration:none;font-weight:600;">dtvacationandtravel@gmail.com</a> &nbsp;&bull;&nbsp; 
+                🌐 <a href="${WEBSITE_URL}" style="color:#b4820a;text-decoration:none;font-weight:700;">www.dtvacationandtravel.com</a>
+              </p>
+              <p style="margin:0;color:#94a3b8;font-size:11px;">
+                &copy; ${new Date().getFullYear()} All rights reserved. Registered Jamaica Travel Agency.
+              </p>
             </td>
           </tr>
 
@@ -490,13 +498,23 @@ export function generateBroadcastCampaignHtml({
             </td>
           </tr>
 
-          <!-- FOOTER -->
+          <!-- FOOTER (Clean Light Premium Aesthetic) -->
           <tr>
-            <td style="background:${BRAND_PRIMARY};padding:28px 40px;text-align:center;">
-              <p style="margin:0 0 6px;color:${BRAND_ACCENT};font-size:12px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;">${AGENCY_NAME}</p>
-              <p style="margin:0 0 8px;color:rgba(255,255,255,0.6);font-size:12px;">📞 ${AGENCY_PHONE} &nbsp;|&nbsp; ✉️ ${AGENCY_EMAIL}</p>
-              <p style="margin:0 0 12px;color:rgba(255,255,255,0.4);font-size:11px;">You are receiving this email because you are a subscriber or client of DT's Vacation & Travel Ltd.</p>
-              <p style="margin:0;color:rgba(255,255,255,0.25);font-size:10px;">&copy; ${new Date().getFullYear()} All rights reserved. Montego Bay & Kingston, Jamaica.</p>
+            <td style="background:#f8fafc;border-top:2px solid rgba(212,160,23,0.35);padding:26px 36px;text-align:center;">
+              <p style="margin:0 0 6px;color:#000C1C;font-family:'Montserrat',Arial,sans-serif;font-size:12px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;">
+                DT's Vacation &amp; Travel Limited
+              </p>
+              <p style="margin:0 0 6px;color:#64748b;font-size:12px;line-height:1.6;">
+                📞 <a href="tel:+18768569812" style="color:#000C1C;text-decoration:none;font-weight:600;">+1 (876) 856-9812</a> &nbsp;&bull;&nbsp; 
+                ✉️ <a href="mailto:dtvacationandtravel@gmail.com" style="color:#000C1C;text-decoration:none;font-weight:600;">dtvacationandtravel@gmail.com</a> &nbsp;&bull;&nbsp; 
+                🌐 <a href="${WEBSITE_URL}" style="color:#b4820a;text-decoration:none;font-weight:700;">www.dtvacationandtravel.com</a>
+              </p>
+              <p style="margin:0 0 4px;color:#94a3b8;font-size:11px;">
+                You are receiving this email because you are a client or subscriber of DT's Vacation &amp; Travel Limited.
+              </p>
+              <p style="margin:0;color:#cbd5e1;font-size:10px;">
+                &copy; ${new Date().getFullYear()} All rights reserved. Montego Bay &amp; Kingston, Jamaica.
+              </p>
             </td>
           </tr>
 

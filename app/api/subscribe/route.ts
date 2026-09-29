@@ -118,11 +118,20 @@ function subscriberWelcomeHtml(email: string): string {
           </td>
         </tr>
 
-        <!-- FOOTER -->
+        <!-- FOOTER (Clean Light Premium Aesthetic) -->
         <tr>
-          <td style="background:#000C1C;padding:24px 40px;text-align:center;">
-            <p style="margin:0 0 4px;color:#D4A017;font-size:12px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;">DT's Vacation &amp; Travel Ltd.</p>
-            <p style="margin:0;color:rgba(255,255,255,0.4);font-size:11px;">&copy; ${new Date().getFullYear()} All rights reserved.</p>
+          <td style="background:#f8fafc;border-top:2px solid rgba(212,160,23,0.35);padding:26px 36px;text-align:center;">
+            <p style="margin:0 0 6px;color:#000C1C;font-family:'Montserrat',Arial,sans-serif;font-size:12px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;">
+              DT's Vacation &amp; Travel Limited
+            </p>
+            <p style="margin:0 0 6px;color:#64748b;font-size:12px;line-height:1.6;">
+              📞 <a href="tel:+18768569812" style="color:#000C1C;text-decoration:none;font-weight:600;">+1 (876) 856-9812</a> &nbsp;&bull;&nbsp; 
+              ✉️ <a href="mailto:dtvacationandtravel@gmail.com" style="color:#000C1C;text-decoration:none;font-weight:600;">dtvacationandtravel@gmail.com</a> &nbsp;&bull;&nbsp; 
+              🌐 <a href="https://www.dtvacationandtravel.com" style="color:#b4820a;text-decoration:none;font-weight:700;">www.dtvacationandtravel.com</a>
+            </p>
+            <p style="margin:0;color:#94a3b8;font-size:11px;">
+              &copy; ${new Date().getFullYear()} All rights reserved. Registered Jamaica Travel Agency.
+            </p>
           </td>
         </tr>
 
