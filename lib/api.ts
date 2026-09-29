@@ -7,9 +7,23 @@ export const API_BASE_URL = PRIMARY_API_URL;
 const ACTIVE_BACKEND_STORAGE_KEY = "dts_active_backend";
 let memoryActiveBaseUrl: string | null = null;
 
+function isLocalOrDropletHost(): boolean {
+  if (typeof window === "undefined") return false;
+  const hostname = window.location.hostname;
+  return (
+    hostname === "localhost" ||
+    hostname === "127.0.0.1" ||
+    hostname === "0.0.0.0" ||
+    hostname.endsWith(".local") ||
+    hostname.startsWith("api.") ||
+    hostname.includes("sslip.io") ||
+    hostname === "67.205.178.226"
+  );
+}
+
 export function getActiveBackendUrl(): string {
   if (typeof window === "undefined") {
-    return process.env.NEXT_PUBLIC_API_URL || "";
+    return process.env.NEXT_PUBLIC_API_URL || PRIMARY_API_URL;
   }
   if (memoryActiveBaseUrl !== null) return memoryActiveBaseUrl;
 
@@ -20,42 +34,58 @@ export function getActiveBackendUrl(): string {
     hostname === "0.0.0.0" ||
     hostname.endsWith(".local");
 
-  // In local development or standalone same-origin deployment, default to relative path ""
+  // In local development, use relative path ""
   if (isLocalhost) {
     memoryActiveBaseUrl = "";
     return "";
   }
 
-  // If explicit NEXT_PUBLIC_API_URL is provided, prioritize it
-  if (process.env.NEXT_PUBLIC_API_URL) {
-    memoryActiveBaseUrl = process.env.NEXT_PUBLIC_API_URL;
-    return process.env.NEXT_PUBLIC_API_URL;
-  }
-
-  try {
-    const saved = sessionStorage.getItem(ACTIVE_BACKEND_STORAGE_KEY);
-    if (saved !== null && (saved === PRIMARY_API_URL || saved === FALLBACK_API_URL || saved === "")) {
-      memoryActiveBaseUrl = saved;
-      return saved;
-    }
-  } catch {}
-
-  // If running on the production domain or VPS (co-located Next.js fullstack standalone server),
-  // same-origin relative calls avoid CORS and DNS failures.
-  if (hostname && !hostname.startsWith("api.")) {
+  // If accessed directly on droplet backend domain / IP
+  if (hostname.startsWith("api.") || hostname.includes("sslip.io") || hostname === "67.205.178.226") {
     memoryActiveBaseUrl = "";
     return "";
   }
 
+  // Running on static frontend (e.g. www.dtvacationandtravel.com, vercel.app):
+  // Check sessionStorage for last working remote backend (must NOT be "")
+  try {
+    const saved = sessionStorage.getItem(ACTIVE_BACKEND_STORAGE_KEY);
+    if (saved && (saved === PRIMARY_API_URL || saved === FALLBACK_API_URL)) {
+      memoryActiveBaseUrl = saved;
+      return saved;
+    }
+    // Clean bad saved value if it was set to ""
+    if (saved === "") {
+      sessionStorage.removeItem(ACTIVE_BACKEND_STORAGE_KEY);
+    }
+  } catch {}
+
+  // Explicit env var if set and non-empty
+  if (process.env.NEXT_PUBLIC_API_URL && process.env.NEXT_PUBLIC_API_URL.trim() !== "") {
+    memoryActiveBaseUrl = process.env.NEXT_PUBLIC_API_URL.trim();
+    return memoryActiveBaseUrl;
+  }
+
+  // Default for production frontend
   memoryActiveBaseUrl = PRIMARY_API_URL;
   return PRIMARY_API_URL;
 }
 
 export function setActiveBackendUrl(url: string): void {
+  // Never save empty string as active backend if we are on a static frontend
+  if (!url || url === "") {
+    if (!isLocalOrDropletHost()) {
+      url = PRIMARY_API_URL;
+    }
+  }
   memoryActiveBaseUrl = url;
   if (typeof window !== "undefined") {
     try {
-      sessionStorage.setItem(ACTIVE_BACKEND_STORAGE_KEY, url);
+      if (url) {
+        sessionStorage.setItem(ACTIVE_BACKEND_STORAGE_KEY, url);
+      } else {
+        sessionStorage.removeItem(ACTIVE_BACKEND_STORAGE_KEY);
+      }
     } catch {}
   }
 }
@@ -126,8 +156,10 @@ export async function apiFetch(path: string, options: RequestInit = {}): Promise
 
   // If in browser and calling remote backend with potential failover
   if (typeof window !== "undefined" && !isAbsolute && currentBase) {
+    const isMutation = options.method === "POST" || options.method === "PUT" || options.method === "DELETE";
+    const timeoutMs = isMutation ? 15000 : 8000;
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 2000);
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
     try {
       const res = await fetch(primaryUrl, {
@@ -143,21 +175,20 @@ export async function apiFetch(path: string, options: RequestInit = {}): Promise
       console.warn(`[API] Fast failover from ${primaryUrl} to ${fallbackUrl}...`);
 
       try {
-        const fallbackRes = await fetch(fallbackUrl, options);
+        const fallbackRes = await fetch(fallbackUrl, {
+          ...options,
+        });
         setActiveBackendUrl(alternateBase);
         console.info(`[API] Failover successful! Active backend set to: ${alternateBase}`);
         return fallbackRes;
-      } catch {
-        // Fallback to local same-origin as final safeguard
-        console.warn(`[API] Remote endpoints failed, falling back to same-origin: ${cleanPath}`);
-        try {
-          const sameOriginRes = await fetch(cleanPath, options);
-          setActiveBackendUrl("");
-          return sameOriginRes;
-        } catch {
-          console.warn(`[API] All endpoints failed for ${path}`);
-          throw primaryErr;
+      } catch (fallbackErr) {
+        console.error(`[API] Both primary and fallback endpoints failed:`, fallbackErr);
+        // Only attempt same-origin if running on an environment where same-origin handles API
+        if (isLocalOrDropletHost()) {
+          console.warn(`[API] Local/droplet host fallback to same-origin: ${cleanPath}`);
+          return await fetch(cleanPath, options);
         }
+        throw primaryErr;
       }
     }
   }
