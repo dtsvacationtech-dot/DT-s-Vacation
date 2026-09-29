@@ -28,6 +28,7 @@ function cleanGeneratedFromPublic() {
   if (fs.existsSync("public")) {
     const files = fs.readdirSync("public");
     for (const file of files) {
+      if (file === "email-signature.html") continue;
       if (file.endsWith(".html") || file.endsWith(".txt")) {
         fs.rmSync(`public/${file}`, { force: true });
       }

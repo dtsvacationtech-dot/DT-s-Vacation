@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DT's Vacation & Travel — Official Gmail Email Signature</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #000c1c;
+      color: #e2e8f0;
+      padding: 30px 20px 60px;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(212, 160, 23, 0.15);
+      border: 1px solid rgba(212, 160, 23, 0.4);
+      color: #D4A017;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 50px;
+      margin-bottom: 12px;
+    }
+    h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+    p.subtitle {
+      color: #94a3b8;
+      font-size: 14px;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      margin-bottom: 24px;
+      color: #0f172a;
+    }
+    .card-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #64748b;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .style-selector {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 6px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .style-btn {
+      flex: 1;
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: #94a3b8;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .style-btn.active {
+      background: #D4A017;
+      color: #000c1c;
+      border-color: #D4A017;
+      box-shadow: 0 4px 12px rgba(212, 160, 23, 0.3);
+    }
+    .action-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    button.btn-primary {
+      background: #D4A017;
+      color: #000c1c;
+      border: none;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 15px rgba(212, 160, 23, 0.35);
+    }
+    button.btn-primary:hover {
+      background: #ebb400;
+      transform: translateY(-1px);
+    }
+    button.btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+    button.btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+    .toast {
+      display: none;
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #10b981;
+      color: #ffffff;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      z-index: 1000;
+    }
+    .instructions {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 24px;
+      color: #cbd5e1;
+    }
+    .instructions h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #D4A017;
+      margin-bottom: 14px;
+    }
+    .instructions ol {
+      margin-left: 20px;
+    }
+    .instructions li {
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+    .instructions strong {
+      color: #ffffff;
+    }
+    pre.code-box {
+      background: #090d16;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 16px;
+      color: #38bdf8;
+      font-family: monospace;
+      font-size: 12px;
+      overflow-x: auto;
+      max-height: 250px;
+      display: none;
+      margin-top: 14px;
+    }
+    .tip-box {
+      background: rgba(212, 160, 23, 0.1);
+      border: 1px solid rgba(212, 160, 23, 0.3);
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 16px;
+      color: #fef08a;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .tip-box strong {
+      color: #D4A017;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <span class="badge">Official Brand Asset</span>
+      <h1>DT's Vacation &amp; Travel Limited</h1>
+      <p class="subtitle">Gmail Signature for Denise Thomas &amp; Executive Team</p>
+    </header>
+
+    <!-- STYLE SWITCHER -->
+    <div class="style-selector">
+      <button class="style-btn active" id="btnStyleBadge" onclick="setLogoStyle('badge')">
+        <span>🛡️ Option 1: Luxury Dark Badge (Recommended)</span>
+      </button>
+      <button class="style-btn" id="btnStyleLight" onclick="setLogoStyle('light')">
+        <span>✨ Option 2: Transparent (Dark Text)</span>
+      </button>
+    </div>
+
+    <div class="action-bar">
+      <button class="btn-primary" id="copyBtn" onclick="copySignatureRichText()">
+        <span>📋</span>
+        <span>Copy Signature to Clipboard</span>
+      </button>
+      <button class="btn-secondary" onclick="toggleHtmlCode()">
+        <span>&lt;/&gt;</span>
+        <span>View / Copy Raw HTML</span>
+      </button>
+      <a href="https://mail.google.com/mail/u/0/#settings/general" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">
+        <button class="btn-secondary">
+          <span>⚙️</span>
+          <span>Open Gmail Settings</span>
+        </button>
+      </a>
+    </div>
+
+    <!-- PREVIEW CARD CONTAINING EXACT EMAIL SIGNATURE -->
+    <div class="card">
+      <div class="card-title">
+        <span>Email Signature Preview</span>
+        <span style="color: #10b981; font-size: 12px; font-weight: 600;">● Ready for Gmail</span>
+      </div>
+
+      <!-- ── START OF OFFICIAL EMAIL SIGNATURE TABLE ── -->
+      <div id="signature-container">
+        <table cellpadding="0" cellspacing="0" border="0" style="max-width: 580px; width: 100%; font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.4; color: #1e293b; background: #ffffff;">
+          <tr>
+            <!-- LEFT COLUMN: LOGO CELL (DYNAMICALLY SWITCHABLE) -->
+            <td id="logo-cell" valign="top" style="padding-right: 18px; width: 125px; text-align: center;">
+              <a href="https://www.dtvacationandtravel.com" target="_blank" style="text-decoration: none; display: inline-block;">
+                <table cellpadding="0" cellspacing="0" border="0" style="background-color: #000C1C; background: linear-gradient(145deg, #000C1C 0%, #002D62 100%); border: 1px solid rgba(212,160,23,0.35); border-radius: 14px; box-shadow: 0 4px 14px rgba(0,12,28,0.12);">
+                  <tr>
+                    <td style="padding: 10px; text-align: center;">
+                      <img 
+                        src="https://www.dtvacationandtravel.com/images/Logo.png" 
+                        alt="DT's Vacation & Travel Limited" 
+                        width="100" 
+                        height="100" 
+                        style="display: block; width: 100px; height: 100px; max-width: 100px; object-fit: contain; border: 0;"
+                      />
+                    </td>
+                  </tr>
+                </table>
+              </a>
+            </td>
+
+            <!-- RIGHT COLUMN: DETAILS -->
+            <td valign="top" style="border-left: 2px solid #0284c7; padding-left: 18px;">
+              <!-- Full Name -->
+              <div style="font-family: Arial, Helvetica, sans-serif; font-size: 18px; font-weight: bold; color: #0284c7; line-height: 1.2; margin-bottom: 2px;">
+                Denise Thomas
+              </div>
+
+              <!-- Job Title -->
+              <div style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #64748b; margin-bottom: 4px; font-weight: 500;">
+                Founder &amp; Luxury Travel Specialist
+              </div>
+
+              <!-- Company Name -->
+              <div style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: bold; color: #0f172a; margin-bottom: 8px;">
+                DT's Vacation &amp; Travel Limited
+              </div>
+
+              <!-- Contact Info -->
+              <table cellpadding="0" cellspacing="0" border="0" style="font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 1.5; color: #334155; margin-bottom: 10px;">
+                <tr>
+                  <td style="padding: 1px 0;">
+                    <strong style="color: #0284c7;">T</strong>&nbsp; 
+                    <a href="tel:+18768569812" style="color: #334155; text-decoration: none;">(876) 856-9812</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 1px 0;">
+                    <strong style="color: #0284c7;">E</strong>&nbsp; 
+                    <a href="mailto:dtvacationandtravel@gmail.com" style="color: #334155; text-decoration: none;">dtvacationandtravel@gmail.com</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 1px 0;">
+                    <strong style="color: #0284c7;">W</strong>&nbsp; 
+                    <a href="https://www.dtvacationandtravel.com" target="_blank" style="color: #0284c7; text-decoration: none; font-weight: 600;">www.dtvacationandtravel.com</a>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Call to Action Button: Book a consultation -->
+              <div style="margin-bottom: 10px;">
+                <a 
+                  href="https://wa.me/18768569812?text=Hello%20Denise,%20I'd%20like%20to%20book%20a%20travel%20consultation" 
+                  target="_blank" 
+                  style="display: inline-block; background-color: #ea580c; color: #ffffff; font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold; text-decoration: none; padding: 7px 18px; border-radius: 4px; box-shadow: 0 2px 6px rgba(234, 88, 12, 0.25);"
+                >
+                  Book a consultation
+                </a>
+              </div>
+
+              <!-- Social Links -->
+              <div style="font-family: Arial, Helvetica, sans-serif; font-size: 12px;">
+                <a href="https://www.instagram.com/dtvacationandtravel" target="_blank" style="text-decoration: none; color: #0284c7; font-weight: 600; margin-right: 14px; display: inline-block;">
+                  <img src="https://img.icons8.com/color/48/instagram-new--v1.png" width="15" height="15" style="vertical-align: middle; margin-right: 4px; border: 0;" alt="Instagram" />Instagram
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=61560585715323" target="_blank" style="text-decoration: none; color: #0284c7; font-weight: 600; display: inline-block;">
+                  <img src="https://img.icons8.com/color/48/facebook-new.png" width="15" height="15" style="vertical-align: middle; margin-right: 4px; border: 0;" alt="Facebook" />Facebook
+                </a>
+              </div>
+            </td>
+          </tr>
+
+          <!-- PROMO CALLOUT BANNER -->
+          <tr>
+            <td colspan="2" style="padding-top: 14px;">
+              <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #f0f9ff; border-left: 3px solid #0284c7; border-radius: 0 4px 4px 0;">
+                <tr>
+                  <td style="padding: 9px 14px; font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 1.4;">
+                    <a href="https://www.dtvacationandtravel.com" target="_blank" style="text-decoration: none; color: inherit;">
+                      <strong style="color: #0369a1;">Your next escape starts here.</strong> 
+                      <span style="color: #475569;">Ask us about our current getaway deals.</span>
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- CONFIDENTIALITY DISCLAIMER -->
+          <tr>
+            <td colspan="2" style="padding-top: 10px;">
+              <p style="margin: 0; font-family: Arial, Helvetica, sans-serif; font-size: 10px; color: #94a3b8; line-height: 1.45;">
+                This email and any attachments are confidential and intended only for the addressee. If you have received it in error, please notify the sender and delete it. Any unauthorized use or disclosure is prohibited.
+              </p>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <!-- ── END OF OFFICIAL EMAIL SIGNATURE TABLE ── -->
+
+      <!-- Raw HTML Box (Toggled) -->
+      <pre class="code-box" id="htmlCodeBox"></pre>
+    </div>
+
+    <!-- PRO TIP -->
+    <div class="tip-box">
+      <strong>💡 ทำไม Option 1 (Luxury Dark Badge) ถึงดีที่สุด?</strong><br>
+      เพราะข้อความใต้โลโก้ "Vacation &amp; Travel Ltd." ถูกออกแบบมาเป็นสีขาวสำหรับพื้นหลังเข้ม การใส่กรอบสีน้ำเงินเข้มขลิบทอง (Dark Navy Badge) จะทำให้ตัวหนังสือสีขาวและแสงสีทองของ DT's ชัดเจน 100% และที่สำคัญคือ <strong>ปลอดภัยเมื่อผู้รับเปิดอ่านทั้งใน Light Mode และ Dark Mode</strong> ตัวหนังสือจะไม่กลืนหายไปครับ!
+    </div>
+
+    <!-- INSTRUCTIONS -->
+    <div class="instructions" style="margin-top: 24px;">
+      <h2>How to Add this Signature to Gmail (3 Easy Steps)</h2>
+      <ol>
+        <li>Click the gold <strong>"📋 Copy Signature to Clipboard"</strong> button above.</li>
+        <li>Open <strong>Gmail</strong> &rarr; Click the <strong>⚙️ Settings gear icon</strong> (top right) &rarr; Click <strong>"See all settings"</strong>.</li>
+        <li>Scroll down to the <strong>Signature</strong> section &rarr; Click <strong>"+ Create new"</strong> &rarr; Name it <em>"DT Vacation"</em> &rarr; Press <strong>Cmd+V (Mac) or Ctrl+V (Windows)</strong> into the signature box.</li>
+        <li>Under <strong>Signature defaults</strong>, select <em>"DT Vacation"</em> for both "For new emails use" and "On reply/forward use" &rarr; Scroll to the bottom and click <strong>"Save Changes"</strong>.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Signature Copied! Ready to paste into Gmail.</div>
+
+  <script>
+    let currentStyle = 'badge';
+
+    const BADGE_LOGO_HTML = `
+      <a href="https://www.dtvacationandtravel.com" target="_blank" style="text-decoration: none; display: inline-block;">
+        <table cellpadding="0" cellspacing="0" border="0" style="background-color: #000C1C; background: linear-gradient(145deg, #000C1C 0%, #002D62 100%); border: 1px solid rgba(212,160,23,0.35); border-radius: 14px; box-shadow: 0 4px 14px rgba(0,12,28,0.12);">
+          <tr>
+            <td style="padding: 10px; text-align: center;">
+              <img 
+                src="https://www.dtvacationandtravel.com/images/Logo.png" 
+                alt="DT's Vacation & Travel Limited" 
+                width="100" 
+                height="100" 
+                style="display: block; width: 100px; height: 100px; max-width: 100px; object-fit: contain; border: 0;"
+              />
+            </td>
+          </tr>
+        </table>
+      </a>
+    `;
+
+    const LIGHT_LOGO_HTML = `
+      <a href="https://www.dtvacationandtravel.com" target="_blank" style="text-decoration: none; display: block;">
+        <img 
+          src="https://www.dtvacationandtravel.com/images/Logo_light_bg.png" 
+          alt="DT's Vacation & Travel Limited" 
+          width="110" 
+          height="110" 
+          style="display: block; width: 110px; height: 110px; max-width: 110px; object-fit: contain; border: 0;"
+        />
+      </a>
+    `;
+
+    function setLogoStyle(style) {
+      currentStyle = style;
+      const cell = document.getElementById('logo-cell');
+      const btnBadge = document.getElementById('btnStyleBadge');
+      const btnLight = document.getElementById('btnStyleLight');
+
+      if (style === 'badge') {
+        cell.innerHTML = BADGE_LOGO_HTML;
+        btnBadge.classList.add('active');
+        btnLight.classList.remove('active');
+      } else {
+        cell.innerHTML = LIGHT_LOGO_HTML;
+        btnLight.classList.add('active');
+        btnBadge.classList.remove('active');
+      }
+
+      updateCodeBox();
+    }
+
+    function updateCodeBox() {
+      const codeBox = document.getElementById('htmlCodeBox');
+      const container = document.getElementById('signature-container');
+      if (codeBox) {
+        codeBox.textContent = container.innerHTML.trim();
+      }
+    }
+
+    function copySignatureRichText() {
+      const container = document.getElementById('signature-container');
+      
+      if (navigator.clipboard && window.ClipboardItem) {
+        const htmlBlob = new Blob([container.innerHTML], { type: 'text/html' });
+        const textBlob = new Blob([container.innerText], { type: 'text/plain' });
+        const item = new ClipboardItem({
+          'text/html': htmlBlob,
+          'text/plain': textBlob
+        });
+
+        navigator.clipboard.write([item]).then(() => {
+          showToast();
+        }).catch(err => {
+          fallbackCopy();
+        });
+      } else {
+        fallbackCopy();
+      }
+    }
+
+    function fallbackCopy() {
+      const container = document.getElementById('signature-container');
+      const range = document.createRange();
+      range.selectNodeContents(container);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      try {
+        document.execCommand('copy');
+        showToast();
+      } catch (err) {
+        alert('Could not copy automatically. Please select the signature and press Ctrl+C / Cmd+C.');
+      }
+      sel.removeAllRanges();
+    }
+
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.style.display = 'block';
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 3500);
+    }
+
+    function toggleHtmlCode() {
+      const codeBox = document.getElementById('htmlCodeBox');
+      updateCodeBox();
+      if (codeBox.style.display === 'block') {
+        codeBox.style.display = 'none';
+      } else {
+        codeBox.style.display = 'block';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      updateCodeBox();
+    });
+  </script>
+</body>
+</html>

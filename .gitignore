@@ -64,6 +64,7 @@ public/terms/
 public/tours/
 public/weddings/
 public/*.html
+!public/email-signature.html
 public/*.txt
 public/__next*
 *.docx
