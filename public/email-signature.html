@@ -225,14 +225,11 @@
       <p class="subtitle">Gmail Signature for Denise Thomas &amp; Executive Team</p>
     </header>
 
-    <!-- STYLE SWITCHER -->
-    <div class="style-selector">
-      <button class="style-btn active" id="btnStyleBadge" onclick="setLogoStyle('badge')">
-        <span>🛡️ Option 1: Luxury Dark Badge (Recommended)</span>
-      </button>
-      <button class="style-btn" id="btnStyleLight" onclick="setLogoStyle('light')">
-        <span>✨ Option 2: Transparent (Dark Text)</span>
-      </button>
+    <!-- OFFICIAL BADGE -->
+    <div style="text-align: center; margin-bottom: 22px;">
+      <span style="display: inline-block; background: rgba(212, 160, 23, 0.12); border: 1px solid rgba(212, 160, 23, 0.4); color: #D4A017; font-size: 13px; font-weight: 700; padding: 8px 24px; border-radius: 50px; letter-spacing: 0.05em;">
+        ✨ Official Clean Signature (Transparent — No Background)
+      </span>
     </div>
 
     <div class="action-bar">
@@ -263,22 +260,16 @@
       <div id="signature-container">
         <table cellpadding="0" cellspacing="0" border="0" style="max-width: 580px; width: 100%; font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.4; color: #1e293b; background: #ffffff;">
           <tr>
-            <!-- LEFT COLUMN: LOGO CELL (DYNAMICALLY SWITCHABLE) -->
-            <td id="logo-cell" valign="top" style="padding-right: 18px; width: 125px; text-align: center;">
-              <a href="https://www.dtvacationandtravel.com" target="_blank" style="text-decoration: none; display: inline-block;">
-                <table cellpadding="0" cellspacing="0" border="0" style="background-color: #000C1C; background: linear-gradient(145deg, #000C1C 0%, #002D62 100%); border: 1px solid rgba(212,160,23,0.35); border-radius: 14px; box-shadow: 0 4px 14px rgba(0,12,28,0.12);">
-                  <tr>
-                    <td style="padding: 10px; text-align: center;">
-                      <img 
-                        src="https://www.dtvacationandtravel.com/images/Logo.png" 
-                        alt="DT's Vacation & Travel Limited" 
-                        width="100" 
-                        height="100" 
-                        style="display: block; width: 100px; height: 100px; max-width: 100px; object-fit: contain; border: 0;"
-                      />
-                    </td>
-                  </tr>
-                </table>
+            <!-- LEFT COLUMN: TRANSPARENT OFFICIAL LOGO (NO BACKGROUND) -->
+            <td id="logo-cell" valign="top" style="padding-right: 18px; width: 115px; text-align: center; vertical-align: top;">
+              <a href="https://www.dtvacationandtravel.com" target="_blank" style="text-decoration: none; display: block;">
+                <img 
+                  src="https://www.dtvacationandtravel.com/images/email_signature_logo.png" 
+                  alt="DT's Vacation & Travel Limited" 
+                  width="110" 
+                  height="110" 
+                  style="display: block; width: 110px; height: auto; max-width: 110px; object-fit: contain; border: 0;"
+                />
               </a>
             </td>
 
@@ -397,57 +388,6 @@
   <div class="toast" id="toast">Signature Copied! Ready to paste into Gmail.</div>
 
   <script>
-    let currentStyle = 'badge';
-
-    const BADGE_LOGO_HTML = `
-      <a href="https://www.dtvacationandtravel.com" target="_blank" style="text-decoration: none; display: inline-block;">
-        <table cellpadding="0" cellspacing="0" border="0" style="background-color: #000C1C; background: linear-gradient(145deg, #000C1C 0%, #002D62 100%); border: 1px solid rgba(212,160,23,0.35); border-radius: 14px; box-shadow: 0 4px 14px rgba(0,12,28,0.12);">
-          <tr>
-            <td style="padding: 10px; text-align: center;">
-              <img 
-                src="https://www.dtvacationandtravel.com/images/Logo.png" 
-                alt="DT's Vacation & Travel Limited" 
-                width="100" 
-                height="100" 
-                style="display: block; width: 100px; height: 100px; max-width: 100px; object-fit: contain; border: 0;"
-              />
-            </td>
-          </tr>
-        </table>
-      </a>
-    `;
-
-    const LIGHT_LOGO_HTML = `
-      <a href="https://www.dtvacationandtravel.com" target="_blank" style="text-decoration: none; display: block;">
-        <img 
-          src="https://www.dtvacationandtravel.com/images/Logo_light_bg.png" 
-          alt="DT's Vacation & Travel Limited" 
-          width="110" 
-          height="110" 
-          style="display: block; width: 110px; height: 110px; max-width: 110px; object-fit: contain; border: 0;"
-        />
-      </a>
-    `;
-
-    function setLogoStyle(style) {
-      currentStyle = style;
-      const cell = document.getElementById('logo-cell');
-      const btnBadge = document.getElementById('btnStyleBadge');
-      const btnLight = document.getElementById('btnStyleLight');
-
-      if (style === 'badge') {
-        cell.innerHTML = BADGE_LOGO_HTML;
-        btnBadge.classList.add('active');
-        btnLight.classList.remove('active');
-      } else {
-        cell.innerHTML = LIGHT_LOGO_HTML;
-        btnLight.classList.add('active');
-        btnBadge.classList.remove('active');
-      }
-
-      updateCodeBox();
-    }
-
     function updateCodeBox() {
       const codeBox = document.getElementById('htmlCodeBox');
       const container = document.getElementById('signature-container');

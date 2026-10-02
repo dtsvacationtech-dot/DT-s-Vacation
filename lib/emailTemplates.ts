@@ -48,21 +48,15 @@ export function generateEmailSignatureHtml(options: EmailSignatureOptions = {}):
   return `
     <table cellpadding="0" cellspacing="0" border="0" style="max-width: 580px; width: 100%; font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.4; color: #1e293b; background: #ffffff; margin-top: 24px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
       <tr>
-        <td valign="top" style="padding-right: 18px; width: 125px; text-align: center;">
-          <a href="${websiteUrl}" target="_blank" style="text-decoration: none; display: inline-block;">
-            <table cellpadding="0" cellspacing="0" border="0" style="background-color: #000C1C; background: linear-gradient(145deg, #000C1C 0%, #002D62 100%); border: 1px solid rgba(212,160,23,0.35); border-radius: 14px; box-shadow: 0 4px 14px rgba(0,12,28,0.12);">
-              <tr>
-                <td style="padding: 10px; text-align: center;">
-                  <img 
-                    src="https://www.dtvacationandtravel.com/images/Logo.png" 
-                    alt="${companyName}" 
-                    width="100" 
-                    height="100" 
-                    style="display: block; width: 100px; height: 100px; max-width: 100px; object-fit: contain; border: 0;"
-                  />
-                </td>
-              </tr>
-            </table>
+        <td valign="top" style="padding-right: 18px; width: 115px; text-align: center; vertical-align: top;">
+          <a href="${websiteUrl}" target="_blank" style="text-decoration: none; display: block;">
+            <img 
+              src="https://www.dtvacationandtravel.com/images/email_signature_logo.png" 
+              alt="${companyName}" 
+              width="110" 
+              height="110" 
+              style="display: block; width: 110px; height: auto; max-width: 110px; object-fit: contain; border: 0;"
+            />
           </a>
         </td>
         <td valign="top" style="border-left: 2px solid #0284c7; padding-left: 18px;">
